@@ -8,7 +8,15 @@
 </head>
 <body>
 
+<h1>Yellow</h1>
 
+<form method="GET" action="{{action('getBar')}}">
+
+    <label for="">Insert</label>
+    <input name="keywords" type="text">
+    
+    <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+</form>
 
 </body>
 </html>
