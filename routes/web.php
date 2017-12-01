@@ -11,14 +11,14 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 
 
-
-Route::group(['prefix' => 'bars'],function(){
+Route::group(['prefix' => 'bars'], function(){
 
 
     Route::get('/',[
@@ -27,7 +27,7 @@ Route::group(['prefix' => 'bars'],function(){
     ]);
 
 
-    Route::get('/find/{keyword}',[
+    Route::get('find/{keyword?}',[
         'uses' => 'BarController@getBarByKeyword',
         'as' => 'getBar'
     ]);

@@ -8,16 +8,9 @@
 </head>
 <body>
 
-<h1>Yellow</h1>
+<p>node: <span> {{$node}} </span></p>
+<p>keywords: <span> {{$keywords}} </span></p>
 
-<form method="GET" action="{{ route('getBar') }}">
-
-    <label for="">Insert</label>
-    <input name="keywords" type="text">
-    
-    <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
-    <input type="submit">
-</form>
 
 </body>
 </html>
