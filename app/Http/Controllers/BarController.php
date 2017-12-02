@@ -12,19 +12,13 @@ class BarController extends Controller
         return view('osm.query');
     }
 
-    public function getBarByKeyword($keyword = null)
+    public function getBarByKeyword(Request $request)
     {
 
-        //$bar = Bar::where('keywords', $keyword);
-        $query = '%' . $keyword . '%';
-        $bar = DB::table('bars')->where('keywords','like', $query)->get()->first();
-
-//        return view('osm.bar', [
-//            'node' => $bar->node,
-//            'keywords' => $bar->keywords
-//        ]);
-
-        return response()->json(array('node' => $bar->node),200);
+        $bars = Bar::search($request->get('keywords'))->get();
+        return response()->json(array($bars),200);
 
     }
+
+
 }

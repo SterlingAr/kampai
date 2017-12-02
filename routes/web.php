@@ -32,4 +32,5 @@ Route::group(['prefix' => 'bars'], function(){
         'as' => 'getBar'
     ]);
 
+
 });

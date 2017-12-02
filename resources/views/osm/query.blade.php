@@ -5,19 +5,30 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="{{URL::to('assets/osm/js/osm_data.js')}}"> </script>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="{{URL::to('assets/osm/js/vue_app.js')}}"></script>
 </head>
 <body>
 
 <h1>Yellow</h1>
 
-<form method="GET" action="{{ route('getBar') }}">
+<form>
 
-    <label for="">Insert</label>
-    <input name="keywords" type="text">
-    
-    <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
-    <input type="submit">
+    <input id="keywordField" name="keywords" type="text" placeholder="Palabras clave">
+    <input  id="queryNode" type="button" value="Envíar">
+
 </form>
+
+<div id="app">
+
+    @{{ message }}
+
+</div>
+
 
 </body>
 </html>
