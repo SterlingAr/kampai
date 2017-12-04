@@ -16,6 +16,7 @@ class CreateBarsTable extends Migration
         Schema::create('bars', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('node');
+            $table->text('description');
             $table->text('keywords');
             $table->timestamps();
         });

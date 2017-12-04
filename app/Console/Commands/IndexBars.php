@@ -37,6 +37,7 @@ class IndexBars extends Command
      */
     public function handle()
     {
+
         $tnt = new TNTSearch;
         $driver = config('database.default');
         $config = config('scout.tntsearch') + config("database.connections.$driver");

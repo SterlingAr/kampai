@@ -14,7 +14,6 @@ $(document).ready(function()
     });
 
 
-
     var url = '/bars/find?keywords=';
 
     $("#queryNode").click(function()
@@ -26,7 +25,6 @@ $(document).ready(function()
             $.each(data, function(key,value)
             {
                 console.log(value['node']);
-
                 $.each(value, function(k,v){
                     console.log(v);
                 });

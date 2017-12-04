@@ -18,6 +18,7 @@ Route::get('/', function () {
 
 
 
+
 Route::group(['prefix' => 'bars'], function(){
 
 
@@ -31,6 +32,5 @@ Route::group(['prefix' => 'bars'], function(){
         'uses' => 'BarController@getBarByKeyword',
         'as' => 'getBar'
     ]);
-
 
 });

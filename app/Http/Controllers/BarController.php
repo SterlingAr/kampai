@@ -16,6 +16,7 @@ class BarController extends Controller
     {
 
         $bars = Bar::search($request->get('keywords'))->get();
+
         return response()->json(array($bars),200);
 
     }
