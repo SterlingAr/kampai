@@ -5,24 +5,26 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>window.Laravel = { csrfToken: '{{ csrf_token() }}' }</script>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="{{URL::to('assets/osm/js/osm_data.js')}}"> </script>
 
 </head>
 <body>
 
 <h1>Yellow</h1>
 
-<form>
-
-    <input id="keywordField" name="keywords" type="text" placeholder="Palabras clave">
-    <input  id="queryNode" type="button" value="Envíar">
-
-</form>
 
 
+<div id="app">
+
+    <bars>
+
+    </bars>
+
+</div>
 
 
+<script src="{{asset('js/app.js')}}"> </script>
 </body>
 </html>

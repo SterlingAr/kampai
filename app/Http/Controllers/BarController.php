@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Bar;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
+use Illuminate\Http\Request;
+Use App\Bar;
 class BarController extends Controller
+
 {
     public function getHome()
     {
@@ -17,9 +17,14 @@ class BarController extends Controller
 
         $bars = Bar::search($request->get('keywords'))->get();
 
-        return response()->json(array($bars),200);
+        $nodes = [];
+
+        foreach ($bars as $bar)
+        {
+            array_push($nodes, $bar->node);
+        }
+
+        return $nodes;
 
     }
-
-
 }

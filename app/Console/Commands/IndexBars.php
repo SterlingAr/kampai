@@ -43,9 +43,10 @@ class IndexBars extends Command
         $config = config('scout.tntsearch') + config("database.connections.$driver");
         $tnt->loadConfig($config);
         $tnt->setDatabaseHandle(app('db')->connection()->getPdo());
-
         $indexer = $tnt->createIndex('bars.index');
+
         $indexer->query('SELECT id, node, keywords FROM bars;');
+
         $indexer->run();
     }
 }

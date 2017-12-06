@@ -8,8 +8,8 @@ use Laravel\Scout\Searchable;
 class Bar extends Model
 {
     //
-    protected $fillable = ['node', 'keywords'];
-
+    protected $fillable = ['node'];
+    protected $guarder = ['node'];
     use Searchable;
 
     /**
