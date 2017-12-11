@@ -1097,10 +1097,13 @@ window.Vue = __webpack_require__(36);
  */
 
 Vue.component('example-component', __webpack_require__(39));
-Vue.component('bars', __webpack_require__(42));
+Vue.component('app', __webpack_require__(55));
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  created: function created() {
+    console.log("*DEBUGGER* : App instance created");
+  }
 });
 
 /***/ }),
@@ -42886,15 +42889,33 @@ if (false) {
 }
 
 /***/ }),
-/* 42 */
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(9)
 /* script */
-var __vue_script__ = __webpack_require__(43)
+var __vue_script__ = __webpack_require__(56)
 /* template */
-var __vue_template__ = __webpack_require__(44)
+var __vue_template__ = __webpack_require__(57)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -42911,7 +42932,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Bars.vue"
+Component.options.__file = "resources/assets/js/components/App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -42921,9 +42942,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fc297112", Component.options)
+    hotAPI.createRecord("data-v-8142f38c", Component.options)
   } else {
-    hotAPI.reload("data-v-fc297112", Component.options)
+    hotAPI.reload("data-v-8142f38c", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -42934,11 +42955,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 43 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -42960,7 +42982,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         return {
             query: "",
-            nodeList: null,
+            nodeList: "",
             osmQuery: "https://z.overpass-api.de/api/interpreter?data=",
             osmNodeData: null
         };
@@ -42979,6 +43001,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(res);
                 _this.nodeList = res.data;
                 _this.buildOSMQuery();
+                _this.fetchNodeDataFromOsm();
             });
         },
         buildOSMQuery: function buildOSMQuery() {
@@ -43013,13 +43036,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
 
             this.osmQuery += queryStart + queryContent + queryEnd;
+            console.log("*DEBUGGER*  Query generada para OSM : " + this.osmQuery);
+        },
+        fetchNodeDataFromOsm: function fetchNodeDataFromOsm() {
+            axios.get(this.osmQuery).then(function (res) {
+                console.log(res);
+            });
         }
     }
 
 });
 
 /***/ }),
-/* 44 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43063,13 +43092,10 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("br"),
-      _vm._v(
-        "\n        " +
-          _vm._s(_vm.query) +
-          "\n        " +
-          _vm._s(_vm.nodeList) +
-          "\n    "
-      )
+      _vm._v("\n        " + _vm._s(_vm.query) + "\n\n        "),
+      _c("p", _vm._b({}, "p", _vm.nodeList, false), [
+        _vm._v(_vm._s(_vm.nodeList))
+      ])
     ])
   ])
 }
@@ -43079,15 +43105,9 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-fc297112", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-8142f38c", module.exports)
   }
 }
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

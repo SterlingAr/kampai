@@ -16,8 +16,12 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('bars', require('./components/Bars.vue'));
+Vue.component('app', require('./components/App.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    created: function(){
+        console.log("*DEBUGGER* : App instance created");
+    }
 });
+

@@ -6,7 +6,8 @@
             <input @click="fetchNodesFromDB()" type="button" value="Envíar">
             <br>
             {{ query }}
-            {{ nodeList }}
+
+            <p v-bind="nodeList">{{ nodeList }}</p>
         </form>
 
     </div>
@@ -20,16 +21,16 @@
 
             return {
                 query: "",
-                nodeList: null,
+                nodeList: "",
                 osmQuery: "https://z.overpass-api.de/api/interpreter?data=",
                 osmNodeData: null,
             }
-
         },
 
         methods: {
 
-            fetchNodesFromDB() {
+            fetchNodesFromDB()
+            {
 
                 axios.get('bars/find', {
                     params: {
@@ -40,11 +41,13 @@
                         console.log(res);
                         this.nodeList = res.data;
                         this.buildOSMQuery();
+                        this.fetchNodeDataFromOsm();
                     });
 
             },
 
-            buildOSMQuery(){
+            buildOSMQuery()
+            {
 
                 let queryStart = "[out:json][timeout:25];(";
                 let queryContent = "";
@@ -56,7 +59,15 @@
                 }
 
                 this.osmQuery += queryStart + queryContent + queryEnd;
+                console.log("*DEBUGGER*  Query generada para OSM : "+this.osmQuery);
+            },
 
+            fetchNodeDataFromOsm()
+            {
+                    axios.get(this.osmQuery)
+                        .then((res) => {
+                        console.log(res);
+                    });
             },
 
 

@@ -18,9 +18,7 @@
 
 <div id="app">
 
-    <bars>
-
-    </bars>
+   <app></app>
 
 </div>
 
