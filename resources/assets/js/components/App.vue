@@ -6,10 +6,8 @@
             <input @click="fetchNodesFromDB()" type="button" value="Envíar">
             <br>
             {{ query }}
-
             <p v-bind="nodeList">{{ nodeList }}</p>
         </form>
-
     </div>
 </template>
 
@@ -66,15 +64,19 @@
             {
                     axios.get(this.osmQuery)
                         .then((res) => {
+                        console.log('*DEBUGGER* :  Objeto recibido : ');
                         console.log(res);
                     });
             },
 
+        },
 
-
-        }
 
 
     }
+
+    new Vue({
+
+    })
 
 </script>

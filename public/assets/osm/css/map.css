@@ -1,0 +1,33 @@
+.container
+{
+    display: grid;
+    grid-template-columns: 1fr 50% 1fr;
+    grid-template-rows: 1fr auto 1fr;
+}
+
+.form-child
+{
+    grid-column: 2 / 3;
+    grid-row: auto;
+}
+
+.form-child>input
+{
+    width:100%;
+    display: inline-block;
+
+}
+
+.bar-child
+{
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+.bar-child > div
+{
+    border: 1px solid black;
+}
+
+body{max-width: 100%; padding:0; margin:0;}
+#mapid { height: 450px; max-width: 100%; padding:0; margin:0;}
