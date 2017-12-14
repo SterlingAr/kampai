@@ -15,6 +15,13 @@ class BarResource extends Resource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+//        return parent::toArray($request);
+
+        return [
+          'id' => $this->id,
+          'node' => $this->node,
+            'data' =>$this->data
+        ];
+
     }
 }
