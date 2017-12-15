@@ -26,13 +26,14 @@ class BarController extends Controller
 
 
     /**
-     * Fetch and return the bar
+     * Display the specified resource.
      *
-     * @param Bar $bar
-     * @return BarResource
+     * @param  \App\Bar  $bar
+     * @return \App\Bar  $bar
      */
     public function show(Bar $bar)
     {
+
         return new BarResource($bar);
     }
 
@@ -40,8 +41,7 @@ class BarController extends Controller
     {
         $bars = Bar::search($request->get('keywords'))->get();
 
-
-        return BarResource::collection($bars);
+         return BarResource::collection($bars);
 
     }
 

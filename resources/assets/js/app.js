@@ -21,7 +21,6 @@ Vue.component('bars', require('./components/Bars.vue'));
 
 const app = new Vue({
     el: '#app',
-    components: { bars },
     created: function(){
         console.log("*DEBUGGER* : App instance created");
     }

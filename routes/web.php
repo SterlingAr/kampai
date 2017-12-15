@@ -12,25 +12,21 @@
 */
 
 
-Route::get('/', function () {
+Route::get('/', function ()
+{
     return view('welcome');
 });
 
 
 
 
-Route::group(['prefix' => 'bars'], function(){
+Route::group(['prefix' => 'bars'], function()
+{
 
 
-    Route::get('/',[
-        'uses' => 'BarController@getHome',
+    Route::get('/', [
+        'uses' => 'BarControllerFrontend@index',
         'as' => 'home'
-    ]);
-
-
-    Route::get('find/{keyword?}',[
-        'uses' => 'BarController@getBarByKeyword',
-        'as' => 'getBar'
     ]);
 
 });

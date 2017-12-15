@@ -37,8 +37,11 @@ class Bar extends Model
         $queryStart = '[out:json][timeout:25];(';
         $queryEnd = ');out body;>;out skel qt;';
         $node = 'node(' . (string)$this->node . ')';
+        $encodedQuery = urlencode($queryStart . $node . $queryEnd);
+        $osmQuery = $baseUri . $encodedQuery ;
 
-        $osmQuery = $baseUri . urlencode($queryStart . $node . $queryEnd);
+        \Debugbar::info($this);
+        \Debugbar::addMessage($osmQuery,'*DEBUGGER* Encoded Query:  ');
 
         $headers = array(
             'http' => array(
@@ -62,10 +65,5 @@ class Bar extends Model
 
 
 
-    function console_log($data){
-        echo '<script>';
-        echo 'console.log('. $data  .')';
-        echo '</script>';
-    }
 
 }

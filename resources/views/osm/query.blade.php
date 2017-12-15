@@ -33,7 +33,6 @@
 
         <app>
         </app>
-        <bars></bars>
 
 
 

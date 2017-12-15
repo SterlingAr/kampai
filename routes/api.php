@@ -19,9 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('barista/custom/{keywords?}','Api\BarController@listBars');
 
-Route::resource('barista', 'Api\BarController',['only' => [
 
-    'index','show'
+
+Route::resource('barista', 'Api\BarController', ['only' => [
+
+    'index','show', 'create'
 
 ]]);
 
