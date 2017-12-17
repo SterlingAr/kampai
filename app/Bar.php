@@ -12,6 +12,8 @@ class Bar extends Model
 
     use Searchable;
 
+
+
     /**
      * Get the indexable data array for the model.
      *
@@ -62,6 +64,19 @@ class Bar extends Model
 
         return json_decode($json_response);
     }
+
+
+    /**
+     * Get the user that owns this Bar
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+
 
 
 

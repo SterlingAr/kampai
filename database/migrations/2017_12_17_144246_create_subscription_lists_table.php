@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBarsTable extends Migration
+class CreateSubscriptionListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateBarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bars', function (Blueprint $table) {
+        Schema::create('subscription_lists', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('node');
-            $table->text('keywords');
-            $table->integer('user_id')->default(0);
+            $table->integer('user_id');
+            $table->integer('bar_id');
             $table->timestamps();
         });
     }
@@ -25,11 +24,10 @@ class CreateBarsTable extends Migration
     /**
      * Reverse the migrations.
      *
-     *
      * @return void
      */
     public function down()
     {
-        Schema::dropIfExists('bars');
+        Schema::dropIfExists('subscription_lists');
     }
 }
