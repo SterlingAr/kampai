@@ -66,15 +66,7 @@ class Bar extends Model
     }
 
 
-    /**
-     * Get the user that owns this Bar
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
+
 
 
 

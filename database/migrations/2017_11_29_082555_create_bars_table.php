@@ -17,7 +17,7 @@ class CreateBarsTable extends Migration
             $table->increments('id');
             $table->bigInteger('node');
             $table->text('keywords');
-            $table->integer('user_id')->default(0);
+            $table->integer('user_id')->default(nullOrEmptyString());
             $table->timestamps();
         });
     }

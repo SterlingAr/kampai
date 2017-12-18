@@ -27,7 +27,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
+    /**
+     * Get the bar that belongs to this User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function bar()
+    {
+        return $this->hasOne('App\Bar','bar_id');
+    }
 
     /**
      * Get the SubscriptionList resource associated with the User
@@ -39,13 +47,5 @@ class User extends Authenticatable
         return $this->hasOne('App\SubscriptionList','subscription_id');
     }
 
-    /**
-     * Get the bar that belongs to this User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function bar()
-    {
-        return $this->hasOne('App\Bar');
-    }
+
 }

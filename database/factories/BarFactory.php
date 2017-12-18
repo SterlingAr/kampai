@@ -8,7 +8,8 @@ $factory->define(App\Bar::class, function (Faker $faker) {
     $keywords = array('anchoas;centollo;salmón;pimientos;salazón;pintxos;bocatas;pizzas','gintonic;sidra;vino hervido;cerveza artesana;ibuprofano');
 
     return [
-        'node' => $faker->unique()->randomElement($nodes),
+//        'node' => $faker->unique()->randomElement($nodes),
+        'node' => $faker->randomElement($nodes),
         'keywords' => $faker->randomElement($keywords),
 //        'user_id' => function(){
 //            return factory(App\User::class)->create()->id;
