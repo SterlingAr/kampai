@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubscriptionListsTable extends Migration
+class CreateBarsConstraints extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class CreateSubscriptionListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscription_lists', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('bar_id');
-            $table->timestamps();
+        Schema::table('bars', function (Blueprint $table) {
+
+            $table->integer('user_id')
+                ->unsigned()
+                ->nullable();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
@@ -28,6 +32,6 @@ class CreateSubscriptionListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscription_lists');
+        //
     }
 }

@@ -11,13 +11,15 @@ class BarsTableSeeder extends Seeder
      */
     public function run()
     {
+
+//         $bar = factory(App\Bar::class,2)->make();
 //
+//         $user = factory(App\User::class)->make()->save();
+//
+//         $bar->user()->associate($user);
+//
+////         $user->bar()->save($bar);
 
-
-
-         $bar = factory(App\Bar::class,2)->create();
-
-         $user = factory(App\User::class)->make();
 
 
 

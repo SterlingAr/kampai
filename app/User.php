@@ -28,14 +28,15 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the bar that belongs to this User
+     * Get the bar or bars that belongs to this User
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function bar()
+    public function bars()
     {
-        return $this->hasOne('App\Bar','bar_id');
+        return $this->hasMany('App\Bar');
     }
+
 
     /**
      * Get the SubscriptionList resource associated with the User
@@ -46,6 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\SubscriptionList','subscription_id');
     }
+
+
+
 
 
 }
