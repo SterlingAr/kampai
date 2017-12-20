@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBarsConstraints extends Migration
+class CreateBarsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateBarsConstraints extends Migration
      */
     public function up()
     {
-        Schema::table('bars', function (Blueprint $table) {
-
-            $table->integer('user_id')
-                ->unsigned()
-                ->nullable();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+        Schema::create('bars', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+            $table->bigInteger('node');
+            $table->text('keywords');
+            $table->timestamps();
         });
     }
 
@@ -32,6 +28,6 @@ class CreateBarsConstraints extends Migration
      */
     public function down()
     {
-        //
+
     }
 }
