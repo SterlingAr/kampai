@@ -17,11 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('barista/custom/{keywords?}','Api\BarController@listBars');
+// Reminder: create a different resource controller queries
+Route::get('barista/custom/{keywords?}','Api\Bar\BarController@listBars');
 
 
 
-Route::resource('barista', 'Api\BarController', ['only' => [
+Route::resource('barista', 'Api\Bar\BarController', ['only' => [
 
     'index','show', 'create'
 
