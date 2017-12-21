@@ -17,6 +17,7 @@ class BarController extends Controller
     public function index()
     {
         $bars = Bar::all();
+
         return BarResource::collection($bars);
 
     }
@@ -50,7 +51,10 @@ class BarController extends Controller
      */
     public function show(Bar $bar)
     {
+
+        \Debugbar::addMessage($bar, '*DEBUGGER* Bar Object in BarController@show');
         return new BarResource($bar);
+
 
     }
 

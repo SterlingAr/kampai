@@ -20,7 +20,7 @@ Route::get('/', function ()
 
 
 
-Route::group(['prefix' => 'bars'], function()
+Route::group(['prefix' => 'bar'], function()
 {
 
 

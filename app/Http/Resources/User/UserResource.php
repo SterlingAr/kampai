@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Bar;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class Test extends Resource
+class UserResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -14,6 +14,11 @@ class Test extends Resource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        \Debugbar::info($this);
+
+        return [
+            'name' => $this->name,
+            'email' => $this->email
+        ];
     }
 }

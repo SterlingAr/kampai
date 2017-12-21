@@ -3,14 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
 
 class Bar extends Model
 {
     //
-    protected $fillable = ['node'];
+    use Notifiable;
+
+    //
 
     use Searchable;
+
+    protected $fillable = ['node'];
 
 
 
@@ -42,9 +47,8 @@ class Bar extends Model
         $encodedQuery = urlencode($queryStart . $node . $queryEnd);
         $osmQuery = $baseUri . $encodedQuery ;
 
-        \Debugbar::info($this);
         \Debugbar::addMessage($osmQuery,'*DEBUGGER* Encoded Query:  ');
-
+        \Debugbar::addMessage($this, '*DEBUGGER* Bar Object');
         $headers = array(
             'http' => array(
                 'method' => 'GET',

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\Users;
 
-use App\Bar;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 
-class TestController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,10 @@ class TestController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+
+        return UserResource::collection($users);
+
     }
 
     /**
@@ -41,21 +46,23 @@ class TestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Bar  $bar
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Bar $bar)
+    public function show(User $user)
     {
-        //
+
+        return new UserResource($user);
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Bar  $bar
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Bar $bar)
+    public function edit(User $user)
     {
         //
     }
@@ -64,10 +71,10 @@ class TestController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Bar  $bar
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bar $bar)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -75,10 +82,10 @@ class TestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Bar  $bar
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bar $bar)
+    public function destroy(User $user)
     {
         //
     }

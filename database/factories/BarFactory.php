@@ -12,7 +12,7 @@ $factory->define(App\Bar::class, function (Faker $faker) {
         'node' => $faker->randomElement($nodes),
         'keywords' => $faker->randomElement($keywords),
 //        'user_id' => function(){
-//            return factory(App\User::class)->create()->id;
+//            return factory(App\Users::class)->create()->id;
 //        }
 
     ];
