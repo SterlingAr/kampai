@@ -1,6 +1,5 @@
-<html>
+<html lang="{{ app()->getLocale() }}">
 <head>
-    <html lang="{{ app()->getLocale() }}">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -10,7 +9,11 @@
 </head>
 <body>
 
-@yield('content')
+    <div id="app">
+
+        @yield('content')
+
+    </div>
 
 <script src="{{asset('js/app.js')}}"> </script>
 </body>

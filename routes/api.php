@@ -22,6 +22,7 @@ Route::get('bars/custom/{keywords?}','Api\Bar\BarController@listBars');
 
 
 
+
 Route::resource('bars', 'Api\Bar\BarController', ['only' => [
 
     'index','show', 'create'
@@ -31,3 +32,7 @@ Route::resource('bars', 'Api\Bar\BarController', ['only' => [
 
 Route::resource('users', 'Api\Users\UserController');
 
+
+Route::resource('users.bars', 'Api\Users\UserBarController', ['only' => [
+    'index'
+]]);

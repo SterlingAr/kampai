@@ -1,6 +1,8 @@
 <template>
     <div>
         {{test}}
+
+        
     </div>
 </template>
 
@@ -9,14 +11,14 @@
 
     export default
     {
-        name: 'bars',
+        name: 'users',
         mounted(){
-            console.log('*DEBUGGER* : Bars component created');
+            console.log('*DEBUGGER* : Users component created');
         },
 
         data () {
             return {
-                test : "Bars component",
+                test : "Users component",
             }
         },
 

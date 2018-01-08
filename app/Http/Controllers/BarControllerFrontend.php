@@ -14,4 +14,16 @@ class BarControllerFrontend extends Controller
         return view('osm.index');
     }
 
+
+    public function bars()
+    {
+        return view('osm.tests.bars');
+    }
+
+
+    public function users()
+    {
+        return view('osm.tests.users');
+    }
+
 }
