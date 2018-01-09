@@ -36,3 +36,5 @@ Route::resource('users', 'Api\Users\UserController');
 Route::resource('users.bars', 'Api\Users\UserBarController', ['only' => [
     'index'
 ]]);
+
+

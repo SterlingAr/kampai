@@ -40,7 +40,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -64,7 +64,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $user->save();
     }
 
     /**

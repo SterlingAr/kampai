@@ -30,17 +30,6 @@ Route::group(['prefix' => 'bar'], function()
     ]);
 
 
-    Route::get('/bars', [
-        'uses' => 'BarControllerFrontend@bars',
-        'as' => 'bars'
-    ]);
-
-
-    Route::get('/users', [
-        'uses' => 'BarControllerFrontend@users',
-        'as' => 'users'
-    ]);
-
 
 
 });
