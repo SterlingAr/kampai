@@ -16,13 +16,14 @@
 
         data () {
             return {
-                test : "Test Message"
-
+                test : "Test Message",
+                bbox:   "",
 
             }
         },
 
         methods: {
+
 
         }
 

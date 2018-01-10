@@ -8,7 +8,7 @@ import Users from './components/Users.vue';
 let routes = [
 
     {
-        path: '/',
+        path: '/bar',
         component: App
     },
 

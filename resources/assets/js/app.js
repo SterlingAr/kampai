@@ -25,6 +25,7 @@ Vue.use(VueRouter);
 // Vue.component('bars', require('./components/Bars.vue'));
 // Vue.component('users', require('./components/Users.vue'));
 //
+Vue.component('maps', require('./components/Map.vue'));
 
 const app = new Vue({
     el: '#app',
@@ -32,6 +33,30 @@ const app = new Vue({
 
     created: function(){
         console.log("*DEBUGGER* : App instance created");
+    },
+
+    data () {
+        return {
+            bbox: '',
+
+
+
+        }
+    },
+
+    methods: {
+        //I use it to calculate the time taken to execute a function.
+        debug: function (fn, fn_name)
+        {
+            let t0 = performance.now();
+            fn();
+            let t1 = performance.now();
+            console.log("*DEBUGGER* : Call to function " + fn_name + "() took " + (t1 - t0) + " milliseconds.")
+        },
+
+
+
     }
+
 });
 
