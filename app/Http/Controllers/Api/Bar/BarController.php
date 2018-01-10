@@ -15,7 +15,7 @@ class BarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $bars = Bar::all();
 
@@ -94,38 +94,27 @@ class BarController extends Controller
     }
 
 
-    public function listBars(Request $request, $keywords = null)
+    public function listBars($keywords, $bbox)
     {
          $node_list = array();
+        $bars = Bar::search($keywords)->get();
 
-//        $bars = Bar::search($request->get('keywords'))
-        $bars = Bar::search('vino')
-            ->get();
-//            ->each( function ($bar)  {
-//                global $node_list;
-//
-//                \Debugbar::addMessage($bar,'*DEBUGGER* nodes:  ');
-//
-//                array_push($node_list, $bar->node);
-//            });
+        foreach ($bars as $bar)
+        {
+            array_push($node_list, $bar->node);
+        }
 
-         $bars->each( function ($bar)  {
-                global $node_list;
 
-                \Debugbar::addMessage($bar,'*DEBUGGER* nodes:  ');
+        \Debugbar::addMessage($node_list,'*DEBUGGER* node_list:  ');
 
-                array_push($node_list, $bar->node);
-            });
+        \Debugbar::addMessage($bars,'*DEBUGGER* bars:  ');
 
-        \Debugbar::addMessage($node_list,'*DEBUGGER* nodes:  ');
-
-        \Debugbar::addMessage($bars,'*DEBUGGER* nodes:  ');
-
+        \Debugbar::addMessage($bbox,'*DEBUGGER* bbox:  ');
 
 
         // Devolver los bares que coinciden en ambos arrays.
-//        return BarResource::collection($bars);
-        return 'Test';
+        return BarResource::collection($bars);
+//        return 'Test';
 
     }
 

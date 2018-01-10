@@ -36,6 +36,7 @@
         data () {
             return {
                 bars: [],
+                keywords: 'vino',
             }
         },
 
@@ -44,18 +45,9 @@
             index: function()
             {
 
-                axios.get('').then( (response) => {
+                axios.get('api/bars/custom/'+this.keywords+"/"+this.$parent.bbox).then( (response) => {
                     console.log(response);
-
-                    let bars = response.data.osmdata.elements;
-
-                    console.log(bars);
-
-                    bars.forEach ( (bar) =>
-                    {
-                        this.bars.push(bar);
-                    });
-                    console.log(this.bars);
+                    console.log('SENT BBOX'+this.$parent.bbox);
 
                 })
                     .catch((error) => {

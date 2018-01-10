@@ -51,7 +51,7 @@
 
                 this.mymap.on('moveend', this.currentBBOX);
 
-
+                this.currentBBOX();
 
             },
 
@@ -68,8 +68,7 @@
 
                 this.$parent.bbox = s + ',' + w + ',' + n + ',' + e;
 
-
-                console.log(this.$parent.bbox );
+                console.log(this.$parent.bbox);
             }
 
 
