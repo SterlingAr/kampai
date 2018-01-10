@@ -18,17 +18,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Reminder: create a different resource controller queries
-Route::get('bars/custom/{keywords?}','Api\Bar\BarController@listBars');
+Route::get('bars/custom/','Api\Bar\BarController@listBars');
 
 
 
+
+//Route::get('bars/custom/{{bbox}}', 'Api\Bar\BarController@barsWithinBBOX');
 
 Route::resource('bars', 'Api\Bar\BarController', ['only' => [
 
     'index','show', 'create'
 
 ]]);
-
 
 Route::resource('users', 'Api\Users\UserController');
 

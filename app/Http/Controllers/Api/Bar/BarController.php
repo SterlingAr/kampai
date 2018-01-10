@@ -6,6 +6,7 @@ use App\Bar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BarResource;
+use function MongoDB\BSON\toJSON;
 
 class BarController extends Controller
 {
@@ -95,10 +96,43 @@ class BarController extends Controller
 
     public function listBars(Request $request, $keywords = null)
     {
-        $bars = Bar::search($request->get('keywords'))->get();
+         $node_list = array();
 
-        return BarResource::collection($bars);
+//        $bars = Bar::search($request->get('keywords'))
+        $bars = Bar::search('vino')
+            ->get();
+//            ->each( function ($bar)  {
+//                global $node_list;
+//
+//                \Debugbar::addMessage($bar,'*DEBUGGER* nodes:  ');
+//
+//                array_push($node_list, $bar->node);
+//            });
+
+         $bars->each( function ($bar)  {
+                global $node_list;
+
+                \Debugbar::addMessage($bar,'*DEBUGGER* nodes:  ');
+
+                array_push($node_list, $bar->node);
+            });
+
+        \Debugbar::addMessage($node_list,'*DEBUGGER* nodes:  ');
+
+        \Debugbar::addMessage($bars,'*DEBUGGER* nodes:  ');
+
+
+
+        // Devolver los bares que coinciden en ambos arrays.
+//        return BarResource::collection($bars);
+        return 'Test';
 
     }
+
+
+
+
+
+
 
 }
