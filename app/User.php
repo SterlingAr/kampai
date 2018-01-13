@@ -43,10 +43,13 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function subscriptionList()
+    public function subscriptions()
     {
-        return $this->hasOne('App\SubscriptionList','subscription_id');
+        return $this->hasOne('App\SubscriptionList');
     }
+
+
+
 
 
 

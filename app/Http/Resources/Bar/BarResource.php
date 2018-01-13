@@ -18,8 +18,7 @@ class BarResource extends Resource
 
         return [
           'id' => $this->id,
-          'node' => $this->node,
-            'osmdata' =>$this->data
+          'node' => $this->node
         ];
 
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class DeleteUsersBarsConstraints extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-
+        //
     }
 
     /**
@@ -31,8 +23,18 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::table('bars', function(Blueprint $table){
+
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
 
 
+            $table->dropForeign(['bar_id']);
+            $table->dropColumn('bar_id');
 
+
+        });
+
+        Schema::dropIfExists('bars');
     }
 }

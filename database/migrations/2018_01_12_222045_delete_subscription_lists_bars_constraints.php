@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DeleteUsersBarsConstraints extends Migration
+class DeleteSubscriptionListsBarsConstraints extends Migration
 {
     /**
      * Run the migrations.
@@ -23,26 +23,21 @@ class DeleteUsersBarsConstraints extends Migration
      */
     public function down()
     {
-        Schema::table('users', function(Blueprint $table){
+
+        Schema::table('subscription_lists_bars', function(Blueprint $table){
 
             $table->dropForeign(['bar_id']);
-
             $table->dropColumn('bar_id');
+
+            $table->dropForeign(['subscription_list_id']);
+            $table->dropColumn('subscription_list_id');
+
+            Schema::dropIfExists('subscription_lists_bars');
+            Schema::dropIfExists('subscription_lists');
+
+
         });
 
 
-        Schema::table('bars', function(Blueprint $table){
-
-            $table->dropForeign(['user_id']);
-
-
-
-            $table->dropColumn('user_id');
-
-        });
-
-
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('bars');
     }
 }

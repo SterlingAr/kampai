@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateSubscriptionListsBarsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
+        Schema::create('subscription_lists_bars', function (Blueprint $table) {
+            $table->increments('id');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -31,8 +26,5 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-
-
-
     }
 }

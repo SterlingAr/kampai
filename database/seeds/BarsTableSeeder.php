@@ -15,7 +15,5 @@ class BarsTableSeeder extends Seeder
             factory(App\Bar::class,2)->make();
 
 
-
-
     }
 }
