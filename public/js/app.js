@@ -45673,6 +45673,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45680,12 +45695,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     mounted: function mounted() {
         console.log('*DEBUGGER* : Bars component created');
-        this.$parent.debug(this.index, 'BARS index');
+        //            this.$parent.debug(this.index, 'BARS index');
     },
     data: function data() {
         return {
             bars: [],
-            keywords: 'gintonic'
+            keywords: ''
         };
     },
 
@@ -45695,8 +45710,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         index: function index() {
             var _this = this;
 
-            axios.get('/api/bars/custom/' + this.keywords + "/" + this.$parent.bbox).then(function (response) {
-                // console.log(response);
+            axios.get('/api/bars/' + this.keywords + "/" + this.$parent.bbox).then(function (response) {
+                console.log('/api/bars/' + _this.keywords + "/" + _this.$parent.bbox);
 
                 var temp_bars = response.data.elements;
 
@@ -45704,7 +45719,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.bars.push(bar);
                 });
 
-                console.log(response);
+                console.log('/api/bars/' + _this.keywords + "/" + _this.$parent.bbox);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -45723,6 +45738,47 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("form", { attrs: { action: "" } }, [
+      _c("div", { staticClass: "form-group row" }, [
+        _c("div", { staticClass: "col-10" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.keywords,
+                expression: "keywords"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "search",
+              placeholder: "How do I shoot web",
+              id: "example-search-input"
+            },
+            domProps: { value: _vm.keywords },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.keywords = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "button", value: "" },
+            on: {
+              click: function($event) {
+                _vm.index()
+              }
+            }
+          })
+        ])
+      ])
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "list-group" },
@@ -45747,7 +45803,7 @@ var render = function() {
               _vm._v(_vm._s(bar.tags.description))
             ]),
             _vm._v(" "),
-            _c("small", [_vm._v("Donec id elit non mi porta.")])
+            _c("small", [_vm._v(_vm._s(bar.tags.address))])
           ]
         )
       })
@@ -45880,12 +45936,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
 
     }
-
-    //
-    //         created(){
-    //             this.index();
-    //         }
-
 
 });
 

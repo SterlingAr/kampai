@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Reminder: create a different resource controller queries
-Route::get('bars/custom/{keywords?}/{bbox}','Api\Bar\BarController@listBars');
+Route::get('bars/{keywords?}/{bbox}','Api\Bar\BarController@listBars');
 
 
 Route::resource('bars', 'Api\Bar\BarController', ['only' => [

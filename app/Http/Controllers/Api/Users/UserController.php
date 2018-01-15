@@ -27,7 +27,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(User $user)
     {
         //
     }
@@ -40,7 +40,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $rules =[
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6'
+        ];
 
+        $this->validate($request,$rules);
+
+        $data=$request->all();
+
+        $data['password']=bcrypt($request->password);
+
+        $user= User::create($data);
+
+        return response()->json(['data'=>$user],201);
     }
 
     /**
@@ -76,7 +90,26 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $rules=[
+          'email'=>'unique:users' . $user->id,
+          'password'=>'min:6|confirmed',
+        ];
+
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+
+        if ($request->has('email') && $user->email != $request->email) {
+            $user->email = $request->email;
+        }
+
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return response()->json(['data'=>$user],201);
     }
 
     /**
@@ -87,6 +120,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+       $user->delete();
+
+       return response()->json(['data'=>$user],201);
     }
 }

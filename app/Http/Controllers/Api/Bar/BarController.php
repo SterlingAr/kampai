@@ -104,14 +104,8 @@ class BarController extends Controller
             array_push($node_list, $bar->node);
         }
 
-//
-//        \Debugbar::addMessage($node_list,'*DEBUGGER* node_list:  ');
-//
-//        \Debugbar::addMessage($bars,'*DEBUGGER* bars:  ');
-//
-//        \Debugbar::addMessage($bbox,'*DEBUGGER* bbox:  ');
 
-        $response = $this->getDataAttribute($node_list[0]);
+        $response = $this->getDataAttribute($node_list, $bbox);
         // Devolver los bares que coinciden en ambos arrays.
         return $response;
 
@@ -119,10 +113,22 @@ class BarController extends Controller
 
 
 
-
-    public function getDataAttribute($nodes)
+    public function getDataAttribute($nodes, $bbox)
 
     {
+
+        $query_nodes = '';
+        $bbox_param = '(' . $bbox . ');';
+
+
+        foreach($nodes as $node)
+        {
+            $query_nodes = $query_nodes . 'node(' . (string)$node . ')' . $bbox_param ;
+
+        }
+
+        \Debugbar::addMessage($query_nodes,'*DEBUGGER* query nodes:  ');
+
 
         $baseUri = 'https://z.overpass-api.de/api/interpreter?data=';
 
@@ -130,10 +136,13 @@ class BarController extends Controller
 
         $queryEnd = ');out body;>;out skel qt;';
 
+        $encodedQuery = urlencode($queryStart . $query_nodes . $queryEnd);
 
-        $node = 'node(' . (string)$nodes . ')';
-        $encodedQuery = urlencode($queryStart . $node . $queryEnd);
         $osmQuery = $baseUri . $encodedQuery ;
+
+
+        \Debugbar::addMessage($baseUri . $queryStart . $query_nodes . $queryEnd,'*DEBUGGER* query:  ');
+
 
         \Debugbar::addMessage($osmQuery,'*DEBUGGER* Encoded Query:  ');
         $headers = array(
@@ -153,14 +162,9 @@ class BarController extends Controller
 
         $json_response = file_get_contents($osmQuery ,false,$context);
 
+
         return $json_response;
 
     }
-
-
-
-
-
-
 
 }
