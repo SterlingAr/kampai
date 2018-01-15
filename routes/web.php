@@ -14,7 +14,7 @@
 
 Route::get('/', function ()
 {
-    return view('welcome');
+    return 'The quieter you are the more you hear.';
 });
 
 

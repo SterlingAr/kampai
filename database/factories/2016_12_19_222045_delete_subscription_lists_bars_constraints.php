@@ -13,7 +13,7 @@ class DeleteSubscriptionListsBarsConstraints extends Migration
      */
     public function up()
     {
-        //
+
     }
 
     /**
@@ -32,11 +32,37 @@ class DeleteSubscriptionListsBarsConstraints extends Migration
             $table->dropForeign(['subscription_list_id']);
             $table->dropColumn('subscription_list_id');
 
-            Schema::dropIfExists('subscription_lists_bars');
-            Schema::dropIfExists('subscription_lists');
 
 
         });
+
+        Schema::dropIfExists('subscription_lists_bars');
+
+
+        Schema::table('subscription_lists', function(Blueprint $table){
+
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+
+        });
+
+
+        Schema::table('users', function(Blueprint $table){
+
+            $table->dropForeign(['subscription_list_id']);
+            $table->dropColumn('user_id');
+
+        });
+
+
+        Schema::dropIfExists('subscription_lists');
+
+        Schema::dropIfExists('users');
+
+        Schema::dropIfExists('bars');
+
+
+
 
 
     }

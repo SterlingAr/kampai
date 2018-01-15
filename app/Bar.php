@@ -59,7 +59,7 @@ class Bar extends Model
      */
     public function subscription()
     {
-        return $this->belongsToMany('App\SubscriptionList','subscription_lists_bars');
+        return $this->belongsToMany('App\SubscriptionList');
     }
 
 

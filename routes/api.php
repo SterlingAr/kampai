@@ -21,19 +21,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('bars/custom/{keywords?}/{bbox}','Api\Bar\BarController@listBars');
 
 
-
-
-//Route::get('bars/custom/{{bbox}}', 'Api\Bar\BarController@barsWithinBBOX');
-
 Route::resource('bars', 'Api\Bar\BarController', ['only' => [
 
     'index','show', 'create'
 
 ]]);
 
-
 Route::resource('users', 'Api\Users\UserController');
 
+Route::resource('subscriptions', 'Api\Subscription\SubscriptionListController');
 
 Route::resource('users.bars', 'Api\Users\UserBarController', ['only' => [
     'index'

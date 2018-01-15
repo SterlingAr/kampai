@@ -29,8 +29,8 @@ class DeleteUsersBarsConstraints extends Migration
             $table->dropColumn('user_id');
 
 
-            $table->dropForeign(['bar_id']);
-            $table->dropColumn('bar_id');
+//            $table->dropForeign(['bar_id']);
+//            $table->dropColumn('bar_id');
 
 
         });

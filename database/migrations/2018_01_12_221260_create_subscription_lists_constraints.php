@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersSubscriptionListsBarsConstraints extends Migration
+class CreateSubscriptionListsConstraints extends Migration
 {
     /**
      * Run the migrations.
@@ -14,22 +14,8 @@ class CreateUsersSubscriptionListsBarsConstraints extends Migration
     public function up()
     {
 
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('subscription_lists', function(Blueprint $table){
 
-            $table->integer('subscription_list_bar_id')
-                ->unsigned()
-                ->nullable();
-
-            $table->foreign('subscription_list_bar_id')
-                ->references('id')
-                ->on('subscription_lists_bars')
-                ->onDelete('cascade');
-
-
-        });
-
-
-        Schema::table('subscription_lists_bars', function (Blueprint $table) {
 
             $table->integer('user_id')
                 ->unsigned()
@@ -37,11 +23,25 @@ class CreateUsersSubscriptionListsBarsConstraints extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('subscription_lists_bars')
+                ->on('users')
                 ->onDelete('cascade');
 
+        });
+
+        Schema::table('users', function(Blueprint $table){
+
+
+            $table->integer('subscription_list_id')
+                ->unsigned()
+                ->nullable();
+
+            $table->foreign('subscription_list_id')
+                ->references('id')
+                ->on('subscription_lists')
+                ->onDelete('cascade');
 
         });
+
 
     }
 
@@ -52,6 +52,6 @@ class CreateUsersSubscriptionListsBarsConstraints extends Migration
      */
     public function down()
     {
-        //
+
     }
 }

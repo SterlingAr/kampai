@@ -17,6 +17,9 @@ class CreateSubscriptionListsTable extends Migration
             $table->increments('id');
             $table->timestamps();
         });
+
+
+
     }
 
     /**

@@ -6,7 +6,6 @@ use App\Bar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BarResource;
-use function MongoDB\BSON\toJSON;
 
 class BarController extends Controller
 {
@@ -53,7 +52,7 @@ class BarController extends Controller
     public function show(Bar $bar)
     {
 
-        \Debugbar::addMessage($bar, '*DEBUGGER* Bar Object in BarController@show');
+//        \Debugbar::addMessage($bar, '*DEBUGGER* Bar Object in BarController@show');
         return new BarResource($bar);
 
 
@@ -105,12 +104,12 @@ class BarController extends Controller
             array_push($node_list, $bar->node);
         }
 
-
-        \Debugbar::addMessage($node_list,'*DEBUGGER* node_list:  ');
-
-        \Debugbar::addMessage($bars,'*DEBUGGER* bars:  ');
-
-        \Debugbar::addMessage($bbox,'*DEBUGGER* bbox:  ');
+//
+//        \Debugbar::addMessage($node_list,'*DEBUGGER* node_list:  ');
+//
+//        \Debugbar::addMessage($bars,'*DEBUGGER* bars:  ');
+//
+//        \Debugbar::addMessage($bbox,'*DEBUGGER* bbox:  ');
 
         $response = $this->getDataAttribute($node_list[0]);
         // Devolver los bares que coinciden en ambos arrays.

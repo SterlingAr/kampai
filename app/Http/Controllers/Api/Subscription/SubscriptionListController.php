@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SubscriptionList;
 use Illuminate\Http\Request;
+use App\Http\Resources\SubscriptionResource;
 
 class SubscriptionListController extends Controller
 {
@@ -14,7 +15,7 @@ class SubscriptionListController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
