@@ -47,12 +47,12 @@ class Rollback extends Migration
         });
 
 
-        Schema::table('users', function(Blueprint $table){
-
-            $table->dropForeign(['subscription_list_id']);
-            $table->dropColumn('subscription_list_id');
-
-        });
+//        Schema::table('users', function(Blueprint $table){
+//
+//            $table->dropForeign(['subscription_list_id']);
+//            $table->dropColumn('subscription_list_id');
+//
+//        });
 
         Schema::dropIfExists('subscription_lists');
 

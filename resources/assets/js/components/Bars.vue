@@ -27,7 +27,7 @@
 
                 <p class="mb-1">{{ bar.tags.description }}</p>
 
-                <small>{{ bar.tags.address }}</small>
+                <small>{{ bar.tags.phone}}</small>
             </a>
 
         </div>
@@ -44,14 +44,13 @@
 
         mounted() {
             console.log('*DEBUGGER* : Bars component created');
-//            this.$parent.debug(this.index, 'BARS index');
 
         },
 
         data () {
             return {
                 bars: [],
-                keywords: '',
+                keywords: null,
             }
         },
 
@@ -59,20 +58,24 @@
 
             index: function()
             {
+                // this.bars = [];
 
                 axios.get('/api/bars/'+this.keywords+"/"+this.$parent.bbox).then( (response) => {
-                     console.log('/api/bars/'+this.keywords+"/"+this.$parent.bbox);
 
-                    let temp_bars = response.data.elements;
+                    console.log(response);
 
-                    temp_bars.forEach( (bar) => {
+
+                    let bars = response.data.elements;
+
+                    console.log(bars);
+
+                    bars.forEach( (bar ) => {
                         this.bars.push(bar);
                     });
 
                     console.log('/api/bars/'+this.keywords+"/"+this.$parent.bbox);
 
-                })
-                    .catch((error) => {
+                }).catch((error) => {
                         console.log(error);
                     });
 

@@ -22,8 +22,12 @@ class SubscriptionListsSeeder extends Seeder
 
                }
 
-//               $sub->user()->associate(factory(App\User::class)->make());
-               factory(App\User::class)->make()->subscription()->save($sub);
+               $user = factory(App\User::class)->create();
+
+
+
+               $user->subscription()->save($sub);
+
 
            });
 

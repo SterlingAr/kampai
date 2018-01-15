@@ -45569,11 +45569,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             bbox: ""
 
         };
-    },
-
-
-    methods: {}
-
+    }
 });
 
 /***/ }),
@@ -45695,12 +45691,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     mounted: function mounted() {
         console.log('*DEBUGGER* : Bars component created');
-        //            this.$parent.debug(this.index, 'BARS index');
     },
     data: function data() {
         return {
             bars: [],
-            keywords: ''
+            keywords: null
         };
     },
 
@@ -45710,12 +45705,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         index: function index() {
             var _this = this;
 
+            // this.bars = [];
+
             axios.get('/api/bars/' + this.keywords + "/" + this.$parent.bbox).then(function (response) {
-                console.log('/api/bars/' + _this.keywords + "/" + _this.$parent.bbox);
 
-                var temp_bars = response.data.elements;
+                console.log(response);
 
-                temp_bars.forEach(function (bar) {
+                var bars = response.data.elements;
+
+                console.log(bars);
+
+                bars.forEach(function (bar) {
                     _this.bars.push(bar);
                 });
 
@@ -45803,7 +45803,7 @@ var render = function() {
               _vm._v(_vm._s(bar.tags.description))
             ]),
             _vm._v(" "),
-            _c("small", [_vm._v(_vm._s(bar.tags.address))])
+            _c("small", [_vm._v(_vm._s(bar.tags.phone))])
           ]
         )
       })
@@ -45913,7 +45913,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         console.log('*DEBUGGER* : Users component created');
 
-        this.$parent.debug(this.index, 'index');
+        // this.$parent.debug(this.index, 'index');
     },
 
     methods: {
@@ -45922,8 +45922,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             axios.get('/api/users').then(function (response) {
-
-                console.log(response);
 
                 var users = response.data;
 

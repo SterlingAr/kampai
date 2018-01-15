@@ -28,19 +28,19 @@ class CreateSubscriptionListsConstraints extends Migration
 
         });
 
-        Schema::table('users', function(Blueprint $table){
-
-
-            $table->integer('subscription_list_id')
-                ->unsigned()
-                ->nullable();
-
-            $table->foreign('subscription_list_id')
-                ->references('id')
-                ->on('subscription_lists')
-                ->onDelete('cascade');
-
-        });
+//        Schema::table('users', function(Blueprint $table){
+//
+//
+//            $table->integer('subscription_list_id')
+//                ->unsigned()
+//                ->nullable();
+//
+//            $table->foreign('subscription_list_id')
+//                ->references('id')
+//                ->on('subscription_lists')
+//                ->onDelete('cascade');
+//
+//        });
 
 
     }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\Bar;
 
 use App\Bar;
+use App\Providers\OsmServiceProvider;
+use App\Http\Services\Osm\OsmServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BarResource;
@@ -93,7 +95,7 @@ class BarController extends Controller
     }
 
 
-    public function listBars($keywords = null, $bbox)
+    public function listBars(OsmServiceInterface $osm_service, $keywords = null, $bbox)
     {
         $node_list = array();
 
@@ -104,67 +106,15 @@ class BarController extends Controller
             array_push($node_list, $bar->node);
         }
 
+//        $response = $this->getDataAttribute($node_list, $bbox);
 
-        $response = $this->getDataAttribute($node_list, $bbox);
-        // Devolver los bares que coinciden en ambos arrays.
-        return $response;
-
+//        return $response;
+        $test = $osm_service->retrieve_osm_data($node_list,$bbox);
+            return $test;
+//        return response()->json($test,200);
     }
 
 
 
-    public function getDataAttribute($nodes, $bbox)
-
-    {
-
-        $query_nodes = '';
-        $bbox_param = '(' . $bbox . ');';
-
-
-        foreach($nodes as $node)
-        {
-            $query_nodes = $query_nodes . 'node(' . (string)$node . ')' . $bbox_param ;
-
-        }
-
-        \Debugbar::addMessage($query_nodes,'*DEBUGGER* query nodes:  ');
-
-
-        $baseUri = 'https://z.overpass-api.de/api/interpreter?data=';
-
-        $queryStart = '[out:json][timeout:25];(';
-
-        $queryEnd = ');out body;>;out skel qt;';
-
-        $encodedQuery = urlencode($queryStart . $query_nodes . $queryEnd);
-
-        $osmQuery = $baseUri . $encodedQuery ;
-
-
-        \Debugbar::addMessage($baseUri . $queryStart . $query_nodes . $queryEnd,'*DEBUGGER* query:  ');
-
-
-        \Debugbar::addMessage($osmQuery,'*DEBUGGER* Encoded Query:  ');
-        $headers = array(
-            'http' => array(
-                'method' => 'GET',
-                'header' => "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" .
-                    "Accept-Encoding: gzip, deflate, br" .
-                    "Accept-Language:en-US,en;q=0.5" .
-                    "Connection: keep-alive" .
-                    "Host: z.overpass-api.de" .
-                    "Upgrade-Insecure-Requests: 1 " .
-                    "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0"
-            )
-        );
-
-        $context = stream_context_create($headers);
-
-        $json_response = file_get_contents($osmQuery ,false,$context);
-
-
-        return $json_response;
-
-    }
 
 }

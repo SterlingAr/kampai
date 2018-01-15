@@ -37,7 +37,7 @@
 
             console.log('*DEBUGGER* : Users component created');
 
-            this.$parent.debug(this.index, 'index');
+            // this.$parent.debug(this.index, 'index');
 
         },
 
@@ -47,7 +47,6 @@
             {
                 axios.get('/api/users').then( (response) => {
 
-                    console.log(response);
 
                     let users = response.data;
 

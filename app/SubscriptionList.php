@@ -9,7 +9,7 @@ class SubscriptionList extends Model
     /**
      * Get the user that owns the SubscriptionList
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function user()
     {

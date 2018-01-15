@@ -13,13 +13,18 @@ class BarOwnersSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Bar::class,3)
-            ->create()
-            ->each(function ($bar){
 
-                $bar->user()->associate(factory(App\User::class)->make());
+        factory(App\User::class,3)
+            ->create()
+            ->each(function ($owner)
+            {
+
+                $owner->bars()->save(factory(App\Bar::class)->make());
 
             });
+
+
+
 
     }
 }
