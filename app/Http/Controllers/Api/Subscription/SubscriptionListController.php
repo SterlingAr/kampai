@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\Subscription;
 
 use App\SubscriptionList;
 use Illuminate\Http\Request;
 use App\Http\Resources\SubscriptionResource;
+use App\Http\Controllers\Controller;
 
 class SubscriptionListController extends Controller
 {

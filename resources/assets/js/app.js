@@ -25,6 +25,14 @@ Vue.use(VueRouter);
 // Vue.component('bars', require('./components/Bars.vue'));
 // Vue.component('users', require('./components/Users.vue'));
 //
+/**
+ * Passport
+ */
+Vue.component('passport-authorized-clients', require('./components/passport/AuthorizedClients.vue'));
+Vue.component('passport-clients', require('./components/passport/Clients.vue'));
+Vue.component('passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens.vue'));
+
+
 Vue.component('maps', require('./components/Map.vue'));
 
 const app = new Vue({
