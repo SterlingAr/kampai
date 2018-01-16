@@ -1,14 +1,39 @@
 <?php
 
 namespace App;
-
-use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject as AuthenticatableUserContract;
 
-class User extends Authenticatable
+class User extends Model implements
+    AuthenticatableContract,
+    AuthenticatableUserContract
 {
-    use HasApiTokens, Notifiable;
+
+    use Authenticatable, Notifiable;
+
+
+    /**
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();  // Eloquent model method
+    }
+
+    /**
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [
+            'user' => [
+                'id' => $this->id,
+             ]
+        ];
+    }
 
     /**
      * The attributes that are mass assignable.

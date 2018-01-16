@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers;
+use App\User;
+use Illuminate\Http\Response as HttpResponse;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,5 +36,21 @@ Route::resource('subscriptions', 'Api\Subscription\SubscriptionListController');
 Route::resource('users.bars', 'Api\Users\UserBarController', ['only' => [
     'index'
 ]]);
+
+
+
+/**
+ * JWT
+ */
+Route::group(['prefix' => 'auth'], function()
+{
+
+    Route::post('/login', 'JWTAuthController@login');
+
+
+    Route::post('/register', 'JWTAuthController@register');
+
+    Route::
+});
 
 
