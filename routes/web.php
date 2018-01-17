@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::get('/', function ()
 {
-    return view('test1');
+    return view('index');
 });
 
 

@@ -6,7 +6,7 @@ use JWTAuth;
 use App\User;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Http\Request;
-
+use Response;
 class JWTAuthController extends Controller
 {
     /**

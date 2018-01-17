@@ -21,16 +21,14 @@ Vue.use(VueRouter);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('app', require('./components/App.vue'));
-// Vue.component('bars', require('./components/Bars.vue'));
+Vue.component('app', require('./components/app/App.vue'));
+Vue.component('menu', require('./components/app/Menu.vue'));
+
+Vue.component('bars', require('./components/bar/Bars.vue'));
+Vue.component('bar', require('./components/bar/Bar.vue'));
+
 // Vue.component('users', require('./components/Users.vue'));
 //
-/**
- * Passport
- */
-Vue.component('passport-authorized-clients', require('./components/passport/AuthorizedClients.vue'));
-Vue.component('passport-clients', require('./components/passport/Clients.vue'));
-Vue.component('passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens.vue'));
 
 
 Vue.component('maps', require('./components/Map.vue'));

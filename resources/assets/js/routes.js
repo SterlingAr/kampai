@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router';
-import App from './components/App.vue';
-import Bars from './components/Bars.vue';
+import App from './components/app/App.vue';
+import Bars from './components/bar/Bars.vue';
 import Users from './components/Users.vue';
 import Login from './components/Login.vue';
 

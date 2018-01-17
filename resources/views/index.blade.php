@@ -12,8 +12,11 @@
 
 @section('content')
 
+        <div class="row">
 
-        <app></app>
+         <app></app>
+
+        </div>
 
         <maps></maps>
 

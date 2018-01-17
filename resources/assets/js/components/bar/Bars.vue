@@ -1,36 +1,7 @@
 <template>
     <div>
-
-        <form action="">
-
-            <div class="form-group row">
-
-                <div class="col-10">
-                    <input v-model="keywords" class="form-control" type="search" placeholder="How do I shoot web" id="example-search-input">
-
-                    <input  v-on:click="index()" type="button" value="">
-                </div>
-
-
-            </div>
-
-        </form>
-
-        <div class="list-group">
-
-            <a v-for="bar in bars" href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ bar.tags.name }}</h5>
-                    <small>3 days ago</small>
-                </div>
-
-                <p class="mb-1">{{ bar.tags.description }}</p>
-
-                <small>{{ bar.tags.phone}}</small>
-            </a>
-
-        </div>
+aaa
+        <bar></bar>
 
     </div>
 </template>
@@ -50,7 +21,7 @@
         data () {
             return {
                 bars: [],
-                keywords: null,
+
             }
         },
 
