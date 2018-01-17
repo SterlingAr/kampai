@@ -9,7 +9,7 @@ import Login from './components/Login.vue';
 let routes = [
 
     {
-        path: '/bar',
+        path: '/',
         component: App
     },
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use JWTAuth;
 use App\User;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Http\Request;
@@ -46,6 +47,27 @@ class JWTAuthController extends Controller
 
         return response()->json(['success' => true, 'data'=> [ 'token' => $token ]]);
     }
+
+
+    /**
+     * Invalidate the token.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(Request $request) {
+
+        $this->validate($request, ['token' => 'required']);
+
+        try {
+            JWTAuth::invalidate($request->input('token'));
+            return response()->json(['success' => true]);
+        } catch (JWTException $e) {
+            // something went wrong whilst attempting to encode the token
+            return response()->json(['success' => false, 'error' => 'Failed to logout, please try again.'], 500);
+        }
+    }
+
 
 
 }

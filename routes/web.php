@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::get('/', function ()
 {
-    return 'The quieter you are the more you hear.';
+    return view('test1');
 });
 
 

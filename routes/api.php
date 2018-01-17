@@ -42,15 +42,25 @@ Route::resource('users.bars', 'Api\Users\UserBarController', ['only' => [
 /**
  * JWT
  */
-Route::group(['prefix' => 'auth'], function()
-{
+Route::group(['prefix' => 'auth'], function(){
+
 
     Route::post('/login', 'JWTAuthController@login');
 
-
     Route::post('/register', 'JWTAuthController@register');
 
-    Route::
+    Route::group(['middleware' => ['jwt.auth']], function() {
+        Route::get('logout', 'JWTAuthController@logout');
+    });
 });
+
+
+
+
+
+
+
+
+
 
 

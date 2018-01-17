@@ -21,7 +21,7 @@ Vue.use(VueRouter);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('app', require('./components/App.vue'));
+Vue.component('app', require('./components/App.vue'));
 // Vue.component('bars', require('./components/Bars.vue'));
 // Vue.component('users', require('./components/Users.vue'));
 //

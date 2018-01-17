@@ -7,11 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Document</title>
 
-    <link rel="stylesheet" href="{{URL::to('assets/leaflet/css/main.css')}}">
-    <link rel="stylesheet" href="{{URL::to('assets/leaflet/css/leaflet.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/leaflet/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/leaflet/css/leaflet.css')}}">
 
-    <script src="{{URL::to('assets/leaflet/js/leaflet.js')}}"></script>
-    <script src="{{URL::to('assets/leaflet/js/main.js')}}"></script>
+    <script src="{{asset('assets/leaflet/js/leaflet.js')}}"></script>
+    <script src="{{asset('assets/leaflet/js/main.js')}}"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>

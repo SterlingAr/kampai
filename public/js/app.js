@@ -4043,7 +4043,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('app', require('./components/App.vue'));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('app', __webpack_require__(43));
 // Vue.component('bars', require('./components/Bars.vue'));
 // Vue.component('users', require('./components/Users.vue'));
 //
@@ -45796,7 +45796,7 @@ exports.clearImmediate = clearImmediate;
 
 
 var routes = [{
-    path: '/bar',
+    path: '/',
     component: __WEBPACK_IMPORTED_MODULE_1__components_App_vue___default.a
 }, {
     path: '/bars',
@@ -45872,6 +45872,94 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45896,9 +45984,242 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    " + _vm._s(_vm.test) + "\n")])
+  return _vm._m(0, false, false)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "side-menu" }, [
+      _c(
+        "nav",
+        { staticClass: "navbar navbar-default", attrs: { role: "navigation" } },
+        [
+          _c("div", { staticClass: "navbar-header" }, [
+            _c("div", { staticClass: "brand-wrapper" }, [
+              _c(
+                "button",
+                { staticClass: "navbar-toggle", attrs: { type: "button" } },
+                [
+                  _c("span", { staticClass: "sr-only" }, [
+                    _vm._v("Toggle navigation")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icon-bar" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icon-bar" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icon-bar" })
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "brand-name-wrapper" }, [
+                _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
+                  _vm._v(
+                    "\n                        Brand\n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: {
+                    "data-toggle": "collapse",
+                    href: "#search",
+                    id: "search-trigger"
+                  }
+                },
+                [_c("span", { staticClass: "glyphicon glyphicon-search" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "panel-collapse collapse",
+                  attrs: { id: "search" }
+                },
+                [
+                  _c("div", { staticClass: "panel-body" }, [
+                    _c(
+                      "form",
+                      { staticClass: "navbar-form", attrs: { role: "search" } },
+                      [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: { type: "text", placeholder: "Search" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default ",
+                            attrs: { type: "submit" }
+                          },
+                          [
+                            _c("span", {
+                              staticClass: "glyphicon glyphicon-ok"
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "side-menu-container" }, [
+            _c("ul", { staticClass: "nav navbar-nav" }, [
+              _c("li", [
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("span", { staticClass: "glyphicon glyphicon-send" }),
+                  _vm._v(" Link")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "active" }, [
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("span", { staticClass: "glyphicon glyphicon-plane" }),
+                  _vm._v(" Active Link")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("span", { staticClass: "glyphicon glyphicon-cloud" }),
+                  _vm._v(" Link")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "panel panel-default",
+                  attrs: { id: "dropdown" }
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        "data-toggle": "collapse",
+                        href: "#dropdown-lvl1"
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "glyphicon glyphicon-user" }),
+                      _vm._v(" Sub Level "),
+                      _c("span", { staticClass: "caret" })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse",
+                      attrs: { id: "dropdown-lvl1" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("ul", { staticClass: "nav navbar-nav" }, [
+                          _c("li", [
+                            _c("a", { attrs: { href: "#" } }, [_vm._v("Link")])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("a", { attrs: { href: "#" } }, [_vm._v("Link")])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("a", { attrs: { href: "#" } }, [_vm._v("Link")])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "li",
+                            {
+                              staticClass: "panel panel-default",
+                              attrs: { id: "dropdown" }
+                            },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    "data-toggle": "collapse",
+                                    href: "#dropdown-lvl2"
+                                  }
+                                },
+                                [
+                                  _c("span", {
+                                    staticClass: "glyphicon glyphicon-off"
+                                  }),
+                                  _vm._v(" Sub Level "),
+                                  _c("span", { staticClass: "caret" })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "panel-collapse collapse",
+                                  attrs: { id: "dropdown-lvl2" }
+                                },
+                                [
+                                  _c("div", { staticClass: "panel-body" }, [
+                                    _c(
+                                      "ul",
+                                      { staticClass: "nav navbar-nav" },
+                                      [
+                                        _c("li", [
+                                          _c("a", { attrs: { href: "#" } }, [
+                                            _vm._v("Link")
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("li", [
+                                          _c("a", { attrs: { href: "#" } }, [
+                                            _vm._v("Link")
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("li", [
+                                          _c("a", { attrs: { href: "#" } }, [
+                                            _vm._v("Link")
+                                          ])
+                                        ])
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("li", [
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("span", { staticClass: "glyphicon glyphicon-signal" }),
+                  _vm._v(" Link")
+                ])
+              ])
+            ])
+          ])
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -48696,6 +49017,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /**
@@ -48789,7 +49112,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("div", { attrs: { id: "mapid" } })])
+    return _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "side-body" }, [
+        _c("div", { attrs: { id: "mapid" } })
+      ])
+    ])
   }
 ]
 render._withStripped = true

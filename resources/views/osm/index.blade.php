@@ -10,8 +10,7 @@
                 <router-link to="/users">  <a class="btn btn-primary" href="" role="button">Users</a></router-link>
                 <router-link to="/users/login">  <a class="btn btn-primary" href="" role="button">Login</a></router-link>
 
-                <router-view>
-                </router-view>
+
         </div>
 
 
