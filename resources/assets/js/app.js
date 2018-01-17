@@ -24,8 +24,9 @@ Vue.use(VueRouter);
 Vue.component('app', require('./components/app/App.vue'));
 Vue.component('menu', require('./components/app/Menu.vue'));
 
-Vue.component('bars', require('./components/bar/Bars.vue'));
-Vue.component('bar', require('./components/bar/Bar.vue'));
+Vue.component('bar-list', require('./components/bar/BarList.vue'));
+Vue.component('bar-item', require('./components/bar/BarItem.vue'));
+Vue.component('bar-view', require('./components/bar/BarView.vue'));
 
 // Vue.component('users', require('./components/Users.vue'));
 //

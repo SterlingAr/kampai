@@ -12,14 +12,9 @@
 
 @section('content')
 
-        <div class="row">
-
-         <app></app>
-
-        </div>
-
-        <maps></maps>
-
+            <router-view></router-view>
+            {{--<app></app>--}}
+            <map></map>
 
 
 @endsection

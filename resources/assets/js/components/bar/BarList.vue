@@ -1,7 +1,9 @@
 <template>
     <div>
-aaa
-        <bar></bar>
+        aaa
+        <div v-for="bar in bars">
+            <bar-item :bar="bar"></bar-item>
+        </div>
 
     </div>
 </template>
@@ -11,17 +13,18 @@ aaa
 
     export default
     {
-        name: 'bars',
+        name: 'bar-list',
 
         mounted() {
             console.log('*DEBUGGER* : Bars component created');
-
+            this.index();
         },
 
         data () {
             return {
                 bars: [],
-
+                messages: ['yay','yay','yay','yay'],
+                keywords: 'vino'
             }
         },
 
@@ -31,7 +34,8 @@ aaa
             {
                 // this.bars = [];
 
-                axios.get('/api/bars/'+this.keywords+"/"+this.$parent.bbox).then( (response) => {
+//                axios.get('http://http://kampai.local/api/bars/'+this.keywords+"/"+this.$parent.bbox).then( (response) => {
+                    axios.get('http://kampai.local/api/bars/vino/43.281204464332774,-2.0570182800292973,43.33741456256349,-1.8973731994628908').then( (response) => {
 
                     console.log(response);
 

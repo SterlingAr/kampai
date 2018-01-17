@@ -1,7 +1,5 @@
 <template>
-        <!-- uncomment code for absolute positioning tweek see top comment in css -->
-        <!-- <div class="absolute-wrapper"> </div> -->
-        <!-- Menu.vue -->
+    <div>
         <div class="side-menu">
             <nav class="navbar navbar-default" role="navigation">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -35,15 +33,13 @@
                                         <input v-model="keywords" type="text" class="form-control" placeholder="Search">
                                     </div>
 
+
                                     <router-link to="/bars">
-                                        <a href="#"><span class="glyphicon glyphicon-send"></span> Link</a>
+                                        <button type="submit" class="btn btn-default ">
+                                            <span class="glyphicon glyphicon-ok">
+                                            </span>
+                                        </button>
                                     </router-link>
-
-                                    <button type="submit" class="btn btn-default ">
-                                        <span class="glyphicon glyphicon-ok">
-
-                                        </span>
-                                    </button>
 
                                 </form>
                             </div>
@@ -51,22 +47,21 @@
                     </div>
                 </div>
 
-                <!-- Main Menu.vue -->
-                <!--<div class="side-menu-container">-->
-                    <!--<ul class="nav navbar-nav">-->
-                        <!--<li>-->
-                            <!--<router-link to="/bars">-->
-                                <!--<a href="#"><span class="glyphicon glyphicon-send"></span> Link</a>-->
-                            <!--</router-link>-->
-                        <!--</li>-->
-                        <!--&lt;!&ndash;<router-view></router-view>&ndash;&gt;-->
-                    <!--</ul>-->
-                <!--</div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;-->
-                <route-view></route-view>
-                <menu></menu>
+                <div class="side-menu-container">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <router-view></router-view>
+
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+
             </nav>
 
         </div>
+        <maps></maps>
+    </div>
+
 </template>
 
 
