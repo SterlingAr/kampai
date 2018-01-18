@@ -1,6 +1,6 @@
 @extends('maps.map_master')
 @section('styles')
-    <link rel="stylesheet" href="{{URL::to('assets/leaflet/css/main.css')}}">
+    <link rel="stylesheet" href="{{URL::to('side-menu.css')}}">
     <link rel="stylesheet" href="{{URL::to('assets/leaflet/css/leaflet.css')}}">
 @endsection
 

@@ -35,7 +35,7 @@
                 // this.bars = [];
 
 //                axios.get('http://http://kampai.local/api/bars/'+this.keywords+"/"+this.$parent.bbox).then( (response) => {
-                    axios.get('http://kampai.local/api/bars/vino/43.281204464332774,-2.0570182800292973,43.33741456256349,-1.8973731994628908').then( (response) => {
+                    axios.get('https://kampai.local/api/bars/vino/43.281204464332774,-2.0570182800292973,43.33741456256349,-1.8973731994628908').then( (response) => {
 
                     console.log(response);
 

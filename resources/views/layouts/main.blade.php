@@ -20,10 +20,12 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-    <script src="maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-    <script src="{{URL::asset('assets/js/app/main.js')}}"></script>
-    <link rel="stylesheet" href="{{URL::asset('assets/css/app/main.css')}}">
+    <script src="{{URL::asset('assets/app/js/main.js')}}"></script>
+    <link rel="stylesheet" href="{{URL::asset('assets/app/css/side-menu.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('assets/app/css/user-profile.css')}}">
+
 
 
 

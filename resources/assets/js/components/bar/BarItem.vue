@@ -22,7 +22,6 @@
         data () {
             return {
 
-                test : "Test Message",
 
             }
         },

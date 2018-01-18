@@ -31,10 +31,12 @@ Vue.component('menu', require('./components/app/Menu.vue'));
 Vue.component('bar-list', require('./components/bar/BarList.vue'));
 Vue.component('bar-item', require('./components/bar/BarItem.vue'));
 Vue.component('bar-view', require('./components/bar/BarView.vue'));
-import Login from './components/auth/Login.vue';
 
-// Vue.component('users', require('./components/Users.vue'));
-//
+import Login from './components/auth/Login.vue';
+import Register from './components/auth/Register.vue';
+
+// Vue.component('user-list', require('./components/user/UserList.vue'));
+// Vue.component('user-view', require('./components/user/ProfileView.vue'));
 
 
 Vue.component('maps', require('./components/Map.vue'));

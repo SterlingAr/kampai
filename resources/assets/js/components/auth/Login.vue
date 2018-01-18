@@ -41,7 +41,10 @@
         data () {
             return {
                 email: '',
-                password: ''
+                password: '',
+                user: {
+                    name: 'Dibbler!'
+                }
             }
         },
 
@@ -59,6 +62,7 @@
                     email: this.email,
                     password: this.password,
 
+
                 }).then((response) =>{
 
                     console.log(response);
@@ -68,7 +72,14 @@
                     {
                         //display 'Login success' and redirect
 
-                        this.$router.push({path:'/bars'});
+                        this.$router.push(
+                            {
+                                name:'profile',
+                                params:
+                                    {
+                                        user: this.user
+                                    }
+                            });
                     }
                     // else
                     // Display error on screen

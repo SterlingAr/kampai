@@ -15,9 +15,20 @@
 
                         <!-- Brand -->
                         <div class="brand-name-wrapper">
-                            <a class="navbar-brand" href="#">
-                                Kampai
-                            </a>
+
+                            <!--<a class="navbar-brand" href="#">-->
+                            <router-link class="navbar-brand"  to="/">
+
+                            Kampai
+
+                            </router-link >
+
+                            <!--</a>-->
+
+                            <router-link class="navbar-brand"  to="/profile/user">
+                                 <span class="glyphicon glyphicon-user"></span>
+                            </router-link >
+
                         </div>
 
                         <!-- Search -->
@@ -51,6 +62,10 @@
                     <ul class="nav navbar-nav">
                         <li>
                             <router-view></router-view>
+                            <router-view name="bar-list"></router-view>
+                            <router-view name="bar-view"></router-view>
+
+
                         </li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
