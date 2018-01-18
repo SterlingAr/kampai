@@ -38,6 +38,7 @@
 }
 .side-menu .navbar {
     border: none;
+    float: none;
 }
 .side-menu .navbar-header {
     width: 100%;

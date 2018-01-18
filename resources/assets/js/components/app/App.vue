@@ -51,7 +51,6 @@
                     <ul class="nav navbar-nav">
                         <li>
                             <router-view></router-view>
-
                         </li>
                     </ul>
                 </div><!-- /.navbar-collapse -->

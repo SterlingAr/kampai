@@ -67,7 +67,3 @@ Route::group(['prefix' => 'bar'], function()
 
 
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

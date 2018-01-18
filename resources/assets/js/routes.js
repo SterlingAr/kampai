@@ -1,9 +1,10 @@
 import VueRouter from 'vue-router';
 import App from './components/app/App.vue';
-import Bars from './components/bar/BarList.vue';
+import BarList from './components/bar/BarList.vue';
 import Users from './components/Users.vue';
-import Login from './components/Login.vue';
-import Bar from './components/bar/BarItem.vue';
+import BarItem from './components/bar/BarItem.vue';
+
+import Login from './components/auth/Login.vue';
 
 
 
@@ -23,16 +24,16 @@ let routes = [
 
                     },
 
-                    {
-                        path: 'bar/:id',
-                        component: BarView
-                    }
+                    // {
+                    //     path: 'bar/:id',
+                    //     component: BarView
+                    // }
                 ]
             },
             ///
             {
-                path: 'users',
-                component: Users,
+                path: 'login',
+                component: Login,
             }
 
         ]
@@ -41,26 +42,6 @@ let routes = [
 
 
 
-    {
-        path: '/barsss',
-        component: Bars,
-        children: [
-            {
-                path: 'bar',
-                component: Bar
-
-            }
-        ]
-    },
-
-    {
-        path: '/userssss',
-        component: Users
-    },
-    {
-        path:   '/users/login',
-        component:  Login
-    }
 ];
 
 export default new VueRouter({routes});

@@ -12,8 +12,12 @@ import Vue from 'vue'; // Importing Vue Library
 import VueRouter from 'vue-router'; // importing Vue router library
 import router from './routes';
 
+import VeeValidate from 'vee-validate';
+
 window.Vue = Vue;
 Vue.use(VueRouter);
+Vue.use(VeeValidate);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,6 +31,7 @@ Vue.component('menu', require('./components/app/Menu.vue'));
 Vue.component('bar-list', require('./components/bar/BarList.vue'));
 Vue.component('bar-item', require('./components/bar/BarItem.vue'));
 Vue.component('bar-view', require('./components/bar/BarView.vue'));
+import Login from './components/auth/Login.vue';
 
 // Vue.component('users', require('./components/Users.vue'));
 //
