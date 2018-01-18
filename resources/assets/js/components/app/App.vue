@@ -16,7 +16,7 @@
                         <!-- Brand -->
                         <div class="brand-name-wrapper">
                             <a class="navbar-brand" href="#">
-                                Brand
+                                Kampai
                             </a>
                         </div>
 

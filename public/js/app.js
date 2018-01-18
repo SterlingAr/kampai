@@ -45933,7 +45933,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "brand-name-wrapper" }, [
       _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
-        _vm._v("\n                            Brand\n                        ")
+        _vm._v("\n                            Kampai\n                        ")
       ])
     ])
   },
@@ -46318,6 +46318,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'Login',
@@ -46325,12 +46341,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             email: '',
-            passwd: ''
+            password: ''
         };
     },
 
 
-    methods: {}
+    mounted: function mounted() {},
+
+    methods: {
+
+        login: function login() {
+            var _this = this;
+
+            axios.post('/api/auth/login', {
+
+                email: this.email,
+                password: this.password
+
+            }).then(function (response) {
+
+                console.log(response);
+
+                _this.$router.push({ path: '/bars' });
+            }).catch(function (error) {
+
+                console.log(error);
+            });
+        }
+    }
 
 });
 
@@ -46351,11 +46389,7 @@ var render = function() {
           class: { "has-error": _vm.errors.has("email") }
         },
         [
-          _c(
-            "label",
-            { staticClass: "control-label", attrs: { for: "email" } },
-            [_vm._v("Email")]
-          ),
+          _c("label", { staticClass: "control-label" }, [_vm._v("Email")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -46367,18 +46401,13 @@ var render = function() {
               },
               {
                 name: "validate",
-                rawName: "v-validate.initial",
-                value: _vm.email,
-                expression: "email",
-                modifiers: { initial: true }
+                rawName: "v-validate",
+                value: "required|email",
+                expression: "'required|email'"
               }
             ],
             staticClass: "form-control",
-            attrs: {
-              "data-rules": "required|email",
-              type: "email",
-              placeholder: "Email"
-            },
+            attrs: { type: "email", placeholder: "Email" },
             domProps: { value: _vm.email },
             on: {
               input: function($event) {
@@ -46390,12 +46419,85 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm.errors.has("email")
-            ? _c("p", { staticClass: "text-danger" }, [
-                _vm._v(_vm._s(_vm.errors.first("email")))
-              ])
-            : _vm._e()
+          _c(
+            "p",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("email"),
+                  expression: "errors.has('email')"
+                }
+              ]
+            },
+            [_vm._v(" " + _vm._s(_vm.errors.first("email")))]
+          )
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "form-group",
+          class: { "has-error": _vm.errors.has("password") }
+        },
+        [
+          _c("label", { staticClass: "control-label" }, [_vm._v("Password")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.password,
+                expression: "password"
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required|alpha",
+                expression: "'required|alpha'"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "password", placeholder: "Password" },
+            domProps: { value: _vm.password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.password = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "p",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("email"),
+                  expression: "errors.has('email')"
+                }
+              ]
+            },
+            [_vm._v(" " + _vm._s(_vm.errors.first("email")))]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "submit" },
+          on: { click: _vm.login }
+        },
+        [_vm._v("Submit")]
       )
     ])
   ])

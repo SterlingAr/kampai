@@ -6,10 +6,26 @@
         <form >
 
             <div class="form-group" :class="{'has-error': errors.has('email') }" >
-                <label class="control-label" for="email">Email</label>
-                <input v-model="email" v-validate.initial="email" data-rules="required|email" class="form-control" type="email" placeholder="Email">
-                <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
+
+                <label class="control-label">Email</label>
+
+                <input v-model="email" v-validate="'required|email'" class="form-control" type="email" placeholder="Email">
+
+                <p v-show="errors.has('email')"> {{ errors.first('email')}}</p>
+
             </div>
+
+            <div class="form-group" :class="{'has-error': errors.has('password') }" >
+
+                <label class="control-label">Password</label>
+
+                <input v-model="password" v-validate="'required|alpha'" class="form-control" type="password" placeholder="Password">
+
+                <p v-show="errors.has('email')"> {{ errors.first('email')}}</p>
+
+            </div>
+
+            <button v-on:click="login" type="submit" class="btn btn-default">Submit</button>
 
         </form>
 
@@ -25,13 +41,45 @@
         data () {
             return {
                 email: '',
-                passwd: ''
+                password: ''
             }
+        },
+
+        mounted: function () {
+
+
         },
 
         methods: {
 
-         
+            login: function ()
+            {
+                axios.post('/api/auth/login', {
+
+                    email: this.email,
+                    password: this.password,
+
+                }).then((response) =>{
+
+                    console.log(response);
+
+                    //If
+                    if(response.status === 200)
+                    {
+                        //display 'Login success' and redirect
+
+                        this.$router.push({path:'/bars'});
+                    }
+                    // else
+                    // Display error on screen
+
+
+                }).catch((error) => {
+
+                    console.log(error);
+
+                })
+            }
         }
 
     }
