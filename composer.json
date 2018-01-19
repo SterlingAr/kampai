@@ -13,7 +13,7 @@
         "laravel/tinker": "~1.0",
         "nesbot/carbon": "^1.22",
         "teamtnt/laravel-scout-tntsearch-driver": "^3.0",
-        "tymon/jwt-auth": "dev-develop"
+        "tymon/jwt-auth": "^0.5.12"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
