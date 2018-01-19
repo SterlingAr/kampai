@@ -27,18 +27,18 @@ let routes = [
         {
             path: '/bars',
             name: 'bar_list',
-            components: {
+            components:
+            {
                 default: BarList,
 
-                // register: Register,
-                // profile_view: ProfileView,
-                // bar_list: BarList,
+
             }
         },
         {
             path: '/login',
             name: 'login',
-            components: {
+            components:
+            {
                 login: Login,
             }
         },
@@ -46,7 +46,8 @@ let routes = [
         {
             path: '/register',
             name: 'register',
-            components: {
+            components:
+            {
                 register: Register,
             }
         },
@@ -54,7 +55,8 @@ let routes = [
         {
             path: '/profile',
             name: 'profile',
-            components: {
+            components:
+            {
                 profile_view: ProfileView,
             }
         }
@@ -62,16 +64,6 @@ let routes = [
         ]
 
     },
-    // {
-    //     path: '/bars',
-    //     name: 'bar_list',
-    //     components: {
-    //         default: BarList,
-    //         // bar_list: BarList,
-    //     }
-    //
-    // },
-
 
 
 
