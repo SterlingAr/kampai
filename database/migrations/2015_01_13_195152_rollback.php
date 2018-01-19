@@ -47,12 +47,23 @@ class Rollback extends Migration
         });
 
 
-//        Schema::table('users', function(Blueprint $table){
-//
-//            $table->dropForeign(['subscription_list_id']);
-//            $table->dropColumn('subscription_list_id');
-//
-//        });
+        Schema::table('permission_roles', function(Blueprint $table){
+
+            $table->dropForeign(['role_id']);
+            $table->dropForeign(['permission_id']);
+
+
+        });
+
+
+        Schema::table('role_users', function(Blueprint $table){
+
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['role_id']);
+
+
+        });
+
 
         Schema::dropIfExists('subscription_lists');
 
@@ -70,6 +81,16 @@ class Rollback extends Migration
 
 
         Schema::dropIfExists('users');
+
+        Schema::dropIfExists('permissions');
+
+        Schema::dropIfExists('roles');
+
+        Schema::dropIfExists('role_users');
+
+        Schema::dropIfExists('permission_roles');
+
+
 
 
 

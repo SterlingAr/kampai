@@ -75,6 +75,13 @@ class User extends Model implements
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function roles(){
+        return $this->belongsToMany('App\Role','role_users')
+            ->withTimestamps();
+    }
 
 
 

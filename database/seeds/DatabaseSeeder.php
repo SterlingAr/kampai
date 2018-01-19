@@ -19,8 +19,11 @@ class DatabaseSeeder extends Seeder
 
            $this->call(SubscriptionListsSeeder::class);
 
+           $this->call(RolesTableSeeder::class);
 
+           $this->call(PermissionsTableSeeder::class);
 
+           $this->call(UserRolesSeeder::class);
 
 
     }
