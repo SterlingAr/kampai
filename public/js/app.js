@@ -45963,15 +45963,17 @@ var routes = [{
     name: 'home',
     component: __WEBPACK_IMPORTED_MODULE_2__components_app_SideMenuContent_vue___default.a,
     children: [{
-        path: '/bars',
+        path: '/bars/:keywords/:bbox',
         name: 'bar_list',
         components: {
             default: __WEBPACK_IMPORTED_MODULE_3__components_bar_BarList_vue___default.a
 
-            // register: Register,
-            // profile_view: ProfileView,
-            // bar_list: BarList,
+        },
+
+        props: {
+            default: true
         }
+
     }, {
         path: '/login',
         name: 'login',
@@ -46114,15 +46116,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('*DEBUGGER* : SideMenu component created');
+    data: function data() {
+        return {
+            keywords: 'all'
+        };
     },
 
+
+    methods: {},
 
     components: { SideMenuContainer: __WEBPACK_IMPORTED_MODULE_0__SideMenuContainer_vue___default.a }
 
@@ -46168,8 +46177,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -46335,7 +46342,17 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "router-link",
-                        { attrs: { to: { name: "bar_list" } } },
+                        {
+                          attrs: {
+                            to: {
+                              name: "bar_list",
+                              params: {
+                                keywords: _vm.keywords,
+                                bbox: this.$parent.bbox
+                              }
+                            }
+                          }
+                        },
                         [
                           _c(
                             "button",
@@ -46576,6 +46593,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -46587,9 +46605,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            bars: [],
-            messages: ['yay', 'yay', 'yay', 'yay'],
-            keywords: 'vino'
+            bars: []
+
         };
     },
 
@@ -46599,10 +46616,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         index: function index() {
             var _this = this;
 
-            // this.bars = [];
+            this.bars = [];
 
-            //                axios.get('http://http://kampai.local/api/bars/'+this.keywords+"/"+this.$parent.bbox).then( (response) => {
-            axios.get('https://kampai.local/api/bars/vino/43.281204464332774,-2.0570182800292973,43.33741456256349,-1.8973731994628908').then(function (response) {
+            axios.get('https://kampai.local/api/bars/' + this.keywords + "/" + this.bbox).then(function (response) {
+                //                    axios.get('https://kampai.local/api/bars/vino/43.281204464332774,-2.0570182800292973,43.33741456256349,-1.8973731994628908').then( (response) => {
 
                 console.log(response);
 
@@ -46614,13 +46631,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.bars.push(bar);
                 });
 
-                console.log('/api/bars/' + _this.keywords + "/" + _this.$parent.bbox);
+                console.log('/api/bars/' + _this.keywords + "/" + _this.bbox);
             }).catch(function (error) {
                 console.log(error);
             });
         }
 
-    }
+    },
+
+    props: ['keywords', 'bbox']
 
 });
 
@@ -46632,12 +46651,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    _vm._l(_vm.bars, function(bar) {
-      return _c("div", [_c("bar-item", { attrs: { bar: bar } })], 1)
-    })
-  )
+  return _c("div", [_c("bar-item", { attrs: { bars: _vm.bars } })], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -46667,6 +46681,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -46679,7 +46702,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
 
-    props: ['bar']
+    props: ['bars']
 
 });
 
@@ -46691,15 +46714,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "list-group" }, [
-    _c("a", { staticClass: "list-group-item active", attrs: { href: "#" } }, [
-      _c("h4", { staticClass: "list-group-item-heading" }, [
-        _vm._v(_vm._s(_vm.bar.tags.name))
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "list-group-item-text" }, [_vm._v("...")])
-    ])
-  ])
+  return _c(
+    "div",
+    _vm._l(_vm.bars, function(bar) {
+      return _c("div", [
+        _c("div", [
+          _c("a", [
+            _c("h4", [_vm._v(_vm._s(bar.tags.name))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(bar.tags.description))])
+          ])
+        ])
+      ])
+    })
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

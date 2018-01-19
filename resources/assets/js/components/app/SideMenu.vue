@@ -45,7 +45,10 @@
                                 </div>
 
 
-                                <router-link :to="{name:'bar_list'}">
+                                <router-link :to="{name:'bar_list',params:{
+                                    keywords: keywords,
+                                    bbox: this.$parent.bbox
+                                }}">
                                     <button type="submit" class="btn btn-default ">
                                             <span class="glyphicon glyphicon-ok">
                                             </span>
@@ -57,9 +60,7 @@
                     </div>
                 </div>
             </div>
-
             <side-menu-container></side-menu-container>
-
         </nav>
     </div>
 
@@ -72,8 +73,17 @@
 
     export default {
 
-        mounted(){
-            console.log('*DEBUGGER* : SideMenu component created');
+
+        data () {
+            return {
+                keywords: 'all'
+            }
+        },
+
+        methods: {
+
+
+
         },
 
         components: {SideMenuContainer}

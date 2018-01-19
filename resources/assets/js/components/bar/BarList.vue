@@ -1,8 +1,9 @@
 <template>
     <div>
-        <div v-for="bar in bars">
-            <bar-item :bar="bar"></bar-item>
-        </div>
+        <!--<div v-for="bar in bars">-->
+            <!--<bar-item :bar="bar"></bar-item>-->
+        <!--</div>-->
+        <bar-item :bars="bars"></bar-item>
     </div>
 </template>
 
@@ -21,8 +22,7 @@
         data () {
             return {
                 bars: [],
-                messages: ['yay','yay','yay','yay'],
-                keywords: 'vino'
+
             }
         },
 
@@ -30,10 +30,10 @@
 
             index: function()
             {
-                // this.bars = [];
+                 this.bars = [];
 
-//                axios.get('http://http://kampai.local/api/bars/'+this.keywords+"/"+this.$parent.bbox).then( (response) => {
-                    axios.get('https://kampai.local/api/bars/vino/43.281204464332774,-2.0570182800292973,43.33741456256349,-1.8973731994628908').then( (response) => {
+                axios.get('https://kampai.local/api/bars/'+this.keywords+"/"+this.bbox).then( (response) => {
+//                    axios.get('https://kampai.local/api/bars/vino/43.281204464332774,-2.0570182800292973,43.33741456256349,-1.8973731994628908').then( (response) => {
 
                     console.log(response);
 
@@ -46,7 +46,7 @@
                         this.bars.push(bar);
                     });
 
-                    console.log('/api/bars/'+this.keywords+"/"+this.$parent.bbox);
+                    console.log('/api/bars/'+this.keywords+"/"+this.bbox);
 
                 }).catch((error) => {
                         console.log(error);
@@ -54,7 +54,9 @@
 
             }
 
-        }
+        },
+
+        props: ['keywords', 'bbox']
 
     }
 

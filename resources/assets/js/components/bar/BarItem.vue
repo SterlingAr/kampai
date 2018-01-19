@@ -1,12 +1,21 @@
 <template>
+    <div>
+        <div v-for="bar in bars">
+                <!--<div  class="list-group">-->
+                    <!--<a href="#" class="list-group-item active">-->
+                        <!--<h4 class="list-group-item-heading">{{bar.tags.name}}</h4>-->
+                        <!--<p class="list-group-item-text">...</p>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <div>
+                <a>
+                    <h4 >{{bar.tags.name}}</h4>
+                    <p>{{bar.tags.description}}</p>
 
-    <div class="list-group">
-        <a href="#" class="list-group-item active">
-            <h4 class="list-group-item-heading">{{bar.tags.name}}</h4>
-            <p class="list-group-item-text">...</p>
-        </a>
+                </a>
+            </div>
+        </div>
     </div>
-
 </template>
 
 
@@ -26,7 +35,7 @@
             }
         },
 
-        props: ['bar'],
+        props: ['bars'],
 
     }
 

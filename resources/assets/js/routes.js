@@ -20,19 +20,25 @@ import Users from './components/user/UserList.vue';
 let routes = [
 
     {
+        //The SideMenu and SideMenuContent view should be shown in the same parent view.
         path: '/',
         name: 'home',
         component: SideMenuContent,
         children: [
         {
-            path: '/bars',
+            path: '/bars/:keywords/:bbox',
             name: 'bar_list',
             components:
             {
                 default: BarList,
 
+            },
 
+            props: {
+                default: true,
             }
+
+
         },
         {
             path: '/login',

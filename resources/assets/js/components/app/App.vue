@@ -12,7 +12,6 @@
     import SideMenu from './SideMenu.vue';
     import OsmMap from '../osm/OsmMap.vue';
 
-
     export default
     {
         name: 'app',
