@@ -1,10 +1,8 @@
 <template>
     <div>
-        aaa
         <div v-for="bar in bars">
             <bar-item :bar="bar"></bar-item>
         </div>
-
     </div>
 </template>
 

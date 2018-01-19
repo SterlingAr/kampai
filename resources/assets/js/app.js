@@ -26,11 +26,17 @@ Vue.use(VeeValidate);
  */
 
 Vue.component('app', require('./components/app/App.vue'));
-Vue.component('menu', require('./components/app/Menu.vue'));
+Vue.component('side-menu', require('./components/app/SideMenu.vue'));
+Vue.component('side-menu-container', require('./components/app/SideMenuContainer.vue'));
+Vue.component('side-menu-content', require('./components/app/SideMenuContent.vue'));
+
+Vue.component('osm-map', require('./components/osm/OsmMap.vue'));
+
 
 Vue.component('bar-list', require('./components/bar/BarList.vue'));
 Vue.component('bar-item', require('./components/bar/BarItem.vue'));
 Vue.component('bar-view', require('./components/bar/BarView.vue'));
+
 
 import Login from './components/auth/Login.vue';
 import Register from './components/auth/Register.vue';
@@ -39,7 +45,6 @@ import Register from './components/auth/Register.vue';
 // Vue.component('user-view', require('./components/user/ProfileView.vue'));
 
 
-Vue.component('maps', require('./components/Map.vue'));
 
 const app = new Vue({
     el: '#app',

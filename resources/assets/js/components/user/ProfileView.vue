@@ -9,7 +9,7 @@
             <div class="useravatar">
                 <img alt="" src="https://lorempixel.com/output/people-q-c-100-100-1.jpg">
             </div>
-            <div class="card-info"> <span class="card-title">{{ user.name }}</span>
+            <div class="card-info"> <span class="card-title">name</span>
 
             </div>
         </div>

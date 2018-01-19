@@ -25,7 +25,7 @@
      */
     export default
     {
-        name: 'map',
+        name: 'osm_map',
         mounted(){
             console.log('*DEBUGGER* : map component created');
             this.initMap();

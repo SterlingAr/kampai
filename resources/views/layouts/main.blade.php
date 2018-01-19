@@ -22,7 +22,7 @@
 
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-    <script src="{{URL::asset('assets/app/js/main.js')}}"></script>
+    <script src="{{URL::asset('assets/app/js/side-menu.js')}}"></script>
     <link rel="stylesheet" href="{{URL::asset('assets/app/css/side-menu.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/app/css/user-profile.css')}}">
 
@@ -33,9 +33,7 @@
 <body>
 
     <div id="app" >
-        <div class="row">
             @yield('content')
-        </div>
     </div>
 
     <script src="{{asset('js/app.js')}}"> </script>
