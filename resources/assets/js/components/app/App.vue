@@ -95,7 +95,7 @@
 
         methods: {
 
-            changeTitle: () =>
+            changeTitle: function () 
                 {
                     this.$store.commit('changeTitle');
                 }
