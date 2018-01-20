@@ -57,6 +57,16 @@ Route::group(['prefix' => 'auth'], function(){
 
 
 
+/**
+ * DUMMY TESTS
+ */
+
+Route::get('/admin/title/edit', function(){
+
+    return response()->json(['title' => 'KAMPAI']);
+
+});
+
 
 
 

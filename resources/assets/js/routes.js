@@ -24,7 +24,7 @@ let routes = [
         component: App,
         children: [
         {
-            path: '/bars/:keywords/:bbox',
+            path: '/bars',
             name: 'bar_list',
             components:
             {

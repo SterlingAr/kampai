@@ -67,7 +67,11 @@
                 n = mapBounds['_northEast']['lat'];
                 e = mapBounds['_northEast']['lng'];
 
-                this.$parent.bbox = s + ',' + w + ',' + n + ',' + e;
+                let bbox = s + ',' + w + ',' + n + ',' + e;
+
+                // this.$parent.bbox = s + ',' + w + ',' + n + ',' + e;
+
+                this.$store.dispatch('updateBBOXAction',bbox);
 
                 console.log(this.$parent.bbox);
             }

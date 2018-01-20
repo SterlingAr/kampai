@@ -20,7 +20,7 @@
                                                         <!-- Brand -->
                                                         <div class="brand-name-wrapper">
                                                                 <a class="navbar-brand" href="#">
-                                                                        {{ title.name }}
+                                                                        {{ appTitle.title }}
                                                                         <span class="glyphicon glyphicon-user"></span>
 
                                                                 </a>
@@ -37,14 +37,10 @@
                                                                 <div class="panel-body">
                                                                         <form class="navbar-form" role="search">
                                                                                 <div class="form-group">
-                                                                                        <input v-model="keywords" type="text" class="form-control" placeholder="Search">
+                                                                                        <input  type="text" class="form-control" placeholder="Search" @input="updateKeywords">
                                                                                 </div>
-                                                                                <router-link :to="{name: 'bar_list', params: {
-                                                                                    keywords: keywords,
-                                                                                    bbox: bbox,
-                                                                                }}">
+
                                                                                         <button type="submit" class="btn btn-default "><span class="glyphicon glyphicon-ok"></span></button>
-                                                                                </router-link>
                                                                         </form>
                                                                 </div>
                                                         </div>
@@ -55,7 +51,9 @@
                                 <!-- Main Menu -->
                                 <div class="side-menu-container">
                                         <div class="panel-body">
-                                                <button @click="changeTitle">ChangeTitle</button>
+                                                <button @click="changeTitle(appObject)">ChangeTitle</button>
+                                               <p> {{bbox}}</p>
+                                                <p>{{keywords}}</p>
                                                 <router-view></router-view>
                                                 <router-view name="bar_list"></router-view>
                                         </div>
@@ -77,39 +75,54 @@
 
     // import NavCustom from './NavCustom.vue'
     import {mapGetters} from 'vuex';
+    import {mapMutations} from 'vuex';
+    import {mapActions} from 'vuex';
     export default
     {
         name: 'app',
         mounted(){
             console.log('*DEBUGGER* : App component created');
-            console.log(this.$store.state.message);
         },
 
         data () {
             return {
 
-                keywords: 'all',
-                bbox: this.$parent.bbox,
+                appObject: {
+                    title: 'KAMPAI'
+                }
+
             }
         },
 
         methods: {
 
-            changeTitle: function () 
-                {
-                    this.$store.commit('changeTitle');
-                }
+            ...mapMutations([
+                // 'changeTitle'
+            ]),
+
+            ...mapActions([
+                'changeTitle'
+            ]),
+
+            // changeTitle: function (){
+            //     this.$store.commit('changeTitle','KAMPAI');
+            // }
+            updateKeywords: function (event)
+            {
+
+                this.$store.dispatch('updateKeywordsAction', event.target.value);
+
+            }
 
 
         },
 
         computed: {
-
-
             ...mapGetters({
 
-                           title: 'appTitle'
-
+                           appTitle: 'currentTitle',
+                           bbox: 'currentBBOX',
+                           keywords: 'currentKeywords'
                        }),
 
 
