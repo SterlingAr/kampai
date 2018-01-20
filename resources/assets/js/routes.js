@@ -1,11 +1,9 @@
 import VueRouter from 'vue-router';
 
 import App from './components/app/App.vue';
-import SideMenuContent from './components/app/SideMenuContent.vue';
 
 
 import BarList from './components/bar/BarList.vue';
-import BarItem from './components/bar/BarItem.vue';
 
 import Register from './components/auth/Register.vue';
 import Login from './components/auth/Login.vue';
@@ -23,7 +21,7 @@ let routes = [
         //The SideMenu and SideMenuContent view should be shown in the same parent view.
         path: '/',
         name: 'home',
-        component: SideMenuContent,
+        component: App,
         children: [
         {
             path: '/bars/:keywords/:bbox',

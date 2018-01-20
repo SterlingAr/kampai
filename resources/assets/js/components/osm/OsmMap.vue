@@ -1,13 +1,11 @@
 <template>
 
 
-    <div class="container-fluid">
-        <div class="side-body">
+
             <div id="mapid">
 
             </div>
-        </div>
-    </div>
+
 
 </template>
 

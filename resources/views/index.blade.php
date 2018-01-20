@@ -12,8 +12,6 @@
 
 @section('content')
 
-    <div class="row">
-        <app></app>
-    </div>
+        <router-view></router-view>
 
 @endsection

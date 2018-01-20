@@ -10,13 +10,16 @@
 import './bootstrap';
 import Vue from 'vue'; // Importing Vue Library
 import VueRouter from 'vue-router'; // importing Vue router library
+import VeeValidate from 'vee-validate';
+
+import store  from './store/store';
 import router from './routes';
 
-import VeeValidate from 'vee-validate';
 
 window.Vue = Vue;
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
+
 
 
 /**
@@ -26,15 +29,11 @@ Vue.use(VeeValidate);
  */
 
 Vue.component('app', require('./components/app/App.vue'));
-Vue.component('side-menu', require('./components/app/SideMenu.vue'));
-Vue.component('side-menu-container', require('./components/app/SideMenuContainer.vue'));
-Vue.component('side-menu-content', require('./components/app/SideMenuContent.vue'));
 
 Vue.component('osm-map', require('./components/osm/OsmMap.vue'));
 
 
 Vue.component('bar-list', require('./components/bar/BarList.vue'));
-Vue.component('bar-item', require('./components/bar/BarItem.vue'));
 Vue.component('bar-view', require('./components/bar/BarView.vue'));
 
 
@@ -49,6 +48,7 @@ import Register from './components/auth/Register.vue';
 const app = new Vue({
     el: '#app',
     router,
+    store: store,
 
     created: function(){
         console.log("*DEBUGGER* : App instance created");
@@ -57,7 +57,6 @@ const app = new Vue({
     data () {
         return {
             bbox: '',
-
 
 
         }
