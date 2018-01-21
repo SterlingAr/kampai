@@ -2,7 +2,7 @@
 
 
 
-            <div id="mapid">
+            <div id="map">
 
             </div>
 
@@ -42,7 +42,7 @@
 
             initMap: function ()
             {
-                this.mymap = L.map('mapid').setView([ 43.30932,-1.97711], 13);
+                this.mymap = L.map('map').setView([ 43.30932,-1.97711], 13);
                 L.tileLayer('https://api.mapbox.com/styles/v1/marborav/cjb7ndf2q3olg2qk50cpyzvy0/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
                     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
                     maxZoom: 20,
@@ -51,8 +51,29 @@
                 }).addTo(this.mymap);
 
                 this.mymap.on('moveend', this.currentBBOX);
-
                 this.currentBBOX();
+
+
+                let routingInstance = L.Routing.control( {
+                    waypoints: [
+                        L.latLng(43.3258095, -1.9726347),
+                        L.latLng(43.3280095 ,  -1.9705863)
+                    ],
+                    altLineOptions: {
+                        styles: [
+                            {color: 'black', opacity: 0.15, weight: 9},
+                            {color: 'white', opacity: 0.8, weight: 6},
+                            {color: 'blue', opacity: 0.5, weight: 2}
+                        ]
+                    },
+                    router: L.Routing.mapbox('pk.eyJ1IjoibWFyYm9yYXYiLCJhIjoiY2o5eDJrbTV0N2NncjJxcXljeDR3cXNhMiJ9.igTamTLm4nLiAN6w8NFS6Q',{
+                        profile: 'mapbox/walking',
+                        language: 'es',
+
+                    })
+                }).addTo(this.mymap);
+
+                routingInstance.addTo(this.mymap);
 
             },
 

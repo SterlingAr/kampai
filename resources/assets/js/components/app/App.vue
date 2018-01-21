@@ -39,8 +39,9 @@
                                                                                 <div class="form-group">
                                                                                         <input  type="text" class="form-control" placeholder="Search" @input="updateKeywords">
                                                                                 </div>
-
-                                                                                        <button type="submit" class="btn btn-default "><span class="glyphicon glyphicon-ok"></span></button>
+                                                                                        <router-link :to="{name: 'bar_list'}">
+                                                                                        <button @click="updateBarsAction" type="submit" class="btn btn-default "><span class="glyphicon glyphicon-ok"></span></button>
+                                                                                        </router-link>
                                                                         </form>
                                                                 </div>
                                                         </div>
@@ -51,9 +52,9 @@
                                 <!-- Main Menu -->
                                 <div class="side-menu-container">
                                         <div class="panel-body">
-                                                <button @click="changeTitle(appObject)">ChangeTitle</button>
-                                               <p> {{bbox}}</p>
-                                                <p>{{keywords}}</p>
+                                                <!--<button @click="changeTitle(appObject)">ChangeTitle</button>-->
+                                               <!--<p> {{bbox}}</p>-->
+                                                <!--<p>{{keywords}}</p>-->
                                                 <router-view></router-view>
                                                 <router-view name="bar_list"></router-view>
                                         </div>
@@ -61,7 +62,7 @@
                         </div>
 
                         <!-- Main Content -->
-                        <div class="container-fluid">
+                        <div>
                                 <div class="side-body">
 
                                         <osm-map></osm-map>
@@ -101,12 +102,11 @@
             ]),
 
             ...mapActions([
-                'changeTitle'
+                'changeTitle',
+                'updateBarsAction'
             ]),
 
-            // changeTitle: function (){
-            //     this.$store.commit('changeTitle','KAMPAI');
-            // }
+
             updateKeywords: function (event)
             {
 

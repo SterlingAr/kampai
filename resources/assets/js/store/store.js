@@ -6,6 +6,7 @@ import Vuex from 'vuex';
 //
 import map_storage from './modules/map_storage';
 import app_storage from './modules/app_storage';
+import bars_storage from './modules/bars_storage';
 //
 Vue.use(Vuex);
 
@@ -15,6 +16,10 @@ const store = new Vuex.Store({
         appTitle: {
             title: 'Kampai',
         },
+
+        api_base_uri: 'https://kampai.local',
+
+        test: 'Hellow from root component.'
 
 
 
@@ -27,6 +32,10 @@ const store = new Vuex.Store({
             return state.appTitle;
         },
 
+        currentBaseURI: state =>
+        {
+            return state.api_base_uri;
+        }
 
 
 
@@ -34,12 +43,17 @@ const store = new Vuex.Store({
 
     mutations: {
 
-        changeTitle: (state, payload) =>
+        changeTitle: (state, newTitleObject) =>
         {
 
-             state.appTitle.title = payload.title;
+             state.appTitle.title = newTitleObject.title;
 
         },
+
+        changeBaseURI: (state,newUriObject) =>
+        {
+            return state.api_base_uri = newUriObject.api_base_uri;
+        }
 
 
 
@@ -47,26 +61,30 @@ const store = new Vuex.Store({
     //Reminder: Commit actions using ONLY actions
     actions: {
 
-        changeTitle: ({commit}, object) =>
+        changeTitle: ({commit}, newTitleObject) =>
         {
           // axios.get('https://kampai.local/api/admin/title/edit')
           //     .then(function(response){
           //      commit('changeTitle', response);
           //
           //  });
-            commit('changeTitle', object);
+            commit('changeTitle', newTitleObject);
 
         },
 
 
+        changeBaseUriAction: ({commit}, newUriObject) =>
+        {
 
+        }
 
 
     },
 
     modules: {
+        app_storage,
         map_storage,
-        app_storage
+        bars_storage
     }
 
 });

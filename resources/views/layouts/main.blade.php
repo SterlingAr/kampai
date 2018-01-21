@@ -8,10 +8,17 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="{{asset('assets/leaflet/css/main.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/leaflet/css/leaflet.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('assets/leaflet/css/leaflet.css')}}">--}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
 
-    <script src="{{asset('assets/leaflet/js/leaflet.js')}}"></script>
-    <script src="{{asset('assets/leaflet/js/main.js')}}"></script>
+    <link rel="stylesheet" href="{{URL::asset('assets/leaflet/css/leaflet-routing-machine.css')}}" />
+
+    {{--<script src="{{asset('assets/leaflet/js/leaflet.js')}}"></script>--}}
+{{--    <script src="{{asset('assets/leaflet/js/main.js')}}"></script>--}}
+
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+
+    <script src="{{URL::asset('assets/leaflet/js/leaflet-routing-machine.js')}}"></script>
 
 
 
@@ -22,12 +29,8 @@
 
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-
     <link rel="stylesheet" href="{{URL::asset('assets/app/css/side-menu.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/app/css/user-profile.css')}}">
-
-
 
 
 </head>
