@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\Role;
 
 use App\Http\Resources\RoleResource;
+use App\Http\Controllers\Controller;
 use App\Role;
 use Illuminate\Http\Request;
 
@@ -58,7 +59,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        return new UserResource($role);
+        return new RoleResource($role);
     }
 
     /**
