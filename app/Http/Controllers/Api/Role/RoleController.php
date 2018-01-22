@@ -39,14 +39,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $rules =[
-          'name' =>'required'
-        ];
-        $this->validate($request,$rules);
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+        $role=new Role();
 
-        $data=$request->all();
+        if ($request->has('name')) {
+            $role->name = $request->name;
+        }
 
-        $role=Role::create($data);
+        $role->save();
 
         return response()->json(['data'=>$role],201);
     }
