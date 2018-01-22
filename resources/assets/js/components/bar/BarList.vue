@@ -2,7 +2,7 @@
     <div>
 
 
-            <table class="table table-hover" id="feature-list">
+            <table class="table table-hover" data-toggle="collapse" data-target=".navbar-collapse.in" id="feature-btn">
                 <thead>
                 <tr>
                     <th>Tipo</th>
@@ -12,7 +12,7 @@
 
                 <tbody  class="list"  v-if="bars.length">
                     <tr v-for="bar in bars">
-                        <router-link :to="bar_view">
+                        <router-link :to="{name: 'bar_view'}" id="feature-btn">
                         <td class="fa fa-beer black"></td>
                         <td>{{bar.tags.name}}</td>
                         </router-link>

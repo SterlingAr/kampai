@@ -4,6 +4,7 @@ import App from './components/app/App.vue';
 
 
 import BarList from './components/bar/BarList.vue';
+import BarView from './components/bar/BarView.vue';
 
 import Register from './components/auth/Register.vue';
 import Login from './components/auth/Login.vue';
@@ -38,6 +39,16 @@ let routes = [
 
 
         },
+
+        {
+            path : '/bar',
+            name : 'bar_view',
+            components:
+            {
+                default:BarView,
+            }
+        },
+
         {
             path: '/login',
             name: 'login',
