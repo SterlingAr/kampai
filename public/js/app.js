@@ -15692,10 +15692,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a({
     },
 
     data: function data() {
-        return {
-            bbox: ''
-
-        };
+        return {};
     },
 
 
@@ -54063,9 +54060,48 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
-// import NavCustom from './NavCustom.vue'
 
 
 
@@ -54113,94 +54149,128 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "side-menu" }, [
-      _c(
-        "nav",
-        { staticClass: "navbar navbar-default", attrs: { role: "navigation" } },
-        [
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass: "navbar navbar-inverse navbar-fixed-top",
+        attrs: { role: "navigation" }
+      },
+      [
+        _c("div", { staticClass: "container-fluid" }, [
           _c("div", { staticClass: "navbar-header" }, [
-            _c("div", { staticClass: "brand-wrapper" }, [
-              _vm._m(0, false, false),
-              _vm._v(" "),
-              _c("div", { staticClass: "brand-name-wrapper" }, [
-                _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
-                  _vm._v(
-                    "\n                                                        " +
-                      _vm._s(_vm.appTitle.title) +
-                      "\n                                                        "
-                  ),
-                  _c("span", { staticClass: "glyphicon glyphicon-user" })
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._m(1, false, false),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "panel-collapse collapse",
-                  attrs: { id: "search" }
-                },
-                [
-                  _c("div", { staticClass: "panel-body" }, [
-                    _c(
-                      "form",
-                      { staticClass: "navbar-form", attrs: { role: "search" } },
-                      [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("input", {
-                            staticClass: "form-control",
-                            attrs: { type: "text", placeholder: "Search" },
-                            on: { input: _vm.updateKeywords }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "router-link",
-                          { attrs: { to: { name: "bar_list" } } },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-default ",
-                                attrs: { type: "submit" },
-                                on: { click: _vm.updateBarsAction }
-                              },
-                              [
-                                _c("span", {
-                                  staticClass: "glyphicon glyphicon-ok"
-                                })
-                              ]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  ])
-                ]
-              )
-            ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "side-menu-container" }, [
-        _c(
-          "div",
-          { staticClass: "panel-body" },
-          [
-            _c("router-view"),
+            _vm._m(0, false, false),
             _vm._v(" "),
-            _c("router-view", { attrs: { name: "bar_list" } })
-          ],
-          1
-        )
-      ])
-    ]),
+            _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
+              _vm._v(_vm._s(_vm.appTitle.title))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "navbar-collapse collapse" }, [
+            _c(
+              "form",
+              {
+                staticClass: "navbar-form navbar-right",
+                attrs: { role: "search" }
+              },
+              [
+                _c("div", { staticClass: "form-group has-feedback" }, [
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "searchbox",
+                      type: "text",
+                      placeholder: "Search"
+                    },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k($event.keyCode, "enter", 13, $event.key)
+                        ) {
+                          return null
+                        }
+                        _vm.updateBarsAction($event)
+                      },
+                      input: _vm.updateKeywords
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "fa fa-search form-control-feedback",
+                      attrs: { id: "searchicon" }
+                    },
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: { name: "bar_list" } } },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-default",
+                              attrs: { type: "submit" }
+                            },
+                            [
+                              _c("span", { staticClass: "sr-only" }, [
+                                _vm._v("Search...")
+                              ])
+                            ]
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(1, false, false)
+          ])
+        ])
+      ]
+    ),
     _vm._v(" "),
-    _c("div", [_c("div", { staticClass: "side-body" }, [_c("osm-map")], 1)])
+    _c(
+      "div",
+      { attrs: { id: "container" } },
+      [
+        _c("div", { attrs: { id: "sidebar" } }, [
+          _c("div", { staticClass: "sidebar-wrapper" }, [
+            _c(
+              "div",
+              { staticClass: "panel panel-default", attrs: { id: "features" } },
+              [
+                _vm._m(2, false, false),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "sidebar-table" },
+                  [
+                    _c("router-view"),
+                    _vm._v(" "),
+                    _c("router-view", { attrs: { name: "bar-list" } }),
+                    _vm._v(" "),
+                    _c("router-view", { attrs: { name: "bar_view" } })
+                  ],
+                  1
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("osm-map")
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _vm._m(3, false, false),
+    _vm._v(" "),
+    _vm._m(4, false, false)
   ])
 }
 var staticRenderFns = [
@@ -54208,17 +54278,176 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "navbar-icon-container" }, [
+      _c(
+        "a",
+        {
+          staticClass: "navbar-icon pull-right visible-xs",
+          attrs: { href: "#", id: "nav-btn" }
+        },
+        [_c("i", { staticClass: "fa fa-bars fa-lg white" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "navbar-icon pull-right visible-xs",
+          attrs: { href: "#", id: "sidebar-toggle-btn" }
+        },
+        [_c("i", { staticClass: "fa fa-search fa-lg white" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "nav navbar-nav" }, [
+      _c("li", { staticClass: "divider hidden-xs" }),
+      _vm._v(" "),
+      _c("li", [
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "#",
+              "data-toggle": "collapse",
+              "data-target": ".navbar-collapse.in",
+              id: "login-btn"
+            }
+          },
+          [_c("i", { staticClass: "fa fa-user" }), _vm._v("  Iniciar sesión")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "#",
+              "data-toggle": "collapse",
+              "data-target": ".navbar-collapse.in",
+              id: "feature-btn"
+            }
+          },
+          [_c("i", { staticClass: "fa fa-user" }), _vm._v("  Feature")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "hidden-xs" }, [
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "#",
+              "data-toggle": "collapse",
+              "data-target": ".navbar-collapse.in",
+              id: "list-btn"
+            }
+          },
+          [_c("i", { staticClass: "fa fa-beer white" }), _vm._v("  Bares")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c("h3", { staticClass: "panel-title" }, [
+        _vm._v("Bares encontrados\n                            "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-xs btn-default pull-right",
+            attrs: { type: "button", id: "sidebar-hide-btn" }
+          },
+          [_c("i", { staticClass: "fa fa-chevron-left" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
-      "button",
-      { staticClass: "navbar-toggle", attrs: { type: "button" } },
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: { id: "loginModal", tabindex: "-1", role: "dialog" }
+      },
       [
-        _c("span", { staticClass: "sr-only" }, [_vm._v("Toggle navigation")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "icon-bar" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "icon-bar" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "icon-bar" })
+        _c("div", { staticClass: "modal-dialog modal-sm" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: {
+                    type: "button",
+                    "data-dismiss": "modal",
+                    "aria-hidden": "true"
+                  }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h4", { staticClass: "modal-title" }, [_vm._v("Login")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("form", { attrs: { id: "contact-form" } }, [
+                _c("fieldset", [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "name" } }, [
+                      _vm._v("Username:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "username" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "email" } }, [
+                      _vm._v("Password:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: { type: "password", id: "password" }
+                    })
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Cancel")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "submit", "data-dismiss": "modal" }
+                },
+                [_vm._v("Login")]
+              )
+            ])
+          ])
+        ])
       ]
     )
   },
@@ -54227,16 +54456,52 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "a",
+      "div",
       {
-        staticClass: "btn btn-default",
-        attrs: {
-          "data-toggle": "collapse",
-          href: "#search",
-          id: "search-trigger"
-        }
+        staticClass: "modal fade",
+        attrs: { id: "featureModal", tabindex: "-1", role: "dialog" }
       },
-      [_c("span", { staticClass: "glyphicon glyphicon-search" })]
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: {
+                    type: "button",
+                    "data-dismiss": "modal",
+                    "aria-hidden": "true"
+                  }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h4", {
+                staticClass: "modal-title text-primary",
+                attrs: { id: "feature-title" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", {
+              staticClass: "modal-body",
+              attrs: { id: "feature-info" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              )
+            ])
+          ])
+        ])
+      ]
     )
   }
 ]
@@ -54258,6 +54523,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -54314,44 +54585,42 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    _vm._l(_vm.bars, function(bar) {
-      return _c("ul", { staticClass: "nav navbar-nav" }, [
-        _c("li", [
-          _c(
-            "a",
-            {
-              staticClass:
-                "list-group-item list-group-item-action flex-column align-items-start",
-              attrs: { href: "#" }
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "d-flex w-100 justify-content-between" },
-                [
-                  _c("h5", { staticClass: "mb-1" }, [
-                    _vm._v(_vm._s(bar.tags.name))
-                  ]),
-                  _vm._v(" "),
-                  _c("small", { staticClass: "text-muted" }, [
-                    _vm._v("3 days ago")
-                  ])
-                ]
-              ),
+  return _c("div", [
+    _c(
+      "table",
+      { staticClass: "table table-hover", attrs: { id: "feature-list" } },
+      [
+        _vm._m(0, false, false),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          { staticClass: "list" },
+          _vm._l(_vm.bars, function(bar) {
+            return _c("tr", [
+              _c("td", { staticClass: "fa fa-beer black" }),
               _vm._v(" "),
-              _c("p", { staticClass: "mb-1" }, [
-                _vm._v(_vm._s(bar.tags.description))
-              ])
-            ]
-          )
-        ])
-      ])
-    })
-  )
+              _c("td", [_vm._v(_vm._s(bar.tags.name))])
+            ])
+          })
+        )
+      ]
+    )
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Tipo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Nombre")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -55139,11 +55408,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /**
@@ -55172,7 +55436,13 @@ var mapBounds = void 0;
     methods: {
 
         initMap: function initMap() {
-            this.mymap = L.map('map').setView([43.30932, -1.97711], 13);
+
+            this.mymap = L.map("mapid", {
+                center: [43.30932, -1.97711],
+                zoomControl: false,
+                attributionControl: false
+            }).setView([43.30932, -1.97711], 13);;
+
             L.tileLayer('https://api.mapbox.com/styles/v1/marborav/cjb7ndf2q3olg2qk50cpyzvy0/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
                 maxZoom: 20,
@@ -55180,22 +55450,53 @@ var mapBounds = void 0;
                 accessToken: 'pk.eyJ1IjoibWFyYm9yYXYiLCJhIjoiY2o5eDJrbTV0N2NncjJxcXljeDR3cXNhMiJ9.igTamTLm4nLiAN6w8NFS6Q'
             }).addTo(this.mymap);
 
+            L.control.zoom({
+                position: "bottomright"
+            }).addTo(this.mymap);
+
             this.mymap.on('moveend', this.currentBBOX);
             this.currentBBOX();
 
-            var routingInstance = L.Routing.control({
+            L.Routing.control({
                 waypoints: [L.latLng(43.3258095, -1.9726347), L.latLng(43.3280095, -1.9705863)],
-                altLineOptions: {
-                    styles: [{ color: 'black', opacity: 0.15, weight: 9 }, { color: 'white', opacity: 0.8, weight: 6 }, { color: 'blue', opacity: 0.5, weight: 2 }]
-                },
                 router: L.Routing.mapbox('pk.eyJ1IjoibWFyYm9yYXYiLCJhIjoiY2o5eDJrbTV0N2NncjJxcXljeDR3cXNhMiJ9.igTamTLm4nLiAN6w8NFS6Q', {
                     profile: 'mapbox/walking',
                     language: 'es'
 
                 })
+
             }).addTo(this.mymap);
 
-            routingInstance.addTo(this.mymap);
+            L.control.locate({
+                position: "bottomright",
+                drawCircle: true,
+                follow: true,
+                setView: true,
+                keepCurrentZoomLevel: true,
+                markerStyle: {
+                    weight: 1,
+                    opacity: 0.8,
+                    fillOpacity: 0.8
+                },
+                circleStyle: {
+                    weight: 1,
+                    clickable: false
+                },
+                icon: "fa fa-location-arrow",
+                metric: false,
+                strings: {
+                    title: "My location",
+                    popup: "You are within {distance} {unit} from this point",
+                    outsideMapBoundsMsg: "You seem located outside the boundaries of the map"
+                },
+                locateOptions: {
+                    maxZoom: 18,
+                    watch: true,
+                    enableHighAccuracy: true,
+                    maximumAge: 10000,
+                    timeout: 10000
+                }
+            }).addTo(this.mymap);
         },
 
         currentBBOX: function currentBBOX() {
@@ -55213,29 +55514,12 @@ var mapBounds = void 0;
 
             var bbox = s + ',' + w + ',' + n + ',' + e;
 
-            // this.$parent.bbox = s + ',' + w + ',' + n + ',' + e;
-
             this.$store.dispatch('updateBBOXAction', bbox);
-
-            console.log(this.$parent.bbox);
         }
 
     },
 
     computed: {}
-
-    /**
-     * MAP FUNCTIONS
-     */
-    // /*MAP section BEGIN*/
-    // let bbox,mapBounds;
-    // function initmap()
-    // {
-    //
-    // }
-    /* To get the bounding box for the query, it should be in this order
-       (s,w,n,e)
-     */
 
 });
 
@@ -55247,7 +55531,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "map" } })
+  return _c("div", { attrs: { id: "mapid" } })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55482,6 +55766,10 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //

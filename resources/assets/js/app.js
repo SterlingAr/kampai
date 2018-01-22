@@ -32,7 +32,6 @@ Vue.component('app', require('./components/app/App.vue'));
 
 Vue.component('osm-map', require('./components/osm/OsmMap.vue'));
 
-
 Vue.component('bar-list', require('./components/bar/BarList.vue'));
 Vue.component('bar-view', require('./components/bar/BarView.vue'));
 
@@ -56,7 +55,6 @@ const app = new Vue({
 
     data () {
         return {
-            bbox: '',
 
 
         }

@@ -2,21 +2,27 @@
     <div>
 
 
-        <ul v-for="bar in bars" class="nav navbar-nav">
-            <li>
+            <table class="table table-hover" id="feature-list">
+                <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Nombre</th>
+                </tr>
+                </thead>
 
-                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{bar.tags.name}}</h5>
-                        <small class="text-muted">3 days ago</small>
-                    </div>
-                    <p class="mb-1">{{bar.tags.description}}</p>
-                    <!--<small class="text-muted">{{ bar.tags.addr.street }}</small>-->
-                </a>
+                <tbody  class="list">
+                    <tr v-for="bar in bars">
+                        <td class="fa fa-beer black"></td>
+                        <td>{{bar.tags.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--<ul v-for="bar in bars">-->
 
+                <!--<li>{{bar.tags.name}}</li>-->
 
-            </li>
-        </ul>
+            <!--</ul>-->
+
 
 
     </div>
