@@ -37,6 +37,9 @@ Route::resource('users.bars', 'Api\Users\UserBarController', ['only' => [
     'index'
 ]]);
 
+Route::resource('roles', 'Api\Role\RoleController');
+Route::resource('permissions', 'Api\Permission\PermissionController');
+
 
 
 /**
