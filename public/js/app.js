@@ -53815,7 +53815,11 @@ var actions = {
 
 "use strict";
 var state = {
-    bars: [''],
+    bars: [{
+        tags: {
+            name: 'Fulencio'
+        }
+    }],
     test: 'Hellow from bars_storage'
 };
 
@@ -54553,7 +54557,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 
 
@@ -54563,6 +54566,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     mounted: function mounted() {
         console.log('*DEBUGGER* : Bars component created');
+        console.log(bars.length);
     },
     data: function data() {
         return {};
@@ -54592,17 +54596,29 @@ var render = function() {
       [
         _vm._m(0, false, false),
         _vm._v(" "),
-        _c(
-          "tbody",
-          { staticClass: "list" },
-          _vm._l(_vm.bars, function(bar) {
-            return _c("tr", [
-              _c("td", { staticClass: "fa fa-beer black" }),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(bar.tags.name))])
+        _vm.bars.length
+          ? _c(
+              "tbody",
+              { staticClass: "list" },
+              _vm._l(_vm.bars, function(bar) {
+                return _c(
+                  "tr",
+                  [
+                    _c("router-link", { attrs: { to: _vm.bar_view } }, [
+                      _c("td", { staticClass: "fa fa-beer black" }),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(bar.tags.name))])
+                    ])
+                  ],
+                  1
+                )
+              })
+            )
+          : _c("div", [
+              _c("p", [
+                _vm._v("Ningún bar coinicide con tu criterio de búsqueda.")
+              ])
             ])
-          })
-        )
       ]
     )
   ])
@@ -55450,9 +55466,10 @@ var mapBounds = void 0;
                 accessToken: 'pk.eyJ1IjoibWFyYm9yYXYiLCJhIjoiY2o5eDJrbTV0N2NncjJxcXljeDR3cXNhMiJ9.igTamTLm4nLiAN6w8NFS6Q'
             }).addTo(this.mymap);
 
-            L.control.zoom({
-                position: "bottomright"
-            }).addTo(this.mymap);
+            //
+            //                L.control.zoom({
+            //                    position: "bottomright"
+            //                }).addTo(this.mymap);
 
             this.mymap.on('moveend', this.currentBBOX);
             this.currentBBOX();
@@ -55467,36 +55484,37 @@ var mapBounds = void 0;
 
             }).addTo(this.mymap);
 
-            L.control.locate({
-                position: "bottomright",
-                drawCircle: true,
-                follow: true,
-                setView: true,
-                keepCurrentZoomLevel: true,
-                markerStyle: {
-                    weight: 1,
-                    opacity: 0.8,
-                    fillOpacity: 0.8
-                },
-                circleStyle: {
-                    weight: 1,
-                    clickable: false
-                },
-                icon: "fa fa-location-arrow",
-                metric: false,
-                strings: {
-                    title: "My location",
-                    popup: "You are within {distance} {unit} from this point",
-                    outsideMapBoundsMsg: "You seem located outside the boundaries of the map"
-                },
-                locateOptions: {
-                    maxZoom: 18,
-                    watch: true,
-                    enableHighAccuracy: true,
-                    maximumAge: 10000,
-                    timeout: 10000
-                }
-            }).addTo(this.mymap);
+            //                L.control.locate({
+            //                    position: "bottomright",
+            //                    drawCircle: true,
+            //                    follow: true,
+            //                    setView: true,
+            //                    keepCurrentZoomLevel: true,
+            //                    markerStyle: {
+            //                        weight: 1,
+            //                        opacity: 0.8,
+            //                        fillOpacity: 0.8
+            //                    },
+            //                    circleStyle: {
+            //                        weight: 1,
+            //                        clickable: false
+            //                    },
+            //                    icon: "fa fa-location-arrow",
+            //                    metric: false,
+            //                    strings: {
+            //                        title: "My location",
+            //                        popup: "You are within {distance} {unit} from this point",
+            //                        outsideMapBoundsMsg: "You seem located outside the boundaries of the map"
+            //                    },
+            //                    locateOptions: {
+            //                        maxZoom: 18,
+            //                        watch: true,
+            //                        enableHighAccuracy: true,
+            //                        maximumAge: 10000,
+            //                        timeout: 10000
+            //                    }
+            //                }).addTo(this.mymap);
+
         },
 
         currentBBOX: function currentBBOX() {

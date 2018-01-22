@@ -1,6 +1,12 @@
 const state =
 {
-    bars: [''],
+    bars: [
+        {
+            tags: {
+                name: 'Fulencio'
+            }
+        }
+    ],
     test: 'Hellow from bars_storage'
 }
 

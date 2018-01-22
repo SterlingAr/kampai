@@ -49,10 +49,10 @@
                     accessToken: 'pk.eyJ1IjoibWFyYm9yYXYiLCJhIjoiY2o5eDJrbTV0N2NncjJxcXljeDR3cXNhMiJ9.igTamTLm4nLiAN6w8NFS6Q'
                 }).addTo(this.mymap);
 
-
-                L.control.zoom({
-                    position: "bottomright"
-                }).addTo(this.mymap);
+//
+//                L.control.zoom({
+//                    position: "bottomright"
+//                }).addTo(this.mymap);
 
                 this.mymap.on('moveend', this.currentBBOX);
                 this.currentBBOX();
@@ -71,36 +71,36 @@
                 }).addTo(this.mymap);
 
 
-                L.control.locate({
-                    position: "bottomright",
-                    drawCircle: true,
-                    follow: true,
-                    setView: true,
-                    keepCurrentZoomLevel: true,
-                    markerStyle: {
-                        weight: 1,
-                        opacity: 0.8,
-                        fillOpacity: 0.8
-                    },
-                    circleStyle: {
-                        weight: 1,
-                        clickable: false
-                    },
-                    icon: "fa fa-location-arrow",
-                    metric: false,
-                    strings: {
-                        title: "My location",
-                        popup: "You are within {distance} {unit} from this point",
-                        outsideMapBoundsMsg: "You seem located outside the boundaries of the map"
-                    },
-                    locateOptions: {
-                        maxZoom: 18,
-                        watch: true,
-                        enableHighAccuracy: true,
-                        maximumAge: 10000,
-                        timeout: 10000
-                    }
-                }).addTo(this.mymap);
+//                L.control.locate({
+//                    position: "bottomright",
+//                    drawCircle: true,
+//                    follow: true,
+//                    setView: true,
+//                    keepCurrentZoomLevel: true,
+//                    markerStyle: {
+//                        weight: 1,
+//                        opacity: 0.8,
+//                        fillOpacity: 0.8
+//                    },
+//                    circleStyle: {
+//                        weight: 1,
+//                        clickable: false
+//                    },
+//                    icon: "fa fa-location-arrow",
+//                    metric: false,
+//                    strings: {
+//                        title: "My location",
+//                        popup: "You are within {distance} {unit} from this point",
+//                        outsideMapBoundsMsg: "You seem located outside the boundaries of the map"
+//                    },
+//                    locateOptions: {
+//                        maxZoom: 18,
+//                        watch: true,
+//                        enableHighAccuracy: true,
+//                        maximumAge: 10000,
+//                        timeout: 10000
+//                    }
+//                }).addTo(this.mymap);
 
 
 

@@ -10,19 +10,18 @@
                 </tr>
                 </thead>
 
-                <tbody  class="list">
+                <tbody  class="list"  v-if="bars.length">
                     <tr v-for="bar in bars">
+                        <router-link :to="bar_view">
                         <td class="fa fa-beer black"></td>
                         <td>{{bar.tags.name}}</td>
+                        </router-link>
                     </tr>
                 </tbody>
+                <div v-else>
+                    <p>Ningún bar coinicide con tu criterio de búsqueda.</p>
+                </div>
             </table>
-            <!--<ul v-for="bar in bars">-->
-
-                <!--<li>{{bar.tags.name}}</li>-->
-
-            <!--</ul>-->
-
 
 
     </div>
@@ -39,7 +38,7 @@
 
         mounted() {
             console.log('*DEBUGGER* : Bars component created');
-
+            console.log(bars.length);
         },
 
         data () {
