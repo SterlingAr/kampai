@@ -39,14 +39,15 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        $rules =[
-            'name' =>'required'
-        ];
-        $this->validate($request,$rules);
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+        $permission=new Permission();
 
-        $data=$request->all();
-
-        $permission=Permission::create($data);
+        if ($request->has('name')) {
+            $permission->name = $request->name;
+        }
+        $permission->save();
 
         return response()->json(['data'=>$permission],201);
     }
