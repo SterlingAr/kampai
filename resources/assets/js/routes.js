@@ -46,6 +46,10 @@ let routes = [
             components:
             {
                 default:BarView,
+            },
+
+            props:{
+                default:true,
             }
         },
 

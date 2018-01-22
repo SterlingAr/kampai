@@ -12,7 +12,9 @@
 
                 <tbody  class="list"  v-if="bars.length">
                     <tr v-for="bar in bars">
-                        <router-link :to="{name: 'bar_view'}" id="feature-btn">
+                        <router-link :to="{name: 'bar_view', params:{
+                            showModal: true
+                        }}" id="feature-btn">
                         <td class="fa fa-beer black"></td>
                         <td>{{bar.tags.name}}</td>
                         </router-link>

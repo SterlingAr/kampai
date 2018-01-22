@@ -62452,6 +62452,10 @@ var routes = [{
         name: 'bar_view',
         components: {
             default: __WEBPACK_IMPORTED_MODULE_3__components_bar_BarView_vue___default.a
+        },
+
+        props: {
+            default: true
         }
     }, {
         path: '/login',
@@ -62586,18 +62590,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -62614,9 +62606,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return {
 
             appObject: {
-                title: 'KAMPAI',
-                showCustomModal: true
-            }
+                title: 'KAMPAI'
+            },
+            showModal: false
 
         };
     },
@@ -62632,7 +62624,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
 
         toggleModal: function toggleModal() {
-            this.showCustomModel = true;
+            this.showModal = true;
         }
 
     }),
@@ -62754,7 +62746,11 @@ var render = function() {
                         "data-target": ".navbar-collapse.in",
                         id: "feature-btn"
                       },
-                      on: { click: _vm.toggleModal }
+                      on: {
+                        click: function($event) {
+                          _vm.showModal = true
+                        }
+                      }
                     },
                     [
                       _c("i", { staticClass: "fa fa-user" }),
@@ -62803,85 +62799,6 @@ var render = function() {
           _c("osm-map")
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "modal",
-        {
-          attrs: { show: _vm.showCustomModal, effect: "fade", width: "400" },
-          on: {
-            "update:show": function($event) {
-              _vm.showCustomModal = $event
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "modal-header",
-              attrs: { slot: "modal-header" },
-              slot: "modal-header"
-            },
-            [
-              _c("h4", { staticClass: "modal-title" }, [
-                _c("i", [_vm._v("Custom")]),
-                _vm._v(" "),
-                _c("code", [_vm._v("Modal")]),
-                _vm._v(" "),
-                _c("b", [_vm._v("Title")])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "modal-body",
-              attrs: { slot: "modal-body" },
-              slot: "modal-body"
-            },
-            [_vm._v("...")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "modal-footer",
-              attrs: { slot: "modal-footer" },
-              slot: "modal-footer"
-            },
-            [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.showCustomModal = false
-                    }
-                  }
-                },
-                [_vm._v("Exit")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-success",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.showCustomModal = false
-                    }
-                  }
-                },
-                [_vm._v("Custom Save")]
-              )
-            ]
-          )
-        ]
       ),
       _vm._v(" "),
       _vm._m(4, false, false),
@@ -63103,6 +63020,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -63160,7 +63079,15 @@ var render = function() {
                     _c(
                       "router-link",
                       {
-                        attrs: { to: { name: "bar_view" }, id: "feature-btn" }
+                        attrs: {
+                          to: {
+                            name: "bar_view",
+                            params: {
+                              showModal: true
+                            }
+                          },
+                          id: "feature-btn"
+                        }
                       },
                       [
                         _c("td", { staticClass: "fa fa-beer black" }),
@@ -63225,16 +63152,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -63268,7 +63185,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "modal",
+    {
+      attrs: { show: _vm.showModal },
+      on: {
+        "update:show": function($event) {
+          _vm.showModal = $event
+        }
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal-header",
+          attrs: { slot: "modal-header" },
+          slot: "modal-header"
+        },
+        [_c("h4", { staticClass: "modal-title" }, [_vm._v("Modal title")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal-body",
+          attrs: { slot: "modal-body" },
+          slot: "modal-body"
+        },
+        [_vm._v("...")]
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

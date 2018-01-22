@@ -30,7 +30,7 @@
                         <li class="divider hidden-xs"></li>
                         <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Iniciar sesión</a></li>
 
-                        <li><a href="#" @click="toggleModal" data-toggle="collapse" data-target=".navbar-collapse.in" id="feature-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Feature</a></li>
+                        <li><a href="#"  data-toggle="collapse" data-target=".navbar-collapse.in" id="feature-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Feature</a></li>
 
                         <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-beer white"></i>&nbsp;&nbsp;Bares</a></li>
                     </ul>
@@ -58,18 +58,6 @@
         </div>
 
 
-        <modal :show.sync="showCustomModal" effect="fade" width="400">
-            <div slot="modal-header" class="modal-header">
-                <h4 class="modal-title">
-                    <i>Custom</i> <code>Modal</code> <b>Title</b>
-                </h4>
-            </div>
-            <div slot="modal-body" class="modal-body">...</div>
-            <div slot="modal-footer" class="modal-footer">
-                <button type="button" class="btn btn-default" @click="showCustomModal = false">Exit</button>
-                <button type="button" class="btn btn-success" @click="showCustomModal = false">Custom Save</button>
-            </div>
-        </modal>
 
 
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
@@ -127,8 +115,9 @@
 
                 appObject: {
                     title: 'KAMPAI',
-                    showCustomModal: true,
-                }
+                },
+                showModal: true,
+
 
             }
         },
@@ -154,7 +143,7 @@
 
             toggleModal: function ()
             {
-                this.showCustomModel = true;
+                this.showModal = true;
             }
 
 
