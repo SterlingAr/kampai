@@ -9,12 +9,12 @@
                     <th>Nombre</th>
                 </tr>
                 </thead>
-
                 <tbody  class="list"  v-if="bars.length">
                     <tr v-for="bar in bars">
                         <router-link :to="{name: 'bar_view', params:{
-                            showModal: true
-                        }}" id="feature-btn">
+                            showModal: true,
+                            bar: 'bar'
+                        }}">
                         <td class="fa fa-beer black"></td>
                         <td>{{bar.tags.name}}</td>
                         </router-link>
@@ -39,8 +39,7 @@
         name: 'bar_list',
 
         mounted() {
-            console.log('*DEBUGGER* : Bars component created');
-            console.log(bars.length);
+
         },
 
         data () {

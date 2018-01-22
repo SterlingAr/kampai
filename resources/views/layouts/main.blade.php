@@ -32,7 +32,6 @@
 
     {{--<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css">--}}
     {{--<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css">--}}
-    <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css">
     <link rel="stylesheet" href="{{URL::asset('assets/bootleaf/css/app.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/leaflet/css/main.css')}}">
     {{--<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon-76.png">--}}

@@ -7,7 +7,9 @@ const state =
             }
         }
     ],
-    test: 'Hellow from bars_storage'
+
+    bars_resource_uri: ''
+
 }
 
 const getters =
@@ -37,26 +39,34 @@ const mutations =
 const actions =
 {
 
-    updateBarsAction: ({state,commit,rootState}) =>
+    updateBarsAction: ({state,commit,rootState,dispatch}) =>
     {
-        console.log(state.test);
-        console.log(rootState.test);
 
+        dispatch('updateBBOXAction');
         let api_base_uri = rootState.api_base_uri;
         let keywords = rootState.app_storage.keywords;
         let bbox = rootState.map_storage.bbox;
 
-        // let bars = bars_resource(api_base_uri,keywords,bbox);
+        try
+        {
+            // if (api_base_uri === '') throw "EXCEPTION <api_base_uri> cannot be empty!";
+            if (keywords === '') throw "EXCEPTION <keywords> cannot be empty";
+            if (bbox === '') throw "EXCEPTION <bbox> cannot be empty";
+        }
+        catch (error)
+        {
+            console.log(error)
+        }
+        finally
+        {
 
-        axios.get(api_base_uri+'/api/bars/' + keywords + "/" + bbox)
+        state.bars_resource_uri = api_base_uri+'/api/bars/' + keywords + "/" + bbox;
+        axios.get(state.bars_resource_uri)
             .then((response) =>
             {
-                console.log(response);
-                console.log(api_base_uri+'/api/bars/' + keywords + "/" + bbox);
-                // bars = response.data.data.elements;
-                let bars = [];
 
-                bars = response.data.elements;
+
+                let bars = response.data.elements;
 
                 console.log(bars);
                 commit('updateBars', bars);
@@ -68,7 +78,7 @@ const actions =
                 console.log(error);
             });
 
-
+        }
 
     }
 

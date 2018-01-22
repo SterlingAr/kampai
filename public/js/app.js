@@ -490,7 +490,7 @@ module.exports = function normalizeComponent (
 /* unused harmony export Store */
 /* unused harmony export install */
 /* unused harmony export mapState */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return mapMutations; });
+/* unused harmony export mapMutations */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapGetters; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapActions; });
 /* unused harmony export createNamespacedHelpers */
@@ -62215,8 +62215,11 @@ var store = new __WEBPACK_IMPORTED_MODULE_2_vuex__["a" /* default */].Store({
 
 "use strict";
 var state = {
-
-    bbox: ''
+    MAP_API_PROVIDER: 'https://api.mapbox.com/styles/v1/marborav/cjb7ndf2q3olg2qk50cpyzvy0/tiles/256/{z}/{x}/{y}?access_token=',
+    API_TOKEN: 'pk.eyJ1IjoibWFyYm9yYXYiLCJhIjoiY2o5eDJrbTV0N2NncjJxcXljeDR3cXNhMiJ9.igTamTLm4nLiAN6w8NFS6Q',
+    MAP_STYLE: 'mapbox.streets',
+    bbox: '',
+    map: ''
 
 };
 
@@ -62224,6 +62227,10 @@ var getters = {
 
     currentBBOX: function currentBBOX(state) {
         return state.bbox;
+    },
+
+    currentMap: function currentMap(state) {
+        return state.map;
     }
 
 };
@@ -62232,16 +62239,60 @@ var mutations = {
 
     updateBBOX: function updateBBOX(state, payload) {
         state.bbox = payload;
+    },
+
+    updateMap: function updateMap(state, payload) {
+        state.map = payload;
     }
 
 };
 
 var actions = {
-
-    updateBBOXAction: function updateBBOXAction(_ref, payload) {
+    //on call, update bbox state value .
+    updateBBOXAction: function updateBBOXAction(_ref) {
         var commit = _ref.commit;
 
-        commit('updateBBOX', payload);
+        var s = void 0,
+            w = void 0,
+            n = void 0,
+            e = void 0,
+            mapBounds = void 0;
+        mapBounds = state.map.getBounds();
+
+        s = mapBounds['_southWest']['lat'];
+        w = mapBounds['_southWest']['lng'];
+        n = mapBounds['_northEast']['lat'];
+        e = mapBounds['_northEast']['lng'];
+
+        var bbox = s + ',' + w + ',' + n + ',' + e;
+        commit('updateBBOX', bbox);
+    },
+
+    updateMapAction: function updateMapAction(_ref2, payload) {
+        var commit = _ref2.commit;
+
+        commit('updateMap', payload);
+    },
+
+    //starts the map, all initial values should be handled with this function
+    initMapAction: function initMapAction(_ref3) {
+        var commit = _ref3.commit;
+
+
+        var mapOptions = {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            maxZoom: 20,
+            id: state.MAP_STYLE,
+            accessToken: state.API_TOKEN
+        };
+
+        var map = L.map("mapid", {
+            center: [43.3213337, -1.976819]
+        }).setView([43.3213337, -1.976819], 16);
+
+        L.tileLayer(state.MAP_API_PROVIDER + '{accessToken}', mapOptions).addTo(map);
+
+        commit('updateMap', map);
     }
 
 };
@@ -62306,7 +62357,9 @@ var state = {
             name: 'Fulencio'
         }
     }],
-    test: 'Hellow from bars_storage'
+
+    bars_resource_uri: ''
+
 };
 
 var getters = {
@@ -62333,30 +62386,34 @@ var actions = {
     updateBarsAction: function updateBarsAction(_ref) {
         var state = _ref.state,
             commit = _ref.commit,
-            rootState = _ref.rootState;
+            rootState = _ref.rootState,
+            dispatch = _ref.dispatch;
 
-        console.log(state.test);
-        console.log(rootState.test);
 
+        dispatch('updateBBOXAction');
         var api_base_uri = rootState.api_base_uri;
         var keywords = rootState.app_storage.keywords;
         var bbox = rootState.map_storage.bbox;
 
-        // let bars = bars_resource(api_base_uri,keywords,bbox);
-
-        axios.get(api_base_uri + '/api/bars/' + keywords + "/" + bbox).then(function (response) {
-            console.log(response);
-            console.log(api_base_uri + '/api/bars/' + keywords + "/" + bbox);
-            // bars = response.data.data.elements;
-            var bars = [];
-
-            bars = response.data.elements;
-
-            console.log(bars);
-            commit('updateBars', bars);
-        }).catch(function (error) {
+        try {
+            // if (api_base_uri === '') throw "EXCEPTION <api_base_uri> cannot be empty!";
+            if (keywords === '') throw "EXCEPTION <keywords> cannot be empty";
+            if (bbox === '') throw "EXCEPTION <bbox> cannot be empty";
+        } catch (error) {
             console.log(error);
-        });
+        } finally {
+
+            state.bars_resource_uri = api_base_uri + '/api/bars/' + keywords + "/" + bbox;
+            axios.get(state.bars_resource_uri).then(function (response) {
+
+                var bars = response.data.elements;
+
+                console.log(bars);
+                commit('updateBars', bars);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 
     /**
@@ -62590,6 +62647,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -62608,15 +62669,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             appObject: {
                 title: 'KAMPAI'
             },
-            showModal: false
+            showModal: true
 
         };
     },
 
 
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["d" /* mapMutations */])([
-        // 'changeTitle'
-    ]), Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])(['changeTitle', 'updateBarsAction']), {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])(['changeTitle', 'updateBarsAction']), {
 
         updateKeywords: function updateKeywords(event) {
 
@@ -62660,7 +62719,7 @@ var render = function() {
           attrs: { role: "navigation" }
         },
         [
-          _c("div", { staticClass: "container-fluid" }, [
+          _c("div", [
             _c("div", { staticClass: "navbar-header" }, [
               _vm._m(0, false, false),
               _vm._v(" "),
@@ -62673,94 +62732,52 @@ var render = function() {
               _c(
                 "form",
                 {
-                  staticClass: "navbar-form navbar-right",
+                  staticClass: "navbar-form navbar-right ",
                   attrs: { role: "search" }
                 },
                 [
-                  _c("div", { staticClass: "form-group has-feedback" }, [
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "searchbox",
-                        type: "text",
-                        placeholder: "Search"
-                      },
-                      on: {
-                        keyup: function($event) {
-                          if (
-                            !("button" in $event) &&
-                            _vm._k($event.keyCode, "enter", 13, $event.key)
-                          ) {
-                            return null
-                          }
-                          _vm.updateBarsAction($event)
-                        },
-                        input: _vm.updateKeywords
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass: "fa fa-search form-control-feedback",
-                        attrs: { id: "searchicon" }
-                      },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { to: { name: "bar_list" } } },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-default",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _c("span", { staticClass: "sr-only" }, [
-                                  _vm._v("Search...")
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  ])
+                  _c(
+                    "div",
+                    { staticClass: "input-group form-group has-feedback" },
+                    [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Search" },
+                        on: { input: _vm.updateKeywords }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "input-group-btn" },
+                        [
+                          _c(
+                            "router-link",
+                            { attrs: { to: { name: "bar_list" } } },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-default",
+                                  attrs: { type: "submit" },
+                                  on: { click: _vm.updateBarsAction }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "glyphicon glyphicon-search"
+                                  })
+                                ]
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
                 ]
               ),
               _vm._v(" "),
-              _c("ul", { staticClass: "nav navbar-nav" }, [
-                _c("li", { staticClass: "divider hidden-xs" }),
-                _vm._v(" "),
-                _vm._m(1, false, false),
-                _vm._v(" "),
-                _c("li", [
-                  _c(
-                    "a",
-                    {
-                      attrs: {
-                        href: "#",
-                        "data-toggle": "collapse",
-                        "data-target": ".navbar-collapse.in",
-                        id: "feature-btn"
-                      },
-                      on: {
-                        click: function($event) {
-                          _vm.showModal = true
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-user" }),
-                      _vm._v("  Feature")
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _vm._m(2, false, false)
-              ])
+              _vm._m(1, false, false)
             ])
           ])
         ]
@@ -62779,7 +62796,7 @@ var render = function() {
                   attrs: { id: "features" }
                 },
                 [
-                  _vm._m(3, false, false),
+                  _vm._m(2, false, false),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -62801,7 +62818,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm._m(4, false, false),
+      _vm._m(3, false, false),
       _vm._v(" "),
       _c("router-view", { attrs: { name: "bar-view" } })
     ],
@@ -62837,38 +62854,53 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", [
-      _c(
-        "a",
-        {
-          attrs: {
-            href: "#",
-            "data-toggle": "collapse",
-            "data-target": ".navbar-collapse.in",
-            id: "login-btn"
-          }
-        },
-        [_c("i", { staticClass: "fa fa-user" }), _vm._v("  Iniciar sesión")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "hidden-xs" }, [
-      _c(
-        "a",
-        {
-          attrs: {
-            href: "#",
-            "data-toggle": "collapse",
-            "data-target": ".navbar-collapse.in",
-            id: "list-btn"
-          }
-        },
-        [_c("i", { staticClass: "fa fa-beer white" }), _vm._v("  Bares")]
-      )
+    return _c("ul", { staticClass: "nav navbar-nav" }, [
+      _c("li", { staticClass: "divider hidden-xs" }),
+      _vm._v(" "),
+      _c("li", [
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "#",
+              "data-toggle": "collapse",
+              "data-target": ".navbar-collapse.in",
+              id: "login-btn"
+            }
+          },
+          [_c("i", { staticClass: "fa fa-user" }), _vm._v("  Iniciar sesión")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "#",
+              "data-toggle": "collapse",
+              "data-target": ".navbar-collapse.in",
+              id: "feature-btn"
+            }
+          },
+          [_c("i", { staticClass: "fa fa-user" }), _vm._v("  Feature")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "hidden-xs" }, [
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "#",
+              "data-toggle": "collapse",
+              "data-target": ".navbar-collapse.in",
+              id: "list-btn"
+            }
+          },
+          [_c("i", { staticClass: "fa fa-beer white" }), _vm._v("  Bares")]
+        )
+      ])
     ])
   },
   function() {
@@ -62923,9 +62955,7 @@ var staticRenderFns = [
               _c("form", { attrs: { id: "contact-form" } }, [
                 _c("fieldset", [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "name" } }, [
-                      _vm._v("Username:")
-                    ]),
+                    _c("label", [_vm._v("Username:")]),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control",
@@ -62934,9 +62964,7 @@ var staticRenderFns = [
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "email" } }, [
-                      _vm._v("Password:")
-                    ]),
+                    _c("label", [_vm._v("Password:")]),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control",
@@ -63022,6 +63050,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -63029,10 +63058,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'bar_list',
 
-    mounted: function mounted() {
-        console.log('*DEBUGGER* : Bars component created');
-        console.log(bars.length);
-    },
+    mounted: function mounted() {},
     data: function data() {
         return {};
     },
@@ -63083,10 +63109,10 @@ var render = function() {
                           to: {
                             name: "bar_view",
                             params: {
-                              showModal: true
+                              showModal: true,
+                              bar: "bar"
                             }
-                          },
-                          id: "feature-btn"
+                          }
                         }
                       },
                       [
@@ -63150,8 +63176,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -63203,7 +63227,11 @@ var render = function() {
           attrs: { slot: "modal-header" },
           slot: "modal-header"
         },
-        [_c("h4", { staticClass: "modal-title" }, [_vm._v("Modal title")])]
+        [
+          _c("h4", { staticClass: "modal-title" }, [
+            _vm._v(_vm._s(_vm.bar.tags.name))
+          ])
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -63999,6 +64027,9 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -64008,10 +64039,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-/**
- *  GLOBAL VARIABLES
- */
-var mapBounds = void 0;
+
+
 
 /**
  * VUE TEMPLATE
@@ -64019,107 +64048,22 @@ var mapBounds = void 0;
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'osm_map',
     mounted: function mounted() {
-        console.log('*DEBUGGER* : map component created');
         this.initMap();
     },
     data: function data() {
-        return {
-            mapBounds: '',
-            mymap: ''
-
-        };
+        return {};
     },
 
 
-    methods: {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])({
+        initMap: 'initMapAction'
+    })),
 
-        initMap: function initMap() {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
 
-            this.mymap = L.map("mapid", {
-                center: [43.30932, -1.97711],
-                zoomControl: false,
-                attributionControl: false
-            }).setView([43.30932, -1.97711], 13);;
+        map: 'currentMap'
 
-            L.tileLayer('https://api.mapbox.com/styles/v1/marborav/cjb7ndf2q3olg2qk50cpyzvy0/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-                maxZoom: 20,
-                id: 'mapbox.Ukiyo-e',
-                accessToken: 'pk.eyJ1IjoibWFyYm9yYXYiLCJhIjoiY2o5eDJrbTV0N2NncjJxcXljeDR3cXNhMiJ9.igTamTLm4nLiAN6w8NFS6Q'
-            }).addTo(this.mymap);
-
-            //
-            //                L.control.zoom({
-            //                    position: "bottomright"
-            //                }).addTo(this.mymap);
-
-            this.mymap.on('moveend', this.currentBBOX);
-            this.currentBBOX();
-
-            L.Routing.control({
-                waypoints: [L.latLng(43.3258095, -1.9726347), L.latLng(43.3280095, -1.9705863)],
-                router: L.Routing.mapbox('pk.eyJ1IjoibWFyYm9yYXYiLCJhIjoiY2o5eDJrbTV0N2NncjJxcXljeDR3cXNhMiJ9.igTamTLm4nLiAN6w8NFS6Q', {
-                    profile: 'mapbox/walking',
-                    language: 'es'
-
-                })
-
-            }).addTo(this.mymap);
-
-            //                L.control.locate({
-            //                    position: "bottomright",
-            //                    drawCircle: true,
-            //                    follow: true,
-            //                    setView: true,
-            //                    keepCurrentZoomLevel: true,
-            //                    markerStyle: {
-            //                        weight: 1,
-            //                        opacity: 0.8,
-            //                        fillOpacity: 0.8
-            //                    },
-            //                    circleStyle: {
-            //                        weight: 1,
-            //                        clickable: false
-            //                    },
-            //                    icon: "fa fa-location-arrow",
-            //                    metric: false,
-            //                    strings: {
-            //                        title: "My location",
-            //                        popup: "You are within {distance} {unit} from this point",
-            //                        outsideMapBoundsMsg: "You seem located outside the boundaries of the map"
-            //                    },
-            //                    locateOptions: {
-            //                        maxZoom: 18,
-            //                        watch: true,
-            //                        enableHighAccuracy: true,
-            //                        maximumAge: 10000,
-            //                        timeout: 10000
-            //                    }
-            //                }).addTo(this.mymap);
-
-        },
-
-        currentBBOX: function currentBBOX() {
-            var s = void 0,
-                w = void 0,
-                n = void 0,
-                e = void 0;
-
-            mapBounds = this.mymap.getBounds();
-
-            s = mapBounds['_southWest']['lat'];
-            w = mapBounds['_southWest']['lng'];
-            n = mapBounds['_northEast']['lat'];
-            e = mapBounds['_northEast']['lng'];
-
-            var bbox = s + ',' + w + ',' + n + ',' + e;
-
-            this.$store.dispatch('updateBBOXAction', bbox);
-        }
-
-    },
-
-    computed: {}
+    }))
 
 });
 

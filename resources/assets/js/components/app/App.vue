@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
+            <div>
                 <div class="navbar-header">
                     <div class="navbar-icon-container">
                         <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
@@ -10,28 +10,28 @@
                     <a class="navbar-brand" href="#">{{ appTitle.title }}</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <form class="navbar-form navbar-right" role="search">
-                        <div class="form-group has-feedback">
-                            <input  v-on:keyup.enter="updateBarsAction" id="searchbox" type="text" placeholder="Search" class="form-control" @input="updateKeywords">
-                            <span id="searchicon" class="fa fa-search form-control-feedback">
-                               <router-link :to="{name: 'bar_list'}">
-                                    <button  type="submit" class="btn btn-default">
-                                        <span class="sr-only">Search...</span>
-                                    </button>
-                               </router-link>
-                            </span>
-                        </div>
-                    </form>
 
+                        <form class="navbar-form navbar-right " role="search">
+                            <div class="input-group form-group has-feedback">
+                                <input type="text" class="form-control" placeholder="Search" @input="updateKeywords">
+                                <div class="input-group-btn">
+                                    <router-link :to="{name: 'bar_list'}" >
+                                     <button @click="updateBarsAction" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                    </router-link>
+                                </div>
+                            </div>
+                        </form>
 
                     <ul class="nav navbar-nav">
-
-
                         <li class="divider hidden-xs"></li>
                         <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Iniciar sesión</a></li>
 
                         <li><a href="#"  data-toggle="collapse" data-target=".navbar-collapse.in" id="feature-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Feature</a></li>
-
+                        <li>
+                            <router-link :to="{name: '/bar'}">
+                                Bar
+                            </router-link>
+                        </li>
                         <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-beer white"></i>&nbsp;&nbsp;Bares</a></li>
                     </ul>
                 </div><!--/.navbar-collapse -->
@@ -54,11 +54,9 @@
                     </div>
                 </div>
             </div>
+
             <osm-map></osm-map>
         </div>
-
-
-
 
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-sm">
@@ -71,11 +69,11 @@
                         <form id="contact-form">
                             <fieldset>
                                 <div class="form-group">
-                                    <label for="name">Username:</label>
+                                    <label>Username:</label>
                                     <input type="text" class="form-control" id="username">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Password:</label>
+                                    <label>Password:</label>
                                     <input type="password" class="form-control" id="password">
                                 </div>
                             </fieldset>
@@ -101,13 +99,11 @@
     import {modal} from 'vue-strap';
 
     import {mapGetters} from 'vuex';
-    import {mapMutations} from 'vuex';
     import {mapActions} from 'vuex';
     export default
     {
         name: 'app',
         mounted(){
-            console.log('*DEBUGGER* : App component created');
         },
 
         data () {
@@ -124,9 +120,6 @@
 
         methods: {
 
-            ...mapMutations([
-                // 'changeTitle'
-            ]),
 
             ...mapActions([
                 'changeTitle',

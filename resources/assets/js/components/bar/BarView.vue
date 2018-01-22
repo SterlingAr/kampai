@@ -1,12 +1,10 @@
 <template>
     <modal :show.sync="showModal">
         <div slot="modal-header" class="modal-header">
-            <h4 class="modal-title">Modal title</h4>
+            <h4 class="modal-title">{{bar.tags.name}}</h4>
         </div>
         <div slot="modal-body" class="modal-body">...</div>
     </modal>
-
-
 </template>
 
 
@@ -31,7 +29,6 @@
 
         components: {
             modal,
-
         }
 
 

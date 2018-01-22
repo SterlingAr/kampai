@@ -40,11 +40,3 @@ function animateSidebar() {
     }, 350, function() {
     });
 }
-
-function sizeLayerControl() {
-    $(".leaflet-control-layers").css("max-height", $("#map").height() - 50);
-}
-
-function clearHighlight() {
-    highlight.clearLayers();
-}
