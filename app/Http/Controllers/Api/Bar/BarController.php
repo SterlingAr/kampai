@@ -8,6 +8,7 @@ use App\Http\Services\Osm\OsmServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BarResource;
+use Mockery\CountValidator\Exception;
 
 class BarController extends Controller
 {
@@ -95,23 +96,44 @@ class BarController extends Controller
     }
 
 
-    public function listBars(OsmServiceInterface $osm_service, $keywords = null, $bbox)
+
+    public function listBars(OsmServiceInterface $osm_service, $keywords = 'all', $bbox)
     {
-        $node_list = array();
+        $bars = 'If you see this, everything failed!';
 
-        $bars = Bar::search($keywords)->get();
-
-        foreach ($bars as $bar)
+        try
         {
-            array_push($node_list, $bar->node);
+
+            if($keywords != '' && $keywords != 'all')
+            {
+
+                if($bbox == null || $bbox == '')
+                {
+                    throw new \Mockery\Exception('<bbox> cannot be empty.');
+                }
+
+
+                $node_list = array();
+                $bars = Bar::search($keywords)->get();
+                foreach ($bars as $bar)
+                {
+                    array_push($node_list, $bar->node);
+                }
+                $bars = $osm_service->retrieve_osm_data($node_list,$bbox);
+                return $bars;
+            }
+
+
+        }
+        catch (Exception $e)
+        {
+
         }
 
-//        $response = $this->getDataAttribute($node_list, $bbox);
+        $bars = $osm_service->retrieve_all_osm_data($bbox);
 
-//        return $response;
-        $test = $osm_service->retrieve_osm_data($node_list,$bbox);
-            return $test;
-//        return response()->json($test,200);
+
+        return $bars;
     }
 
 

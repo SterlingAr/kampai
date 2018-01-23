@@ -20,7 +20,12 @@ Interface OsmServiceInterface
      */
     public function retrieve_osm_data($node_list, $bbox);
 
+    /**
+     * If no keywords are given.
+     * @param $bbox
+     * @return mixed
+     */
+    public function retrieve_all_osm_data($bbox);
 
-    public function test();
 
 }

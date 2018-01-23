@@ -1,33 +1,50 @@
 <template>
-    <modal :show.sync="showModal">
-        <div slot="modal-header" class="modal-header">
-            <h4 class="modal-title">{{bar.tags.name}}</h4>
-        </div>
-        <div slot="modal-body" class="modal-body">...</div>
-    </modal>
+    <div>
+        <modal :show.sync="showModal">
+            <div slot="modal-header" class="modal-header">
+                <!--<h4 class="modal-title">{{bar.tags.name}}</h4>-->
+            </div>
+            <div slot="modal-body" class="modal-body">...</div>
+        </modal>
+        <p>test</p>
+    </div>
+
 </template>
 
 
 <script>
 
     import {modal} from 'vue-strap';
+    import {mapGetters} from 'vuex';
 
     export default
     {
         name: 'bar-view',
-        mounted(){
-            console.log('*DEBUGGER* : bar component created');
+        mounted()
+        {
+
         },
 
-        data () {
-            return {
+        data ()
+        {
+            return
+            {
 
-                test : "Test Message",
 
             }
         },
 
-        components: {
+        computed:
+        {
+
+        ...mapGetters({
+                showModal : 'currentBarModal'
+        })
+
+        },
+
+        components:
+        {
             modal,
         }
 

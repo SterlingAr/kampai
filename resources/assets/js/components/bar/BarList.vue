@@ -11,12 +11,14 @@
                 </thead>
                 <tbody  class="list"  v-if="bars.length">
                     <tr v-for="bar in bars">
-                        <router-link :to="{name: 'bar_view', params:{
-                            showModal: true,
-                            bar: 'bar'
+                        <router-link :to="{
+                            name: 'bar_view',
+                            params:{
+//                                showModal: true,
+                                bar: 'bar'
                         }}">
                         <td class="fa fa-beer black"></td>
-                        <td>{{bar.tags.name}}</td>
+                        <td >{{bar.tags.name}}</td>
                         </router-link>
                     </tr>
                 </tbody>
@@ -33,7 +35,7 @@
 <script>
 
     import {mapGetters} from 'vuex';
-
+    import {mapActions} from 'vuex';
     export default
     {
         name: 'bar_list',
@@ -50,7 +52,9 @@
 
         methods: {
 
-
+            ...mapActions({
+                showModal: 'updateBarModalAction'
+            })
 
 
 
@@ -59,7 +63,7 @@
         computed: {
 
             ...mapGetters({
-                bars: 'currentBars'
+                bars: 'currentBars',
             })
 
         }

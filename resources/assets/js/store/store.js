@@ -7,6 +7,8 @@ import Vuex from 'vuex';
 import map_storage from './modules/map_storage';
 import app_storage from './modules/app_storage';
 import bars_storage from './modules/bars_storage';
+import bar_view_storage from './modules/bar_view_storage';
+
 //
 Vue.use(Vuex);
 
@@ -84,7 +86,8 @@ const store = new Vuex.Store({
     modules: {
         app_storage,
         map_storage,
-        bars_storage
+        bars_storage,
+        bar_view_storage,
     }
 
 });

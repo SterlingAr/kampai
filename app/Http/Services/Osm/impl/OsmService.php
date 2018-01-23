@@ -24,6 +24,10 @@ class OsmService implements OsmServiceInterface
 
     }
 
+    public function retrieve_all_osm_data($bbox)
+    {
+        return $this->query_all_node_data($bbox);
+    }
 
     /**
      *
@@ -46,19 +50,51 @@ class OsmService implements OsmServiceInterface
 
         $query_uri = self::BASE_URI . self::QUERY_START . $query_nodes . self::QUERY_END;
 
+
+        $res = $this->query_osm($query_uri);
+
+        return $res;
+    }
+
+    /**
+     * @param $bbox
+     * @return \Psr\Http\Message\StreamInterface
+     */
+    private function query_all_node_data($bbox)
+    {
+        $format_bbox = '(' . $bbox . ');';
+        $key = "amenity";
+        $value = "bar";
+
+        $key_block  = "['{$key}'='{$value}']";
+
+        $body_block = "node{$key_block}{$format_bbox}way{$key_block}{$format_bbox}relation{$key_block}{$format_bbox}";
+
+//        dd($body_block);
+
+
+        $query_uri = self::BASE_URI . self::QUERY_START . $body_block . self::QUERY_END ;
+
+//        dd($query_uri);
+
+        $res = $this->query_osm($query_uri);
+
+        return $res;
+    }
+
+    /**
+     * @param $query
+     * @return \Psr\Http\Message\StreamInterface
+     */
+    private function query_osm($query)
+    {
         $client = new \GuzzleHttp\Client(); // library I use to communicate with other apis
 
-        $res = $client->request('GET',$query_uri);
+        $res = $client->request('GET',$query);
 
         return $res->getBody();
     }
 
-    public function test()
-    {
-
-        return 'It works!';
-
-    }
 
 
 

@@ -2,7 +2,7 @@ const state =
 {
     MAP_API_PROVIDER: 'https://api.mapbox.com/styles/v1/marborav/cjb7ndf2q3olg2qk50cpyzvy0/tiles/256/{z}/{x}/{y}?access_token=',
     API_TOKEN: 'pk.eyJ1IjoibWFyYm9yYXYiLCJhIjoiY2o5eDJrbTV0N2NncjJxcXljeDR3cXNhMiJ9.igTamTLm4nLiAN6w8NFS6Q',
-    MAP_STYLE: 'mapbox.streets',
+    MAP_STYLE: 'streets',
     bbox: '',
     map: '',
 
