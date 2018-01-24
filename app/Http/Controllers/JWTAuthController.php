@@ -24,6 +24,8 @@ class JWTAuthController extends Controller
             return Response::json(false, HttpResponse::HTTP_UNAUTHORIZED);
         }
 
+
+
         return response()->json(['success' => true, 'data'=> [ 'token' => $token ]]);
 
     }
@@ -38,8 +40,13 @@ class JWTAuthController extends Controller
     {
         $credentials = $request->only('name','email', 'password');
 
+
         try {
-            $user = User::create($credentials);
+//            $user = User::create($credentials);
+              $user = new User();
+              $user->email = $request->email;
+              $user->password = bcrypt($request->password);
+
         } catch (Exception $e) {
             return Response::json(['error' => 'User already exists.'], HttpResponse::HTTP_CONFLICT);
         }

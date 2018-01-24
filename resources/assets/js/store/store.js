@@ -21,7 +21,7 @@ const store = new Vuex.Store({
 
         api_base_uri: '',
 
-        test: 'Hellow from root component.'
+            test: 'Hellow from root component.'
 
 
 

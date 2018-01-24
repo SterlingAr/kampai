@@ -62223,8 +62223,10 @@ var state = {
     API_TOKEN: 'pk.eyJ1IjoibWFyYm9yYXYiLCJhIjoiY2o5eDJrbTV0N2NncjJxcXljeDR3cXNhMiJ9.igTamTLm4nLiAN6w8NFS6Q',
     MAP_STYLE: 'streets',
     bbox: '',
-    map: ''
-
+    map: '',
+    featureCollection: '',
+    featureLayer: '',
+    barIcon: 'https://imgur.com/a/ppfBY'
 };
 
 var getters = {
@@ -62235,6 +62237,14 @@ var getters = {
 
     currentMap: function currentMap(state) {
         return state.map;
+    },
+
+    currentFeatures: function currentFeatures(state) {
+        return state.featureCollection;
+    },
+
+    currentFeatureLayer: function currentFeatureLayer(state) {
+        return state.featureLayer;
     }
 
 };
@@ -62247,6 +62257,14 @@ var mutations = {
 
     updateMap: function updateMap(state, payload) {
         state.map = payload;
+    },
+
+    updateFeatureCollection: function updateFeatureCollection(state, payload) {
+        state.featureCollection = payload;
+    },
+
+    updateFeatureLayer: function updateFeatureLayer(state, payload) {
+        state.featureLayer = payload;
     }
 
 };
@@ -62278,9 +62296,14 @@ var actions = {
         commit('updateMap', payload);
     },
 
-    //starts the map, all initial values should be handled with this function
+    /**
+     * starts the map, all initial values should be handled with this function
+     * @param commit
+     * @param dispatch
+     */
     initMapAction: function initMapAction(_ref3) {
-        var commit = _ref3.commit;
+        var commit = _ref3.commit,
+            dispatch = _ref3.dispatch;
 
 
         var mapOptions = {
@@ -62296,8 +62319,102 @@ var actions = {
 
         L.tileLayer(state.MAP_API_PROVIDER + '{accessToken}', mapOptions).addTo(map);
 
+        var dinnerIcon = L.icon({
+            iconUrl: 'https://i.imgur.com/DujcmnC.png',
+            iconSize: [32, 37],
+            iconAnchor: [16, 37]
+            // popupAnchor: [0, -28]
+        });
+
+        var pubIcon = L.icon({
+            iconUrl: 'https://imgur.com/a/ppfBY',
+            iconSize: [32, 37],
+            iconAnchor: [16, 37]
+            // popupAnchor: [0, -28]
+        });
+
+        var featureLayer = L.geoJSON(false, {
+
+            pointToLayer: function pointToLayer(feature, latlng) {
+                if (feature.amenity == 'bar') {
+                    return L.marker(latlng, { icon: pubIcon });
+                }
+                if (feature.amenity = 'restaurant') {
+                    return L.marker(latlng, { icon: dinnerIcon });
+                }
+            },
+
+            onEachFeature: onEachFeature
+
+        }).addTo(map);
+
+        commit('updateFeatureLayer', featureLayer);
+
         commit('updateMap', map);
+    },
+
+    /**
+     * receives an array of node objects, commits a FeatureCollection  holding all nodes
+     * @param commit
+     * @param dispatch
+     * @param bars
+     */
+    addFeaturesAction: function addFeaturesAction(_ref4, bars) {
+        var commit = _ref4.commit,
+            dispatch = _ref4.dispatch;
+
+
+        var featuresArray = [];
+        var featureCollection = new Object();
+
+        bars.forEach(function (element) {
+            var feature = new Object();
+            var featureProperties = new Object();
+            var featureGeometry = new Object();
+            featureProperties.popupContent = "Establecimiento";
+
+            featureGeometry.type = "Point";
+            var nodeCoord = [element.lon, element.lat];
+            featureGeometry.coordinates = nodeCoord;
+
+            feature.type = "Feature";
+            feature.properties = featureProperties;
+            feature.geometry = featureGeometry;
+            feature.amenity = element.tags.amenity;
+            featuresArray.push(feature);
+        });
+
+        featureCollection.type = "FeatureCollection";
+        featureCollection.features = featuresArray;
+
+        commit('updateFeatureCollection', featureCollection);
+
+        dispatch('addFeaturesToLayer', featureCollection);
+    },
+
+    addFeaturesToLayer: function addFeaturesToLayer(_ref5, featureCollection) {
+        var commit = _ref5.commit;
+
+
+        var layer = state.featureLayer;
+
+        layer.addData(featureCollection);
+
+        commit('updateFeatureLayer', layer);
     }
+
+    // onEachFeature : (feature, layer) =>
+    // {
+    //     let popupContent = "<p>I started out as a GeoJSON " +
+    //         feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
+    //
+    //     if (feature.properties && feature.properties.popupContent) {
+    //         popupContent += feature.properties.popupContent;
+    //     }
+    //
+    //     layer.bindPopup(popupContent);
+    // }
+
 
 };
 
@@ -62307,6 +62424,16 @@ var actions = {
     mutations: mutations,
     actions: actions
 });
+
+function onEachFeature(feature, layer) {
+    var popupContent = "<p>I started out as a GeoJSON " + feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
+
+    if (feature.properties && feature.properties.popupContent) {
+        popupContent += feature.properties.popupContent;
+    }
+
+    layer.bindPopup(popupContent);
+}
 
 /***/ }),
 /* 51 */
@@ -62411,40 +62538,45 @@ var actions = {
             axios.get(state.bars_resource_uri).then(function (response) {
 
                 var bars = response.data.elements;
-
                 console.log(bars);
                 commit('updateBars', bars);
+                dispatch('addFeaturesAction', bars);
             }).catch(function (error) {
                 console.log(error);
             });
         }
     }
 
-    /**
-     * Retrieve new bars using global parameters.
-     */
-};function bars_resource(api_base_uri, keywords, bbox) {
+    // /**
+    //  * Retrieve new bars using global parameters.
+    //  */
+    // function bars_resource (api_base_uri,keywords,bbox)
+    // {
+    //
+    //     console.log("bars_resource, api_base_uri = " + api_base_uri );
+    //     console.log("bars_resource, keywords = " + keywords );
+    //     console.log("bars_resource, bbox = " + bbox );
+    //
+    //     let bars = [];
+    //
+    //     axios.get(api_base_uri+'/api/bars/' + keywords + "/" + bbox)
+    //     .then((response) =>
+    //     {
+    //         // console.log(response);
+    //
+    //         console.log(api_base_uri+'/api/bars/' + keywords + "/" + bbox);
+    //         bars = response.data.data.elements;
+    //     }).catch((error) =>
+    //     {
+    //         console.log(error);
+    //     });
+    //
+    //     console.log(bars);
+    //     return bars;
+    //
+    // }
 
-    console.log("bars_resource, api_base_uri = " + api_base_uri);
-    console.log("bars_resource, keywords = " + keywords);
-    console.log("bars_resource, bbox = " + bbox);
-
-    var bars = [];
-
-    axios.get(api_base_uri + '/api/bars/' + keywords + "/" + bbox).then(function (response) {
-        // console.log(response);
-
-        console.log(api_base_uri + '/api/bars/' + keywords + "/" + bbox);
-        bars = response.data.data.elements;
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-    console.log(bars);
-    return bars;
-}
-
-/* harmony default export */ __webpack_exports__["a"] = ({
+};/* harmony default export */ __webpack_exports__["a"] = ({
 
     state: state,
     getters: getters,
@@ -62596,18 +62728,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(1);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -62888,85 +63008,6 @@ var render = function() {
       ),
       _vm._v(" "),
       _vm._m(5, false, false),
-      _vm._v(" "),
-      _c(
-        "modal",
-        {
-          attrs: { show: _vm.showModal, effect: "fade", width: "400" },
-          on: {
-            "update:show": function($event) {
-              _vm.showModal = $event
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "modal-header",
-              attrs: { slot: "modal-header" },
-              slot: "modal-header"
-            },
-            [
-              _c("h4", { staticClass: "modal-title" }, [
-                _c("i", [_vm._v("Custom")]),
-                _vm._v(" "),
-                _c("code", [_vm._v("Modal")]),
-                _vm._v(" "),
-                _c("b", [_vm._v("Title")])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "modal-body",
-              attrs: { slot: "modal-body" },
-              slot: "modal-body"
-            },
-            [_vm._v("...")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "modal-footer",
-              attrs: { slot: "modal-footer" },
-              slot: "modal-footer"
-            },
-            [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.showCustomModal = false
-                    }
-                  }
-                },
-                [_vm._v("Exit")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-success",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.showCustomModal = false
-                    }
-                  }
-                },
-                [_vm._v("Custom Save")]
-              )
-            ]
-          )
-        ]
-      ),
       _vm._v(" "),
       _c("router-view", { attrs: { name: "bar-view" } })
     ],

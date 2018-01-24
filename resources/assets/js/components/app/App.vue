@@ -28,9 +28,6 @@
                         <!--<li><a >&nbspTest</a></li>-->
 
                         <li><a href="#"  data-toggle="collapse" data-target=".navbar-collapse.in" id="feature-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Feature</a></li>
-                        <!--<router-link :to="{name: '/bar'}">-->
-                        <li @click="showCustomModal"> feature</li>
-                        <!--</router-link>-->
 
                         <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-beer white"></i>&nbsp;&nbsp;Bares</a></li>
                     </ul>
@@ -86,18 +83,6 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <modal :show.sync="showCustomModal" effect="fade" width="400">
-            <div slot="modal-header" class="modal-header">
-                <h4 class="modal-title">
-                    <i>Custom</i> <code>Modal</code> <b>Title</b>
-                </h4>
-            </div>
-            <div slot="modal-body" class="modal-body">...</div>
-            <div slot="modal-footer" class="modal-footer">
-                <button type="button" class="btn btn-default" @click="showCustomModal = false">Exit</button>
-                <button type="button" class="btn btn-success" @click="showCustomModal = false">Custom Save</button>
-            </div>
-        </modal>
 
 
         <router-view name="bar-view"></router-view>
@@ -108,7 +93,6 @@
 
 <script>
 
-    import {modal} from 'vue-strap';
 
     import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
@@ -124,7 +108,6 @@
                 appObject: {
                     title: 'KAMPAI',
                 },
-                showCustomModal: false,
                 users: []
 
 
@@ -133,10 +116,6 @@
 
         methods: {
 
-            showModal: function()
-            {
-                this.showCustomModal = true;
-            },
 
 
             ...mapActions([
@@ -172,9 +151,6 @@
 
         },
 
-        components: {
-            modal
-        }
 
 
 
