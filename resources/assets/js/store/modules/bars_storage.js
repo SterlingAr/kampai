@@ -38,7 +38,16 @@ const mutations =
 
 const actions =
 {
-
+    /**
+     * Given state values : app_storage.keywords, map_storage.bbox;
+     * commit an array of nodes to state.bars and dispatch an action to update
+     * the features shown on the map.
+     *
+     * @param state
+     * @param commit
+     * @param rootState
+     * @param dispatch
+     */
     updateBarsAction: ({state,commit,rootState,dispatch}) =>
     {
 
@@ -69,6 +78,7 @@ const actions =
                 let bars = response.data.elements;
                 console.log(bars);
                 commit('updateBars', bars);
+
                 dispatch('addFeaturesAction',bars);
 
 

@@ -129,21 +129,38 @@ const actions =
 
        let featureLayer =  L.geoJSON(false, {
 
-            pointToLayer: function (feature, latlng) {
-                if(feature.amenity == 'bar')
-                {
-                    return L.marker(latlng, {icon: pubIcon});
-                }
-                if(feature.amenity = 'restaurant')
-                {
-                    return L.marker(latlng, {icon: dinnerIcon});
+            // pointToLayer: function (feature, latlng) {
+            //     if(feature.amenity == 'bar')
+            //     {
+            //         return L.marker(latlng, {icon: pubIcon});
+            //     }
+            //     if(feature.amenity = 'restaurant')
+            //     {
+            //         return L.marker(latlng, {icon: dinnerIcon});
+            //
+            //     }
 
-                }
 
+            // },
 
-            },
+           // onEachFeature: onEachFeature
 
-           onEachFeature: onEachFeature
+           style: function (feature) {
+               return feature.properties && feature.properties.style;
+           },
+
+           onEachFeature: onEachFeature,
+
+           pointToLayer: function (feature, latlng) {
+               return L.circleMarker(latlng, {
+                   radius: 8,
+                   fillColor: "#ff7800",
+                   color: "#000",
+                   weight: 1,
+                   opacity: 1,
+                   fillOpacity: 0.8
+               });
+           }
 
 
         }).addTo(map);
@@ -201,6 +218,8 @@ const actions =
 
             let layer = state.featureLayer;
 
+            layer.clearLayers();
+
             layer.addData(featureCollection);
 
             commit('updateFeatureLayer', layer);
@@ -229,7 +248,16 @@ export default {
     actions
 }
 
+/**
+ * Functions out of the vuex scope.
+ */
 
+
+/**
+ *
+ * @param feature
+ * @param layer
+ */
 function onEachFeature(feature, layer)
 {
     let popupContent = "<p>I started out as a GeoJSON " +
