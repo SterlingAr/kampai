@@ -54884,7 +54884,9 @@ var render = function() {
                       [
                         _c("td", { staticClass: "fa fa-beer black" }),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(bar.tags.name))])
+                        bar.tags.name != ""
+                          ? _c("td", [_vm._v(_vm._s(bar.tags.name))])
+                          : _vm._e()
                       ]
                     )
                   ],

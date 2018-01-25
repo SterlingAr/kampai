@@ -16,7 +16,14 @@ class CreateBarsTable extends Migration
         Schema::create('bars', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->bigInteger('node');
-            $table->text('keywords');
+            $table->string('name')->nullable();
+            $table->string('amenity')->nullable();
+            $table->string('amenity_es')->nullable();
+            $table->text('description')->nullable();
+            $table->text('description_1')->nullable();
+            $table->text('all_tags')->nullable();
+            $table->text('keywords')->nullable();
+
             $table->timestamps();
         });
     }

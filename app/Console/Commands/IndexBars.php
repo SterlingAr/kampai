@@ -45,7 +45,7 @@ class IndexBars extends Command
         $tnt->setDatabaseHandle(app('db')->connection()->getPdo());
         $indexer = $tnt->createIndex('bars.index');
 
-        $indexer->query('SELECT id, node, keywords FROM bars;');
+        $indexer->query('SELECT id, node,name,amenity,amenity_es,description,description_1, keywords, all_tags FROM bars;');
 
         $indexer->run();
     }

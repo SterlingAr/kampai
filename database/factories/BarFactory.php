@@ -9,6 +9,11 @@ $factory->define(App\Bar::class, function (Faker $faker) {
 
     return [
         'node' => $faker->randomElement($nodes),
+        'name' => $faker->safeColorName,
+        'amenity' => 'bar',
+        'amenity_es' => 'bar',
+        'description' => $faker->realText(),
+        'description_1' => $faker->realText(),
         'keywords' => $faker->randomElement($keywords),
 
     ];

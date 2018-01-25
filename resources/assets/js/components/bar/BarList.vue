@@ -18,7 +18,7 @@
                                 bar: 'bar'
                         }}">
                         <td class="fa fa-beer black"></td>
-                        <td >{{bar.tags.name}}</td>
+                        <td v-if="bar.tags.name != '' ">{{bar.tags.name}}</td>
                         </router-link>
                     </tr>
                 </tbody>

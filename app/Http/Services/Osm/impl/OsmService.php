@@ -8,11 +8,13 @@
 
 namespace App\Http\Services\Osm;
 
+use App\Bar;
 
 class OsmService implements OsmServiceInterface
 {
+    const BBOX_SS = "43.18264913393606,-2.0571899414062504,43.34627851892777,-1.8754005432128908";
 
-    const  BASE_URI = 'https://z.overpass-api.de/api/interpreter?data=';
+    const  BASE_URI = 'https://z.overpass-api.de/api/interpreter';
     const  QUERY_START = '[out:json][timeout:25];(';
     const  QUERY_END = ');out body;>;out skel qt;';
 
@@ -28,6 +30,153 @@ class OsmService implements OsmServiceInterface
     {
         return $this->query_all_node_data($bbox);
     }
+
+
+    /**
+     * Given a bbox and amenity, query all nodes and save to db.
+     *
+     */
+    public function save_nodes_to_db()
+    {
+
+        $this->save_node_data();
+
+    }
+
+
+    /**
+     * Loop through each node and save it to the database.
+     */
+    private function save_node_data()
+    {
+
+        $osm_obj = json_decode($this->query_all_node_data(self::BBOX_SS));
+
+        $nodes = $osm_obj->elements;
+
+
+        foreach($nodes as $node)
+        {
+
+            $restaurante = 'restaurante';
+            $cafeteria = 'cafeteria';
+            $comida_rapida = 'comida rapida';
+
+            $bar = new Bar();
+            $bar->node = $node->id;
+
+//            if(isset($node->tags))
+//                $this->mix_remaining_tags($node);
+//
+
+            if(isset($node->tags))
+            {
+
+                if(isset($node->tags->name))
+                {
+                    $bar->name = $node->tags->name;
+                }
+                else
+                {
+                    $bar->name = 'no name';
+                }
+
+
+                $amenity = $node->tags->amenity;
+
+                if($amenity == 'restaurant' )
+                {
+                    $bar->amenity_es = $restaurante;
+                }
+                if($amenity == 'cafe' )
+                {
+                    $bar->amenity_es = $cafeteria;
+                }
+                if($amenity == 'fast_food' )
+                {
+                    $bar->amenity_es = $comida_rapida;
+                }
+
+                if($amenity == 'bar' )
+                {
+                    $bar->amenity_es =  $amenity;
+                }
+
+                $bar->amenity= $amenity;
+
+
+                if(isset($node->tags->description))
+                {
+                    $bar->description = $node->tags->description;
+                }
+
+                if(isset($node->tags->description_1))
+                {
+                    $bar->description_1 = $node->tags->description_1;
+                }
+                print_r($node->id . " [OK]" . "\n");
+
+                $bar->all_tags = $this->mix_remaining_tags($node);
+
+
+                $bar->save();
+            }
+
+        }
+
+    }
+
+    private function mix_remaining_tags($node)
+    {
+        $tags = $node->tags;
+        $all_tags = "";
+
+        foreach($tags as $key => $value)
+        {
+
+                if(
+                $key == 'name' ||
+                $key == 'amenity' ||
+                $key == 'description' ||
+                $key == 'description_1'
+                )
+                    continue;
+
+                if($key == 'wheelchair' && $value == 'no')
+                    continue;
+
+                if($key == 'delivery' && $value == 'no')
+                    continue;
+
+                if($key == 'payment:discover_card' && $value = 'no')
+                    continue;
+
+                if($key == 'payment:mastercard' && $value = 'no')
+                    continue;
+
+                if($key == 'payment:american_express' && $value = 'no')
+                    continue;
+
+                if($key == 'smoking' && $value == 'no')
+                    continue;
+
+                if($key == 'takeaway' && $value == 'no')
+                    continue;
+
+                if($key == 'outdoor_seating' && $value == 'yes')
+                    continue;
+
+
+//            print_r($key . " " . $value . "\n");
+            $all_tags = $all_tags . " " . (string) $key . " " . $value;
+
+        }
+
+
+        return $all_tags;
+
+    }
+
 
     /**
      *
@@ -48,10 +197,9 @@ class OsmService implements OsmServiceInterface
             $query_nodes = $query_nodes . 'node(' . (string)$node . ')' . $query_bbox ;
         }
 
-        $query_uri = self::BASE_URI . self::QUERY_START . $query_nodes . self::QUERY_END;
 
 
-        $res = $this->query_osm($query_uri);
+        $res = $this->query_osm($query_nodes);
 
         return $res;
     }
@@ -62,35 +210,49 @@ class OsmService implements OsmServiceInterface
      */
     private function query_all_node_data($bbox)
     {
+        $values = array('restaurant','bar','fast_food','bbq','cafe');
+
         $format_bbox = '(' . $bbox . ');';
         $key = "amenity";
-        $value = "bar";
+        $body_block = "";
 
-        $key_block  = "['{$key}'='{$value}']";
+        foreach($values as $value)
+        {
+//            if($body_block < )
+            $key_block  = "['{$key}'='{$value}']";
 
-        $body_block = "node{$key_block}{$format_bbox}way{$key_block}{$format_bbox}relation{$key_block}{$format_bbox}";
+            $body_block = $body_block .  "node{$key_block}{$format_bbox}way{$key_block}{$format_bbox}relation{$key_block}{$format_bbox}";
+
+        }
+
 
 //        dd($body_block);
 
 
-        $query_uri = self::BASE_URI . self::QUERY_START . $body_block . self::QUERY_END ;
 
 //        dd($query_uri);
 
-        $res = $this->query_osm($query_uri);
+        $res = $this->query_osm($body_block);
 
         return $res;
     }
 
     /**
-     * @param $query
+     * @param $body_block
      * @return \Psr\Http\Message\StreamInterface
      */
-    private function query_osm($query)
+    private function query_osm($body_block)
     {
+
+        $request_param = self::QUERY_START . $body_block .  self::QUERY_END;
+
         $client = new \GuzzleHttp\Client(); // library I use to communicate with other apis
 
-        $res = $client->request('GET',$query);
+        $res = $client->request('POST', self::BASE_URI, [
+            'form_params' => [
+                'data' => $request_param
+                ]
+        ]);
 
         return $res->getBody();
     }
