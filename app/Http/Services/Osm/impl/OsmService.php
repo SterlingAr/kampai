@@ -13,6 +13,7 @@ use App\Bar;
 class OsmService implements OsmServiceInterface
 {
     const BBOX_SS = "43.18264913393606,-2.0571899414062504,43.34627851892777,-1.8754005432128908";
+    const DEBUGG_BBOX = "43.32058821339322,-1.9749802350997927,43.325919142914046,-1.9689935445785525";
 
     const  BASE_URI = 'https://z.overpass-api.de/api/interpreter';
     const  QUERY_START = '[out:json][timeout:25];(';
@@ -226,12 +227,6 @@ class OsmService implements OsmServiceInterface
         }
 
 
-//        dd($body_block);
-
-
-
-//        dd($query_uri);
-
         $res = $this->query_osm($body_block);
 
         return $res;
@@ -254,11 +249,29 @@ class OsmService implements OsmServiceInterface
                 ]
         ]);
 
-        return $res->getBody();
+        $raw_json = $res->getBody();
+
+//        return  $this->filter_bad_nodes($raw_json);
+        return $raw_json;
+    }
+
+    /**
+     * Exclude nodes that have no 'tag' parameters
+     */
+    private function filter_bad_nodes($raw_json)
+    {
+
+        dd($raw_json);
+//        return $raw_json;
+//        dd($raw_json);
+
     }
 
 
-
-
+    public function debugger()
+    {
+        $raw_json = $this->retrieve_all_osm_data(self::DEBUGG_BBOX);
+        dd(json_decode($raw_json));
+    }
 
 }

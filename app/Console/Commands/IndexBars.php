@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Services\Search\SearchServiceInterface;
+
 use Illuminate\Console\Command;
-use TeamTNT\TNTSearch\TNTSearch;
+
 class IndexBars extends Command
 {
     /**
@@ -20,14 +22,19 @@ class IndexBars extends Command
      */
     protected $description = 'Index the bars in the database';
 
+    protected $search_service;
+
+
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * IndexBars constructor. SearchServiceInterface $search_service
+     * @param SearchServiceInterface $search_service
      */
-    public function __construct()
+    public function __construct(SearchServiceInterface $search_service)
     {
         parent::__construct();
+
+//
+        $this->search_service = $search_service;
     }
 
     /**
@@ -38,15 +45,7 @@ class IndexBars extends Command
     public function handle()
     {
 
-        $tnt = new TNTSearch;
-        $driver = config('database.default');
-        $config = config('scout.tntsearch') + config("database.connections.$driver");
-        $tnt->loadConfig($config);
-        $tnt->setDatabaseHandle(app('db')->connection()->getPdo());
-        $indexer = $tnt->createIndex('bars.index');
+        $this->search_service->index_bars();
 
-        $indexer->query('SELECT id, node,name,amenity,amenity_es,description,description_1, keywords, all_tags FROM bars;');
-
-        $indexer->run();
     }
 }

@@ -70,12 +70,21 @@ const actions =
         {
 
         state.bars_resource_uri = api_base_uri+'/api/bars/' + keywords + "/" + bbox;
+
         axios.get(state.bars_resource_uri)
             .then((response) =>
             {
 
+                let bars = [];
 
-                let bars = response.data.elements;
+                for(let bar of response.data.elements)
+                {
+                    if(typeof bar.tags === 'undefined')
+                        continue;
+
+                    bars.push(bar);
+                }
+
                 console.log(bars);
                 commit('updateBars', bars);
 
@@ -94,34 +103,6 @@ const actions =
 
 }
 
-// /**
-//  * Retrieve new bars using global parameters.
-//  */
-// function bars_resource (api_base_uri,keywords,bbox)
-// {
-//
-//     console.log("bars_resource, api_base_uri = " + api_base_uri );
-//     console.log("bars_resource, keywords = " + keywords );
-//     console.log("bars_resource, bbox = " + bbox );
-//
-//     let bars = [];
-//
-//     axios.get(api_base_uri+'/api/bars/' + keywords + "/" + bbox)
-//     .then((response) =>
-//     {
-//         // console.log(response);
-//
-//         console.log(api_base_uri+'/api/bars/' + keywords + "/" + bbox);
-//         bars = response.data.data.elements;
-//     }).catch((error) =>
-//     {
-//         console.log(error);
-//     });
-//
-//     console.log(bars);
-//     return bars;
-//
-// }
 
 export default {
 

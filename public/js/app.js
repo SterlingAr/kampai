@@ -53951,26 +53951,48 @@ var actions = {
         var featuresArray = [];
         var featureCollection = new Object();
 
-        bars.forEach(function (element) {
-            var feature = new Object();
-            var featureProperties = new Object();
-            var featureGeometry = new Object();
-            featureProperties.popupContent = "Establecimiento";
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-            featureGeometry.type = "Point";
-            var nodeCoord = [element.lon, element.lat];
-            featureGeometry.coordinates = nodeCoord;
+        try {
+            for (var _iterator = bars[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var bar = _step.value;
 
-            feature.type = "Feature";
-            feature.properties = featureProperties;
-            feature.geometry = featureGeometry;
-            feature.amenity = element.tags.amenity;
-            featuresArray.push(feature);
-        });
+                // if(bar.tags === null || bar.tags === '')
+                //     continue;
+
+                var feature = new Object();
+                var featureProperties = new Object();
+                var featureGeometry = new Object();
+                featureProperties.popupContent = "Establecimiento";
+                featureGeometry.type = "Point";
+
+                featureGeometry.coordinates = [bar.lon, bar.lat];
+
+                feature.type = "Feature";
+                feature.properties = featureProperties;
+                feature.geometry = featureGeometry;
+                feature.amenity = bar.tags.amenity;
+                featuresArray.push(feature);
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
 
         featureCollection.type = "FeatureCollection";
         featureCollection.features = featuresArray;
-
         commit('updateFeatureCollection', featureCollection);
 
         dispatch('addFeaturesToLayer', featureCollection);
@@ -54138,9 +54160,38 @@ var actions = {
         } finally {
 
             state.bars_resource_uri = api_base_uri + '/api/bars/' + keywords + "/" + bbox;
+
             axios.get(state.bars_resource_uri).then(function (response) {
 
-                var bars = response.data.elements;
+                var bars = [];
+
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = response.data.elements[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var bar = _step.value;
+
+                        if (typeof bar.tags === 'undefined') continue;
+
+                        bars.push(bar);
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+
                 console.log(bars);
                 commit('updateBars', bars);
 
@@ -54151,36 +54202,9 @@ var actions = {
         }
     }
 
-    // /**
-    //  * Retrieve new bars using global parameters.
-    //  */
-    // function bars_resource (api_base_uri,keywords,bbox)
-    // {
-    //
-    //     console.log("bars_resource, api_base_uri = " + api_base_uri );
-    //     console.log("bars_resource, keywords = " + keywords );
-    //     console.log("bars_resource, bbox = " + bbox );
-    //
-    //     let bars = [];
-    //
-    //     axios.get(api_base_uri+'/api/bars/' + keywords + "/" + bbox)
-    //     .then((response) =>
-    //     {
-    //         // console.log(response);
-    //
-    //         console.log(api_base_uri+'/api/bars/' + keywords + "/" + bbox);
-    //         bars = response.data.data.elements;
-    //     }).catch((error) =>
-    //     {
-    //         console.log(error);
-    //     });
-    //
-    //     console.log(bars);
-    //     return bars;
-    //
-    // }
+};
 
-};/* harmony default export */ __webpack_exports__["a"] = ({
+/* harmony default export */ __webpack_exports__["a"] = ({
 
     state: state,
     getters: getters,
@@ -54884,9 +54908,7 @@ var render = function() {
                       [
                         _c("td", { staticClass: "fa fa-beer black" }),
                         _vm._v(" "),
-                        bar.tags.name != ""
-                          ? _c("td", [_vm._v(_vm._s(bar.tags.name))])
-                          : _vm._e()
+                        _c("td", [_vm._v(_vm._s(bar.tags.name))])
                       ]
                     )
                   ],

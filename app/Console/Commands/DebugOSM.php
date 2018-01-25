@@ -1,19 +1,18 @@
 <?php
 
 namespace App\Console\Commands;
-
 use App\Http\Services\Osm\OsmServiceInterface;
 
 use Illuminate\Console\Command;
 
-class PopulateDatabase extends Command
+class DebugOSM extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'query:nodes';
+    protected $signature = 'debug:osm';
 
     /**
      * The console command description.
@@ -22,18 +21,18 @@ class PopulateDatabase extends Command
      */
     protected $description = 'Command description';
 
-    protected $osmService;
+    protected $debug;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(OsmServiceInterface $osmService)
+    public function __construct(OsmServiceInterface $debug)
     {
         parent::__construct();
 
-        $this->osmService = $osmService;
+        $this->debug = $debug;
     }
 
     /**
@@ -43,6 +42,6 @@ class PopulateDatabase extends Command
      */
     public function handle()
     {
-        $this->osmService->save_nodes_to_db();
+        $this->debug->debugger();
     }
 }

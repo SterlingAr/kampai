@@ -28,8 +28,13 @@ Interface OsmServiceInterface
     public function retrieve_all_osm_data($bbox);
 
 
-
+    /**
+     * @return mixed
+     */
     public function save_nodes_to_db();
+
+
+    public function debugger();
 
 
 }

@@ -183,28 +183,29 @@ const actions =
         let featuresArray = [];
         let featureCollection = new Object();
 
-        bars.forEach(function (element)
+        for(let bar of bars)
         {
+            // if(bar.tags === null || bar.tags === '')
+            //     continue;
+
             let feature = new Object();
             let featureProperties = new Object();
             let featureGeometry = new Object();
             featureProperties.popupContent =  "Establecimiento";
-
             featureGeometry.type = "Point";
-            let nodeCoord = [element.lon,element.lat];
-            featureGeometry.coordinates = nodeCoord;
+
+            featureGeometry.coordinates = [bar.lon,bar.lat];
 
             feature.type = "Feature";
             feature.properties = featureProperties;
             feature.geometry = featureGeometry;
-            feature.amenity = element.tags.amenity;
+            feature.amenity = bar.tags.amenity;
             featuresArray.push(feature);
 
-        });
+        }
 
         featureCollection.type = "FeatureCollection";
         featureCollection.features = featuresArray;
-
         commit('updateFeatureCollection',featureCollection);
 
 

@@ -62,7 +62,9 @@ class JWTAuthController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout(Request $request) {
+    public function logout(Request $request)
+
+    {
 
         $this->validate($request, ['token' => 'required']);
 

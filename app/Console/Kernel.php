@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\IndexBars::class,
         \App\Console\Commands\PopulateDatabase::class,
+        \App\Console\Commands\DebugOSM::class,
 
 
     ];
