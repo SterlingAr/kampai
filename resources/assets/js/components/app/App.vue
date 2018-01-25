@@ -13,7 +13,7 @@
 
                         <form class="navbar-form navbar-right " role="search">
                             <div class="input-group form-group has-feedback">
-                                <input type="text" class="form-control" placeholder="Search" @input="updateKeywords">
+                                <input type="text" class="form-control" placeholder="Search"    @input="updateKeywords">
                                 <div class="input-group-btn">
                                     <router-link :to="{name: 'bar_list'}" >
                                      <button @click="updateBarsAction" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
@@ -94,8 +94,7 @@
 <script>
 
 
-    import {mapGetters} from 'vuex';
-    import {mapActions} from 'vuex';
+    import {mapGetters, mapActions} from 'vuex';
     export default
     {
         name: 'app',
@@ -116,20 +115,15 @@
 
         methods: {
 
-
-
             ...mapActions([
                 'changeTitle',
                 'updateBarsAction',
                 'updateBarModalAction'
             ]),
 
-
             updateKeywords: function (event)
             {
-
                 this.$store.dispatch('updateKeywordsAction', event.target.value);
-
             },
 
             toggleModal: function ()
@@ -137,18 +131,15 @@
                 this.showModal = true;
             }
 
-
         },
 
         computed: {
-            ...mapGetters({
-
-                           appTitle: 'currentTitle',
-                           bbox: 'currentBBOX',
-                           keywords: 'currentKeywords'
-                       }),
-
-
+            ...mapGetters(
+                {
+                   appTitle: 'currentTitle',
+                   bbox: 'currentBBOX',
+                   keywords: 'currentKeywords'
+                }),
         },
 
 

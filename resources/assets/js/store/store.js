@@ -57,8 +57,6 @@ const store = new Vuex.Store({
             return state.api_base_uri = newUriObject.api_base_uri;
         }
 
-
-
     },
     //Reminder: Commit actions using ONLY actions
     actions: {
