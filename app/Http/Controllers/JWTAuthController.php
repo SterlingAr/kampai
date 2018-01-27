@@ -7,8 +7,21 @@ use App\User;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Http\Request;
 use Response;
+use App\Http\Resources\UserResource;
+use App\Http\Services\User\UserServiceInterface;
+
 class JWTAuthController extends Controller
 {
+
+    protected $userService;
+
+    public function __construct(UserServiceInterface $userService)
+    {
+
+        $this->userService = $userService;
+    }
+
+
     /**
      * Check user and return token on success.
      *
@@ -17,16 +30,8 @@ class JWTAuthController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials= $request->only('email', 'password');
 
-        if ( ! $token = JWTAuth::attempt($credentials))
-        {
-            return Response::json(false, HttpResponse::HTTP_UNAUTHORIZED);
-        }
-
-
-
-        return response()->json(['success' => true, 'data'=> [ 'token' => $token ]]);
+      return  $this->userService->loginOrFail($request);
 
     }
 
@@ -38,21 +43,8 @@ class JWTAuthController extends Controller
      */
     public function register(Request $request)
     {
-        $credentials = $request->only('name','email', 'password');
+       return $this->userService->registerOrFail($request);
 
-
-        try {
-//            $user = User::create($credentials);
-              $user = new User();
-              $user->email = $request->email;
-              $user->password = bcrypt($request->password);
-
-        } catch (Exception $e) {
-            return Response::json(['error' => 'User already exists.'], HttpResponse::HTTP_CONFLICT);
-        }
-        $token = JWTAuth::fromUser($user);
-
-        return response()->json(['success' => true, 'data'=> [ 'token' => $token ]]);
     }
 
 
@@ -63,18 +55,8 @@ class JWTAuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function logout(Request $request)
-
     {
-
-        $this->validate($request, ['token' => 'required']);
-
-        try {
-            JWTAuth::invalidate($request->input('token'));
-            return response()->json(['success' => true]);
-        } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
-            return response()->json(['success' => false, 'error' => 'Failed to logout, please try again.'], 500);
-        }
+        return $this->userService->logout($request);
     }
 
 

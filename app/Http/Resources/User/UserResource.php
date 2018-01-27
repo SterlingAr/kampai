@@ -19,7 +19,7 @@ class UserResource extends Resource
         return [
             'name' => $this->name,
             'email' => $this->email,
-
+            'roles' => $this->roles,
         ];
     }
 }

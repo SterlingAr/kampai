@@ -186,6 +186,8 @@ return [
         //custom service providers
         App\Providers\OsmServiceProvider::class,
         App\Providers\SearchServiceProvider::class,
+        App\Providers\UserServiceProvider::class,
+
 
 
     ],

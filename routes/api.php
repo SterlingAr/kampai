@@ -63,23 +63,5 @@ Route::group(['prefix' => 'auth'], function(){
 /**
  * DUMMY TESTS
  */
-
-Route::get('/admin/title/edit', function()
-{
-
-    return response()->json(['title' => 'KAMPAI']);
-
-});
-
-
-//Service check for client to trying something.
-Route::get('/state', function()
-{
-
-});
-
-
-
-
-
+Route::post('/subscription/bar', 'UserActionController@addBarToSubs');
 
