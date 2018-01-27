@@ -63,5 +63,5 @@ Route::group(['prefix' => 'auth'], function(){
 /**
  * DUMMY TESTS
  */
-Route::post('/subscription/bar', 'UserActionController@addBarToSubs');
+Route::post('/subscription/bar', 'Api\Users\UserActionController@addBarToSubs');
 

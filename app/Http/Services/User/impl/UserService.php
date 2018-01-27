@@ -18,11 +18,10 @@ use Response;
 use App\Http\Resources\UserResource;
 use App\Bar;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-
+use Illuminate\Support\Collection ;
 
 class UserService implements UserServiceInterface
 {
-
     use ValidatesRequests;
 
     public function loginOrFail(Request $request)
@@ -92,42 +91,43 @@ class UserService implements UserServiceInterface
             ->subscription()
             ->get()
             ->first();
-
-        if($subList.isEmpty())
+//        dd($subList);
+        if(!isset($subList))
         {
+            $subList = new SubscriptionList();
+            $subList->save();
             $subList->bars()->save($bar);
 
             $user->subscription()->save($subList);
 
-            return response().json(
+            return response()->json(
                 [
-                    'subscription_list' => $subList,
+                    'subscription_list' => json_encode($subList),
                     'status' => 'SubscriptionList created.'
                 ],HttpResponse::HTTP_CREATED);
         }
 
-        //check if bar exists in that list.
-        // if exists, return SubscriptionList and 200 OK
-        // if not return 202 Accepted.
         $barsInList = $subList->bars()->get();
 
         if(!$barsInList->containsStrict('id',$bar->id) )
         {
             $subList->bars()->save($bar);
-            return response().json([
+            return response()->json([
                 'subscription_list' => $subList,
                 'status' => 'Bar added to SubscriptionList'
-                ],HttpResponse::HTTP_OK);
+            ],HttpResponse::HTTP_OK);
         }
-
         else
         {
-            return response().json([
-                  'status' => 'Bar already exists in that list'
-                ],HttpResponse::HTTP_NO_CONTENT);
+            return response()->json([
+                'status' => 'Bar already exists in that list'
+            ],HttpResponse::HTTP_NO_CONTENT);
         }
 
 
+        //check if bar exists in that list.
+        // if exists, return SubscriptionList and 200 OK
+        // if not return 202 Accepted.
 
 
 //        return response().json([],HttpResponse::HTTP_ACCEPTED);
@@ -155,3 +155,5 @@ class UserService implements UserServiceInterface
 
 
 }
+
+?>

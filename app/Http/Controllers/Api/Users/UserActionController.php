@@ -28,9 +28,9 @@ class UserActionController
     public function addBarToSubs(Request $request)
     {
         $bar = Bar::where('node', $request->node)->first();
-        $user = User::where('user_id', $request->id)->first();
+        $user = User::where('id', $request->user_id)->first();
 
-        $this->userService->addBarToSubs($bar,$user);
+        return $this->userService->addBarToSubs($bar,$user);
 
     }
 
