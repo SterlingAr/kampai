@@ -31,7 +31,6 @@ Route::resource('bars', 'Api\Bar\BarController', ['only' => [
 
 Route::resource('users', 'Api\Users\UserController');
 
-Route::resource('subscriptions', 'Api\Subscription\SubscriptionListController');
 
 Route::resource('users.bars', 'Api\Users\UserBarController', ['only' => [
     'index'
@@ -53,7 +52,13 @@ Route::group(['prefix' => 'auth'], function(){
     Route::post('/register', 'JWTAuthController@register');
 
     Route::group(['middleware' => ['jwt.auth']], function() {
+
         Route::get('logout', 'JWTAuthController@logout');
+
+        Route::post('/subscription/bar', 'Api\Users\UserActionController@addBarToSubs');
+        Route::delete('/subscription/bar/remove/{bar}/{user}','Api\Users\UserActionController@removeBarFromSubs');
+
+
     });
 });
 
@@ -63,5 +68,3 @@ Route::group(['prefix' => 'auth'], function(){
 /**
  * DUMMY TESTS
  */
-Route::post('/subscription/bar', 'Api\Users\UserActionController@addBarToSubs');
-

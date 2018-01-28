@@ -15,7 +15,7 @@ class CreateSubscriptionListsBarsTable extends Migration
     {
         Schema::create('subscription_lists_bars', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+//            $table->timestamps();
         });
     }
 

@@ -187,6 +187,7 @@ return [
         App\Providers\OsmServiceProvider::class,
         App\Providers\SearchServiceProvider::class,
         App\Providers\UserServiceProvider::class,
+        App\Providers\JWTAuthServiceProvider::class,
 
 
 

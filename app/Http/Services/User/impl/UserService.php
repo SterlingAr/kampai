@@ -8,8 +8,8 @@
 
 
 namespace App\Http\Services\User;
+
 use App\SubscriptionList;
-use JWTAuth;
 use App\User;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Http\Request;
@@ -24,64 +24,6 @@ class UserService implements UserServiceInterface
 {
     use ValidatesRequests;
 
-    public function loginOrFail(Request $request)
-    {
-
-        $credentials= $request->only('email', 'password');
-
-        if ( ! $token = JWTAuth::attempt($credentials))
-        {
-            return Response::json(false, HttpResponse::HTTP_UNAUTHORIZED);
-        }
-
-        $user = User::where('email', $request->email)->get()->first();
-        $roles = $user->roles()->orderBy('name')->get();
-        $user_arr  = new UserResource($user);
-
-
-
-        return response()->json([
-            'success' => true,
-            'data'=> [ 'token' => $token ],
-            'user' => $user_arr,
-            'roles' => $roles,
-        ]);
-
-    }
-    public function registerOrFail(Request $request)
-    {
-
-//        $credentials = $request->only('name','email', 'password');
-
-        try {
-            $user = new User();
-            $user->email = $request->email;
-            $user->password = bcrypt($request->password);
-
-        } catch (Exception $e) {
-            return Response::json(['error' => 'User already exists.'], HttpResponse::HTTP_CONFLICT);
-        }
-        $token = JWTAuth::fromUser($user);
-
-        return response()->json(['success' => true, 'data'=> [ 'token' => $token ]]);
-
-    }
-    public function logout(Request $request)
-    {
-
-        $this->validate($request, ['token' => 'required']);
-
-        try {
-            JWTAuth::invalidate($request->input('token'));
-            return response()->json(['success' => true]);
-        } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
-            return response()->json(['success' => false, 'error' => 'Failed to logout, please try again.'], 500);
-        }
-
-    }
-
-
 
     public function addBarToSubs(Bar $bar, User $user)
     {
@@ -91,53 +33,87 @@ class UserService implements UserServiceInterface
             ->subscription()
             ->get()
             ->first();
-//        dd($subList);
+
         if(!isset($subList))
         {
             $subList = new SubscriptionList();
             $subList->save();
             $subList->bars()->save($bar);
-
             $user->subscription()->save($subList);
+            $barsInList = $subList->bars()->get();
 
             return response()->json(
                 [
-                    'subscription_list' => json_encode($subList),
+                    'subscription_list' => $barsInList->toArray(),
                     'status' => 'SubscriptionList created.'
                 ],HttpResponse::HTTP_CREATED);
         }
 
         $barsInList = $subList->bars()->get();
 
-        if(!$barsInList->containsStrict('id',$bar->id) )
-        {
-            $subList->bars()->save($bar);
-            return response()->json([
-                'subscription_list' => $subList,
-                'status' => 'Bar added to SubscriptionList'
-            ],HttpResponse::HTTP_OK);
-        }
-        else
-        {
-            return response()->json([
-                'status' => 'Bar already exists in that list'
-            ],HttpResponse::HTTP_NO_CONTENT);
-        }
-
-
         //check if bar exists in that list.
         // if exists, return SubscriptionList and 200 OK
         // if not return 202 Accepted.
+        if(!$barsInList->contains('id',$bar->id))
+        {
+            $subList->bars()->save($bar);
+            return response()->json(
+                [
+                'subscription_list' => $barsInList->toArray(),
+                'status' => 'Bar added to SubscriptionList'
+            ],HttpResponse::HTTP_OK);
+        }
 
+        return response()->json([
+            'status' => 'Bar already exists in that list'
+        ],HttpResponse::HTTP_OK);
 
-//        return response().json([],HttpResponse::HTTP_ACCEPTED);
-
-        //check
 
     }
 
-    public function removeBarFromSubs($Bar, User $user)
+    public function removeBarFromSubs(Bar $bar, User $user)
     {
+
+        $subList = $user
+            ->subscription()
+            ->get()
+            ->first();
+
+        $barsInList = $subList->bars()->get();
+
+        //if SubscriptionList doesn't contain Bar, return 410 Gone.
+        if(!$barsInList->contains('id',$bar->id) )
+        {
+            return response()->json([
+                'status' => 'SubscriptionList does not contain that Bar. '
+            ],HttpResponse::HTTP_GONE);
+        }
+
+        //Remove Bar from SubscriptionList and return updated SubscriptionList with 200 OK code
+        $subList->bars()->detach($bar->id);
+
+        $barsInList = $this->forgetById($barsInList,$bar->id);
+
+        return response()->json([
+            'subList' => $barsInList->toArray(), //return updated collection.
+            'status' => 'Bar removed from SubscriptionList successfully'
+        ],HttpResponse::HTTP_OK);
+
+    }
+
+    //Custom hack for removing item from a collection, since Collection has no
+    //method for removing a Model from collection. The key is
+    private function forgetById($collection,$id)
+    {
+        foreach($collection as $key => $item)
+        {
+            if($item->id == $id)
+            {
+                $collection->forget($key);
+                break;
+            }
+        }
+        return $collection;
     }
 
     public function claimBar(Bar $bar)

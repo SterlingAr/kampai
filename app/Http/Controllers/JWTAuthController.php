@@ -8,17 +8,17 @@ use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Http\Request;
 use Response;
 use App\Http\Resources\UserResource;
-use App\Http\Services\User\UserServiceInterface;
+use App\Http\Services\Auth\JWTAuthServiceInterface;
 
 class JWTAuthController extends Controller
 {
 
-    protected $userService;
+    protected $authService;
 
-    public function __construct(UserServiceInterface $userService)
+    public function __construct(JWTAuthServiceInterface $authService)
     {
 
-        $this->userService = $userService;
+        $this->authService = $authService;
     }
 
 
@@ -31,7 +31,7 @@ class JWTAuthController extends Controller
     public function login(Request $request)
     {
 
-      return  $this->userService->loginOrFail($request);
+      return  $this->authService->loginOrFail($request);
 
     }
 
@@ -43,7 +43,7 @@ class JWTAuthController extends Controller
      */
     public function register(Request $request)
     {
-       return $this->userService->registerOrFail($request);
+       return $this->authService->registerOrFail($request);
 
     }
 
@@ -56,7 +56,7 @@ class JWTAuthController extends Controller
      */
     public function logout(Request $request)
     {
-        return $this->userService->logout($request);
+        return $this->authService->logout($request);
     }
 
 

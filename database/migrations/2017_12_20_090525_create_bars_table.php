@@ -24,7 +24,7 @@ class CreateBarsTable extends Migration
             $table->text('all_tags')->nullable();
             $table->text('keywords')->nullable();
 
-            $table->timestamps();
+//            $table->timestamps();
         });
     }
 

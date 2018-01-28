@@ -15,7 +15,7 @@ class CreateSubscriptionListsTable extends Migration
     {
         Schema::create('subscription_lists', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+//            $table->timestamps();
         });
 
 

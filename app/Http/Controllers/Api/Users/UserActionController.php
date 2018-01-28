@@ -24,13 +24,28 @@ class UserActionController
     }
 
 
-
+    /**
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function addBarToSubs(Request $request)
     {
         $bar = Bar::where('node', $request->node)->first();
         $user = User::where('id', $request->user_id)->first();
 
         return $this->userService->addBarToSubs($bar,$user);
+
+    }
+
+
+    public function removeBarFromSubs($node_id, $user_id)
+    {
+
+        $bar = Bar::where('node', $node_id)->first();
+        $user = User::where('id', $user_id)->first();
+
+        return $this->userService->removeBarFromSubs($bar,$user);
 
     }
 

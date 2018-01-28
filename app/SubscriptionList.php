@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubscriptionList extends Model
 {
+    public $timestamps = false;
     /**
      * Get the user that owns the SubscriptionList
      *

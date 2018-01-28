@@ -12,6 +12,7 @@ class Bar extends Model
     use Notifiable;
 
     //
+    public $timestamps = false;
 
     use Searchable;
 
