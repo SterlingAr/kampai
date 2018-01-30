@@ -226,7 +226,6 @@ class OsmService implements OsmServiceInterface
 
         }
 
-
         $res = $this->query_osm($body_block);
 
         return $res;
