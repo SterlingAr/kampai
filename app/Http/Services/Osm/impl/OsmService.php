@@ -135,13 +135,13 @@ class OsmService implements OsmServiceInterface
         foreach($tags as $key => $value)
         {
 
-                if(
-                $key == 'name' ||
-                $key == 'amenity' ||
-                $key == 'description' ||
-                $key == 'description_1'
-                )
-                    continue;
+//                if(
+//                $key == 'name' ||
+//                $key == 'amenity'
+////                $key == 'description' ||
+////                $key == 'description_1'
+//                )
+//                    continue;
 
                 if($key == 'wheelchair' && $value == 'no')
                     continue;

@@ -25,7 +25,7 @@ class SearchService implements SearchServiceInterface
 
         $indexer = $tnt->createIndex('bars.index');
         $indexer->setPrimaryKey('id');
-        $indexer->query('SELECT id, name,amenity,amenity_es,description,description_1, keywords, all_tags FROM bars;');
+        $indexer->query('SELECT id, keywords, all_tags FROM bars;');
         $indexer->run();
     }
 
