@@ -17,6 +17,7 @@ use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Http\Request;
 use Response;
 use Illuminate\Support\Collection;
+use Validator;
 class JWTAuthService implements JWTAuthServiceInterface
 {
 
@@ -53,37 +54,60 @@ class JWTAuthService implements JWTAuthServiceInterface
     public function registerOrFail(Request $request)
     {
 
-            $validatedData = $request->validate([
-                'name' => 'required|max:25',
-                'email' => 'required',
-                'password' => 'required|min:8|max:30|'
+            //recibo request con name,email,password
+            //comprobar si el usuario existe
+            //si existe, envíar 409 status error
+            //si no existe, enviar 201 status created.
+
+            $rules = [
+                'name' => 'required|max:255',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|min:6',
+            ];
+
+            $input = $request->only(
+                'name',
+                'email',
+                'password'
+            );
+
+            $validator = Validator::make($input, $rules);
+
+
+            if($validator->fails())
+            {
+                $error = $validator->messages()->toJson();
+                return response()->json(['success'=> false, 'error'=> $error],
+                    HttpResponse::HTTP_BAD_REQUEST);
+            }
+
+            $email = $request->email;
+            $name = $request->name;
+            $password = bcrypt($request->password);
+
+            $user = User::create([
+                'name' => $name,
+                'email' => $email,
+                'password' => $password
             ]);
 
-            $user = User::where('email', $request->email);
 
-            if (!isset($user))
-            {
-                $validatedData['password'] = bcrypt($request->password);
-                $user = User::create($validatedData);
-                $role = new Role();
-                $role->name = 'normie';
+            $role = new Role();
+            $role->name = 'normie';
+            $user->roles()->save($role);
+            $user->save();
 
-                $user->roles()->save($role);
-                $user->save();
+            $token = JWTAuth::fromUser($user);
 
-                $token = JWTAuth::fromUser($user);
+            return response()->json([
+                'success' => true,
+                'data' => ['token' => $token]], HttpResponse::HTTP_CREATED);
 
-                return response()->json([
-                    'success' => true,
-                    'data' => ['token' => $token]], HttpResponse::HTTP_CREATED);
 
-            }
-            else
-            {
-                return response()->json([
-                    'error' => 'User already exists.'],
-                    HttpResponse::HTTP_CONFLICT);
-            }
+
+//                return response()->json([
+//                    'error' => 'User already exists.'],
+//                    HttpResponse::HTTP_CONFLICT);
 
 
     }

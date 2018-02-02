@@ -51,6 +51,7 @@ Route::group(['prefix' => 'auth'], function(){
 
     Route::post('/register', 'JWTAuthController@register');
 
+
     Route::group(['middleware' => ['jwt.auth']], function() {
 
         Route::get('logout', 'JWTAuthController@logout');
