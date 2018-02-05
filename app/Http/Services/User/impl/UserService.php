@@ -34,6 +34,7 @@ class UserService implements UserServiceInterface
             ->get()
             ->first();
 
+
         if(!isset($subList))
         {
             $subList = new SubscriptionList();
@@ -52,11 +53,14 @@ class UserService implements UserServiceInterface
         $barsInList = $subList->bars()->get();
 
         //check if bar exists in that list.
-        // if exists, return SubscriptionList and 200 OK
-        // if not return 202 Accepted.
+        // if exists, return SubscriptionList and 409 Conflict
+        // if not return 200 OK.
         if(!$barsInList->contains('id',$bar->id))
         {
             $subList->bars()->save($bar);
+
+            $barsInList = $subList->bars()->get();
+
             return response()->json(
                 [
                 'subscription_list' => $barsInList->toArray(),
@@ -66,7 +70,7 @@ class UserService implements UserServiceInterface
 
         return response()->json([
             'status' => 'Bar already exists in that list'
-        ],HttpResponse::HTTP_OK);
+        ],HttpResponse::HTTP_CONFLICT);
 
 
     }

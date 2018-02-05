@@ -56,14 +56,15 @@ Route::group(['prefix' => 'auth'], function(){
 
         Route::get('logout', 'JWTAuthController@logout');
 
+        Route::post('/subscription/bar', 'Api\Users\UserActionController@addBarToSubs');
+
+        Route::delete('/subscription/bar/remove/{bar}/{user}','Api\Users\UserActionController@removeBarFromSubs');
 
     });
 });
 
 
 
-Route::post('/subscription/bar', 'Api\Users\UserActionController@addBarToSubs');
-Route::delete('/subscription/bar/remove/{bar}/{user}','Api\Users\UserActionController@removeBarFromSubs');
 
 
 /**
