@@ -8,6 +8,7 @@
 
 
 namespace App\Http\Services\User;
+use App\Http\Services\Osm\OsmServiceInterface;
 
 use App\SubscriptionList;
 use App\User;
@@ -24,6 +25,13 @@ class UserService implements UserServiceInterface
 {
     use ValidatesRequests;
 
+    protected $osmService;
+
+     public function __construct(OsmServiceInterface $osmService)
+     {
+         $this->osmService = $osmService;
+     }
+
 
     public function addBarToSubs(Bar $bar, User $user)
     {
@@ -33,37 +41,40 @@ class UserService implements UserServiceInterface
             ->subscription()
             ->get()
             ->first();
-
-
         if(!isset($subList))
         {
             $subList = new SubscriptionList();
             $subList->save();
             $subList->bars()->save($bar);
             $user->subscription()->save($subList);
+
+            //return only node data.
             $barsInList = $subList->bars()->get();
+
+            $node_data = $this->query_node_data($barsInList);
 
             return response()->json(
                 [
-                    'subscription_list' => $barsInList->toArray(),
+                    'subscription_list' => json_decode($node_data),
                     'status' => 'SubscriptionList created.'
                 ],HttpResponse::HTTP_CREATED);
         }
 
-        $barsInList = $subList->bars()->get();
-
         //check if bar exists in that list.
         // if exists, return SubscriptionList and 409 Conflict
         // if not return 200 OK.
+        $barsInList = $subList->bars()->get();
+
         if(!$barsInList->contains('id',$bar->id))
         {
             $subList->bars()->save($bar);
 
             $barsInList = $subList->bars()->get();
 
+            $node_data = $this->query_node_data($barsInList);
             return response()->json(
                 [
-                'subscription_list' => $barsInList->toArray(),
+                'subscription_list' => json_decode($node_data),
                 'status' => 'Bar added to SubscriptionList'
             ],HttpResponse::HTTP_OK);
         }
@@ -71,13 +82,10 @@ class UserService implements UserServiceInterface
         return response()->json([
             'status' => 'Bar already exists in that list'
         ],HttpResponse::HTTP_CONFLICT);
-
-
     }
 
     public function removeBarFromSubs(Bar $bar, User $user)
     {
-
         $subList = $user
             ->subscription()
             ->get()
@@ -98,10 +106,25 @@ class UserService implements UserServiceInterface
 
         $barsInList = $this->forgetById($barsInList,$bar->id);
 
+        $node_data = $this->query_node_data($barsInList);
+
         return response()->json([
-            'subList' => $barsInList->toArray(), //return updated collection.
+            'subscription_list' => json_decode($node_data), //return updated collection.
             'status' => 'Bar removed from SubscriptionList successfully'
         ],HttpResponse::HTTP_OK);
+    }
+
+    //Given an array of nodes, return data as an array of objects.
+    private function query_node_data($barsCollection)
+    {
+        $node_array = [];
+
+        foreach($barsCollection as $bar)
+        {
+            array_push($node_array, $bar->node);
+        }
+
+        return $this->osmService->query_only_nodes($node_array);
 
     }
 

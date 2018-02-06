@@ -36,5 +36,12 @@ Interface OsmServiceInterface
 
     public function debugger();
 
+    /**
+     * @param $nodes
+     * @return mixed
+     */
+    public function query_only_nodes($node_array);
+
+
 
 }

@@ -7,7 +7,7 @@
  */
 
 namespace App\Http\Services\Auth;
-
+use App\Http\Services\Osm\OsmServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use JWTAuth;
@@ -21,6 +21,12 @@ use Validator;
 class JWTAuthService implements JWTAuthServiceInterface
 {
 
+    protected $osmService;
+
+    public function __construct(OsmServiceInterface $osmService)
+    {
+        $this->osmService = $osmService;
+    }
 
 
     use ValidatesRequests;
@@ -36,7 +42,6 @@ class JWTAuthService implements JWTAuthServiceInterface
             return Response::json(false, HttpResponse::HTTP_UNAUTHORIZED);
         }
 
-
         $user =  $this->fetchUserData($request->email);
 //        dd($user);
 
@@ -45,6 +50,7 @@ class JWTAuthService implements JWTAuthServiceInterface
             'success' => true,
             'token' => $token,
             'user' => $user,
+
 
         ],HttpResponse::HTTP_OK);
     }
@@ -58,7 +64,6 @@ class JWTAuthService implements JWTAuthServiceInterface
             //comprobar si el usuario existe
             //si existe, envíar 409 status error
             //si no existe, enviar 201 status created.
-
             $rules = [
                 'name' => 'required|max:255',
                 'email' => 'required|email|max:255|unique:users',
@@ -72,7 +77,6 @@ class JWTAuthService implements JWTAuthServiceInterface
             );
 
             $validator = Validator::make($input, $rules);
-
 
             if($validator->fails())
             {
@@ -144,23 +148,36 @@ class JWTAuthService implements JWTAuthServiceInterface
             return $e;
         }
 
-//        if(!$user)
-//            return false;
-
         $roles = $user->roles()->get();
         if(isset($roles))
             $user->roles =  $roles;
 
-
         $subscription = $user->subscription()->get()->first();
 
         if(isset($subscription))
-            $user->subscription = $subscription->bars()->get();
+        {
+            $barsInSub = $subscription->bars()->get();
+
+            $node_data = $this->query_node_data($barsInSub);
+
+            $user->subscription = json_decode($node_data);
+        }
 
         return $user;
 
     }
 
+    //Repeated function, should be refactored.
+    private function query_node_data($barsInSub)
+    {
+        $node_array = [];
 
+        foreach($barsInSub as $bar)
+        {
+            array_push($node_array, $bar->node);
+        }
+
+        return $this->osmService->query_only_nodes($node_array);
+    }
 
 }

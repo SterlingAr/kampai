@@ -230,7 +230,21 @@ class OsmService implements OsmServiceInterface
         return $res;
     }
 
+    public function query_only_nodes($node_array)
+    {
+        $query_nodes = '';
+        //foreach node in array, build body_block and user query_osm  to retrieve nodes.
+        //return an array of node objects.
+        foreach($node_array as $node)
+        {
+            $query_nodes = $query_nodes . 'node(' . (string)$node . ');';
+        }
+        return $this->query_osm($query_nodes);
+    }
+
     /**
+     * Query nodes from OSM.
+     *
      * @param $body_block
      * @return \Psr\Http\Message\StreamInterface
      */
@@ -238,7 +252,6 @@ class OsmService implements OsmServiceInterface
     {
 
         $request_param = self::QUERY_START . $body_block .  self::QUERY_END;
-
         $client = new \GuzzleHttp\Client(); // library I use to communicate with other apis
 
         $res = $client->request('POST', self::BASE_URI, [
@@ -248,7 +261,6 @@ class OsmService implements OsmServiceInterface
         ]);
 
         $raw_json = $res->getBody();
-
 //        return  $this->filter_bad_nodes($raw_json);
         return $raw_json;
     }
