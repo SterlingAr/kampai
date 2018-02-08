@@ -7,19 +7,13 @@ git clone https://github.com/SterlingAr/kampai.git
 
 composer install 
 
-cp .env-example .env
+cp .env.example .env
 
 ```
 
-__Append to .env__ 
-
->SCOUT_DRIVER=tntsearch
 
 
 __Create database and change connection data in .env__
-
-
-
 
 ```
 php artisan vendor:publish –provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
@@ -28,7 +22,9 @@ php artisan migrate
 php artisan db:seed
 php artisan query:nodes
 php artisan index:bars
-php artisan config:cache
+php artisan key:generate
 php artisan config:cache
 
+
 ```
+__Eventually fix permissions of storage/ folder__
