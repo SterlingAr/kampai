@@ -13,7 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\IndexBars::class,
+        \App\Console\Commands\PopulateDatabase::class,
+        \App\Console\Commands\DebugOSM::class,
+
+
     ];
 
     /**

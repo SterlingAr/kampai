@@ -11,6 +11,59 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+use Illuminate\Http\Request;
+
+Route::get('/', function ()
+{
+    return view('index');
+});
+
+
+
+
+Route::group(['prefix' => 'bar'], function()
+{
+
+
+    Route::get('/', [
+        'uses' => 'BarControllerFrontend@index',
+        'as' => 'home'
+    ]);
+
+    Route::get('test', function(){
+
+
+        $query = http_build_query([
+            'client_id' => 3,
+            'redirect_uri' => 'http://kampai.local/bar/auth-user',
+            'response_type' => 'code',
+            'scope' => '',
+        ]);
+
+        return redirect('http://kampai.local/oauth/authorize?' . $query);
+
+    });
+
+    Route::get('auth-user', function(Request $request) {
+
+        $http = new GuzzleHttp\Client;
+
+        $response = $http->post('http://kampai.local/oauth/token', [
+            'form_params' => [
+                'grant_type' => 'password',
+                'client_id' => '3',
+                'client_secret' => 'XOZ5cTqVNrJYZkjZ7wYd4RcVFa8QumLnHsVbB2mh',
+                'redirect_url' => 'http://kampai.local/bar/auth-user',
+                'code'  => $request->code,
+
+            ],
+        ]);
+
+        return json_decode((string) $response->getBody(),true);
+
+    });
+
+
+
+
 });
