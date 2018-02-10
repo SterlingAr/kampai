@@ -30,7 +30,7 @@ interface UserServiceInterface
     public function removeBarFromSubs(Bar $bar, User $user);
 
     //Owner can claim bar as his
-    public function claimBar(Bar $bar);
+    public function claimBar(Bar $bar, User $user);
 
 
 

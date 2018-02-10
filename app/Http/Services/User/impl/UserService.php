@@ -129,7 +129,7 @@ class UserService implements UserServiceInterface
     }
 
     //Custom hack for removing item from a collection, since Collection has no
-    //method for removing a Model from collection. The key is
+    //method for removing a Model from collection.
     private function forgetById($collection,$id)
     {
         foreach($collection as $key => $item)
@@ -143,8 +143,12 @@ class UserService implements UserServiceInterface
         return $collection;
     }
 
-    public function claimBar(Bar $bar)
+
+    public function claimBar(Bar $bar,User $user)
     {
+
+        //if user has
+
     }
 
     public function ownerBarList(User $user)
@@ -159,4 +163,3 @@ class UserService implements UserServiceInterface
 
 }
 
-?>

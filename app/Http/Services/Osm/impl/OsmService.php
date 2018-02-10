@@ -12,7 +12,7 @@ use App\Bar;
 
 class OsmService implements OsmServiceInterface
 {
-    const BBOX_SS = "43.18264913393606,-2.0571899414062504,43.34627851892777,-1.8754005432128908";
+    const BBOX_SS = "43.29569915140259,-2.1273994445800786,43.357263034988996,-1.8802070617675781";
     const DEBUG_BBOX = "46.727271481220434,23.481731414794922,46.817213196155656,23.728923797607425";
 
     const  BASE_URI = 'https://z.overpass-api.de/api/interpreter';
@@ -51,7 +51,7 @@ class OsmService implements OsmServiceInterface
     private function save_node_data()
     {
 
-        $osm_obj = json_decode($this->query_all_node_data(self::DEBUG_BBOX));
+        $osm_obj = json_decode($this->query_all_node_data(self::BBOX_SS));
 
         $nodes = $osm_obj->elements;
 
