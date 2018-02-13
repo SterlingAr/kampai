@@ -18,6 +18,7 @@ use Mockery\Exception;
 use Response;
 use App\Http\Resources\UserResource;
 use App\Bar;
+use App\Role;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Collection ;
 
@@ -114,7 +115,7 @@ class UserService implements UserServiceInterface
         ],HttpResponse::HTTP_OK);
     }
 
-    //Given an array of nodes, return data as an array of objects.
+    //Given an collection, return data as an array of objects.
     private function query_node_data($barsCollection)
     {
         $node_array = [];
@@ -143,12 +144,74 @@ class UserService implements UserServiceInterface
         return $collection;
     }
 
-    public function claimBar(Bar $bar)
+    /**
+     * @param Role $role
+     * @param User $user
+     * @return bool
+     */
+    private function hasRole(Role $role, User $user)
     {
+        $roles = $user->roles()->get();
+
+        if($roles->contains($role))
+        {
+            return true;
+        }
+
+        return false;
+
     }
+
+    public function claimBar(Bar $bar, User $user)
+    {
+         //if bar exists and doesn't belong to other user.
+         //if user doesn't have this bar already.
+        //Add bar to user's list.
+        //return array of owned bars.
+        if($bar->user_id && $bar->user_id !== $user->user_id)
+        {
+            //bar doesn't belong to this user
+            return response()->json([
+                'status' => 'This bar is already owned by another user'
+            ],HttpResponse::HTTP_UNAUTHORIZED);
+        }
+
+        if($bar->user_id && $bar->user_id == $user->id)
+        {
+            return response()->json([
+                'status' => 'The bar is already owned by given user'
+            ], HttpResponse::HTTP_CONFLICT);
+            //bar already owned.
+        }
+
+        $role = Role::where('name','owner')->get()->first();
+
+        if(!$this->hasRole($role, $user))
+        {
+            $user->roles()->save($role);
+        }
+
+        $user->bars()->save($bar);
+        $bars_owned = json_decode($this->ownedBars($user));
+
+        return response()->json([
+            'status' => 'Bar claimed',
+            'bars_owned' => $bars_owned->elements
+        ], HttpResponse::HTTP_OK);
+
+    }
+
 
     public function ownerBarList(User $user)
     {
+        //retrieve bars owned by users and return an array.
+      return $this->ownedBars($user);
+
+    }
+
+    private function ownedBars(User $user)
+    {
+        return $this->query_node_data($user->bars()->get());
     }
 
     public function editKeywords(Bar $bar)

@@ -24,6 +24,14 @@ class UserActionController
     }
 
 
+    public function claimBar(Request $request)
+    {
+        $bar = Bar::where('node', $request->node)->first();
+        $user = User::where('id', $request->user_id)->first();
+        return $this->userService->claimBar($bar,$user);
+    }
+
+
     /**
      *
      * @param Request $request
@@ -46,7 +54,6 @@ class UserActionController
         $user = User::where('id', $user_id)->first();
 
         return $this->userService->removeBarFromSubs($bar,$user);
-
     }
 
 }

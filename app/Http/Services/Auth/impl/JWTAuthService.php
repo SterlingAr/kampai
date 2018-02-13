@@ -8,6 +8,7 @@
 
 namespace App\Http\Services\Auth;
 use App\Http\Services\Osm\OsmServiceInterface;
+use App\Http\Services\User\UserServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use JWTAuth;
@@ -22,10 +23,12 @@ class JWTAuthService implements JWTAuthServiceInterface
 {
 
     protected $osmService;
+    protected $userService;
 
-    public function __construct(OsmServiceInterface $osmService)
+    public function __construct(OsmServiceInterface $osmService,UserServiceInterface $userService)
     {
         $this->osmService = $osmService;
+        $this->userService = $userService;
     }
 
 
@@ -50,7 +53,6 @@ class JWTAuthService implements JWTAuthServiceInterface
             'success' => true,
             'token' => $token,
             'user' => $user,
-
 
         ],HttpResponse::HTTP_OK);
     }
@@ -162,6 +164,9 @@ class JWTAuthService implements JWTAuthServiceInterface
 
             $user->subscription = json_decode($node_data);
         }
+
+        $bars_owned = $this->userService->ownerBarList($user);
+        $user->bars_owned = json_decode($bars_owned)->elements;
 
         return $user;
 

@@ -23,21 +23,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('bars/{keywords?}/{bbox}','Api\Bar\BarController@listBars');
 
 
-Route::resource('bars', 'Api\Bar\BarController', ['only' => [
-
-    'index','show', 'create'
-
-]]);
-
-Route::resource('users', 'Api\Users\UserController');
-
-
-Route::resource('users.bars', 'Api\Users\UserBarController', ['only' => [
-    'index'
-]]);
-
-Route::resource('roles', 'Api\Role\RoleController');
-Route::resource('permissions', 'Api\Permission\PermissionController');
 
 
 
@@ -60,9 +45,30 @@ Route::group(['prefix' => 'auth'], function(){
 
         Route::delete('/subscription/bar/remove/{bar}/{user}','Api\Users\UserActionController@removeBarFromSubs');
 
+        Route::post('/claim','Api\Users\UserActionController@claimBar');
+
+
+
+        // implemented but unused-ish
+        Route::resource('bars', 'Api\Bar\BarController', ['only' => [
+
+            'index','show', 'create'
+
+        ]]);
+
+        Route::resource('users', 'Api\Users\UserController');
+
+
+        Route::resource('users.bars', 'Api\Users\UserBarController', ['only' => [
+            'index'
+        ]]);
+
+        Route::resource('roles', 'Api\Role\RoleController');
+        Route::resource('permissions', 'Api\Permission\PermissionController');
+
+
     });
 });
-
 
 
 
