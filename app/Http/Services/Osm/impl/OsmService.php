@@ -65,7 +65,7 @@ class OsmService implements OsmServiceInterface
     private function save_node_data()
     {
 
-        $osm_obj = json_decode($this->query_all_node_data(self::HAMBURG_BBOX));
+        $osm_obj = json_decode($this->query_all_node_data(self::BBOX_SS));
 
         $nodes = $osm_obj->elements;
 
