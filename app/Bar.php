@@ -16,9 +16,7 @@ class Bar extends Model
 
     use Searchable;
 
-    protected $fillable = ['node'];
-
-
+    protected $fillable = ['node','keywords'];
 
     /**
      * Get the indexable data array for the model.

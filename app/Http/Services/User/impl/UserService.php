@@ -9,6 +9,7 @@
 
 namespace App\Http\Services\User;
 use App\Http\Services\Osm\OsmServiceInterface;
+use App\Http\Services\Search\SearchServiceInterface;
 
 use App\SubscriptionList;
 use App\User;
@@ -27,10 +28,12 @@ class UserService implements UserServiceInterface
     use ValidatesRequests;
 
     protected $osmService;
+    protected $searchService;
 
-     public function __construct(OsmServiceInterface $osmService)
+     public function __construct(OsmServiceInterface $osmService,SearchServiceInterface $searchService)
      {
          $this->osmService = $osmService;
+         $this->searchService = $searchService;
      }
 
 
@@ -168,7 +171,7 @@ class UserService implements UserServiceInterface
          //if user doesn't have this bar already.
         //Add bar to user's list.
         //return array of owned bars.
-        if($bar->user_id && $bar->user_id !== $user->user_id)
+        if($bar->user_id && $bar->user_id !== $user->id)
         {
             //bar doesn't belong to this user
             return response()->json([
@@ -192,15 +195,33 @@ class UserService implements UserServiceInterface
         }
 
         $user->bars()->save($bar);
-        $bars_owned = json_decode($this->ownedBars($user));
+//        $bars_owned = json_decode($this->ownedBars($user));
+        $bars_owned = $this->ownedBars($user);
 
+        $roles = $user->roles()->get();
+
+//        $bars_owned_keywords = $this->appendKeywords($bars_owned->elements);
         return response()->json([
             'status' => 'Bar claimed',
-            'bars_owned' => $bars_owned->elements
+            'bars_owned' => $bars_owned,
+            'roles' => json_decode($roles)
         ], HttpResponse::HTTP_OK);
 
     }
 
+
+    //foreach bar owned, add the keywords belonging to this bar.
+    // NOTE: to be refactored using a transformer instead of dirty hacks.
+    private function appendKeywords($bars)
+    {
+        foreach ($bars as $bar)
+        {
+            $b = Bar::where('node', $bar->id)->first();
+            $bar->keywords = $b->keywords;
+
+        }
+        return $bars;
+    }
 
     public function ownerBarList(User $user)
     {
@@ -211,14 +232,34 @@ class UserService implements UserServiceInterface
 
     private function ownedBars(User $user)
     {
-        return $this->query_node_data($user->bars()->get());
+        $bars_json = json_decode($this->query_node_data($user->bars()->get()));
+
+        $bars_with_keywords = $this->appendKeywords($bars_json->elements);
+
+        return $bars_with_keywords ;
     }
 
-    public function editKeywords(Bar $bar)
+    public function editKeywords(Bar $bar,$keywords)
     {
 
+        //to-be implemented exception handling, no can do now.
+
+        return $this->updateKeywords($bar,$keywords);
+
     }
 
+    //
+    private function updateKeywords(Bar $bar, $keywords)
+    {
+        $bar->keywords = $keywords;
+        $bar->save();
+    }
+
+    //regenerate SQLite keyword index for search utility.
+    private function reIndexNodes()
+    {
+        $this->searchService->index_bars();
+    }
 
 }
 

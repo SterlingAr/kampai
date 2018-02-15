@@ -47,13 +47,21 @@ class UserActionController
     }
 
 
-    public function removeBarFromSubs($node_id, $user_id)
+    public function removeBarFromSubs($node_id, $user_id)//should be changed to use request object
     {
 
         $bar = Bar::where('node', $node_id)->first();
         $user = User::where('id', $user_id)->first();
 
         return $this->userService->removeBarFromSubs($bar,$user);
+    }
+
+    public function updateKeywords(Request $request)
+    {
+        $bar = Bar::where('node', $request->node)->first();
+
+        return $this->userService->editKeywords($bar,$request->keywords);
+
     }
 
 }

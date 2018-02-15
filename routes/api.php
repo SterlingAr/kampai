@@ -47,13 +47,13 @@ Route::group(['prefix' => 'auth'], function(){
 
         Route::post('/claim','Api\Users\UserActionController@claimBar');
 
+        Route::post('/keywords', 'Api\Users\UserActionController@updateKeywords');
 
 
         // implemented but unused-ish
         Route::resource('bars', 'Api\Bar\BarController', ['only' => [
 
             'index','show', 'create'
-
         ]]);
 
         Route::resource('users', 'Api\Users\UserController');

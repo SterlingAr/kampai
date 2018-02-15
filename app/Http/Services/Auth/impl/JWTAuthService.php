@@ -166,7 +166,7 @@ class JWTAuthService implements JWTAuthServiceInterface
         }
 
         $bars_owned = $this->userService->ownerBarList($user);
-        $user->bars_owned = json_decode($bars_owned)->elements;
+        $user->bars_owned = $bars_owned;
 
         return $user;
 
