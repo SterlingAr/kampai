@@ -9,15 +9,24 @@
 namespace App\Http\Services\Osm;
 
 use App\Bar;
+use TeamTNT\TNTSearch\Indexer\TNTIndexer;
 
 class OsmService implements OsmServiceInterface
 {
     const BBOX_SS = "43.29569915140259,-2.1273994445800786,43.357263034988996,-1.8802070617675781";
     const DEBUG_BBOX = "46.727271481220434,23.481731414794922,46.817213196155656,23.728923797607425";
-
+    const HAMBURG_BBOX = "53.52939080761803,9.875850677490236,53.566719995879154,10.123043060302736";
     const  BASE_URI = 'https://z.overpass-api.de/api/interpreter';
     const  QUERY_START = '[out:json][timeout:25];(';
     const  QUERY_END = ');out body;>;out skel qt;';
+
+
+    protected $tnt;
+
+    public function __construct()
+    {
+        $this->tnt = new TNTIndexer;
+    }
 
 
     public function retrieve_osm_data($node_list, $bbox)
@@ -44,6 +53,11 @@ class OsmService implements OsmServiceInterface
 
     }
 
+    private function create_n_grams($keyword)
+    {
+
+    }
+
 
     /**
      * Loop through each node and save it to the database.
@@ -51,7 +65,11 @@ class OsmService implements OsmServiceInterface
     private function save_node_data()
     {
 
+<<<<<<< HEAD
         $osm_obj = json_decode($this->query_all_node_data(self::BBOX_SS));
+=======
+        $osm_obj = json_decode($this->query_all_node_data(self::HAMBURG_BBOX));
+>>>>>>> dev
 
         $nodes = $osm_obj->elements;
 

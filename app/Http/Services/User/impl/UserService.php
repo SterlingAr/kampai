@@ -9,6 +9,7 @@
 
 namespace App\Http\Services\User;
 use App\Http\Services\Osm\OsmServiceInterface;
+use App\Http\Services\Search\SearchServiceInterface;
 
 use App\SubscriptionList;
 use App\User;
@@ -18,6 +19,7 @@ use Mockery\Exception;
 use Response;
 use App\Http\Resources\UserResource;
 use App\Bar;
+use App\Role;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Collection ;
 
@@ -26,10 +28,12 @@ class UserService implements UserServiceInterface
     use ValidatesRequests;
 
     protected $osmService;
+    protected $searchService;
 
-     public function __construct(OsmServiceInterface $osmService)
+     public function __construct(OsmServiceInterface $osmService,SearchServiceInterface $searchService)
      {
          $this->osmService = $osmService;
+         $this->searchService = $searchService;
      }
 
 
@@ -114,7 +118,7 @@ class UserService implements UserServiceInterface
         ],HttpResponse::HTTP_OK);
     }
 
-    //Given an array of nodes, return data as an array of objects.
+    //Given an collection, return data as an array of objects.
     private function query_node_data($barsCollection)
     {
         $node_array = [];
@@ -143,23 +147,128 @@ class UserService implements UserServiceInterface
         return $collection;
     }
 
+<<<<<<< HEAD
 
     public function claimBar(Bar $bar,User $user)
     {
 
         //if user has
 
+=======
+    /**
+     * @param Role $role
+     * @param User $user
+     * @return bool
+     */
+    private function hasRole(Role $role, User $user)
+    {
+        $roles = $user->roles()->get();
+
+        if($roles->contains($role))
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public function claimBar(Bar $bar, User $user)
+    {
+         //if bar exists and doesn't belong to other user.
+         //if user doesn't have this bar already.
+        //Add bar to user's list.
+        //return array of owned bars.
+        if($bar->user_id && $bar->user_id !== $user->id)
+        {
+            //bar doesn't belong to this user
+            return response()->json([
+                'status' => 'This bar is already owned by another user'
+            ],HttpResponse::HTTP_UNAUTHORIZED);
+        }
+
+        if($bar->user_id && $bar->user_id == $user->id)
+        {
+            return response()->json([
+                'status' => 'The bar is already owned by given user'
+            ], HttpResponse::HTTP_CONFLICT);
+            //bar already owned.
+        }
+
+        $role = Role::where('name','owner')->get()->first();
+
+        if(!$this->hasRole($role, $user))
+        {
+            $user->roles()->save($role);
+        }
+
+        $user->bars()->save($bar);
+//        $bars_owned = json_decode($this->ownedBars($user));
+        $bars_owned = $this->ownedBars($user);
+
+        $roles = $user->roles()->get();
+
+//        $bars_owned_keywords = $this->appendKeywords($bars_owned->elements);
+        return response()->json([
+            'status' => 'Bar claimed',
+            'bars_owned' => $bars_owned,
+            'roles' => json_decode($roles)
+        ], HttpResponse::HTTP_OK);
+
+    }
+
+
+    //foreach bar owned, add the keywords belonging to this bar.
+    // NOTE: to be refactored using a transformer instead of dirty hacks.
+    private function appendKeywords($bars)
+    {
+        foreach ($bars as $bar)
+        {
+            $b = Bar::where('node', $bar->id)->first();
+            $bar->keywords = $b->keywords;
+
+        }
+        return $bars;
+>>>>>>> dev
     }
 
     public function ownerBarList(User $user)
     {
+        //retrieve bars owned by users and return an array.
+      return $this->ownedBars($user);
+
     }
 
-    public function editKeywords(Bar $bar)
+    private function ownedBars(User $user)
+    {
+        $bars_json = json_decode($this->query_node_data($user->bars()->get()));
+
+        $bars_with_keywords = $this->appendKeywords($bars_json->elements);
+
+        return $bars_with_keywords ;
+    }
+
+    public function editKeywords(Bar $bar,$keywords)
     {
 
+        //to-be implemented exception handling, no can do now.
+
+        return $this->updateKeywords($bar,$keywords);
+
     }
 
+    //
+    private function updateKeywords(Bar $bar, $keywords)
+    {
+        $bar->keywords = $keywords;
+        $bar->save();
+    }
+
+    //regenerate SQLite keyword index for search utility.
+    private function reIndexNodes()
+    {
+        $this->searchService->index_bars();
+    }
 
 }
 

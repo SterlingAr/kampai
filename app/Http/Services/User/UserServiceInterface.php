@@ -31,6 +31,10 @@ interface UserServiceInterface
 
     //Owner can claim bar as his
     public function claimBar(Bar $bar, User $user);
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 
 
 
@@ -38,7 +42,7 @@ interface UserServiceInterface
     public function ownerBarList(User $user);
 
     //Owner can modify his Bar keywords.
-    public function editKeywords(Bar $bar);
+    public function editKeywords(Bar $bar, $keywords);
 
 
     //Owner can modify keywords of his bar.
