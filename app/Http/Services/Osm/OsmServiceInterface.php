@@ -42,6 +42,8 @@ Interface OsmServiceInterface
      */
     public function query_only_nodes($node_array);
 
+    public function create_feature_collection($nodes);
+
 
 
 }

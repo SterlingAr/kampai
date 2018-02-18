@@ -53,11 +53,54 @@ class OsmService implements OsmServiceInterface
 
     }
 
-    private function create_n_grams($keyword)
+    public function create_feature_collection($nodes)
     {
+        $feature_collection = array(
+            "type" => 'FeatureCollection',
+            "features" => $this->create_features_array($nodes)
+        );
 
+        return $feature_collection;
     }
 
+    private function create_features_array($nodes)
+    {
+
+
+        $featureArray = [];
+
+        $feature = [];
+
+        $featureGeometry = [];
+
+//        dd($nodes->elements);
+
+        foreach($nodes->elements as $node)
+        {
+
+            $featureGeometry = [
+                'type' => 'Point',
+                'coordinates' => [$node->lon, $node->lat]
+             ];
+
+            $coord = [
+              'lat' => $node->lat,
+              'lon' => $node->lon
+            ];
+
+            $node->tags->node = $node->id;
+            $node->tags->coord = $coord;
+            $feature = [
+                'type' => 'Feature',
+                'geometry' => $featureGeometry,
+                'amenity' => $node->tags->amenity,
+                'details' => $node->tags
+
+            ];
+            array_push($featureArray,$feature);
+        }
+        return $featureArray;
+    }
 
     /**
      * Loop through each node and save it to the database.
