@@ -13,11 +13,11 @@ use TeamTNT\TNTSearch\Indexer\TNTIndexer;
 
 class OsmService implements OsmServiceInterface
 {
-    const BBOX_SS = "43.18264913393606,-2.0571899414062504,43.34627851892777,-1.8754005432128908";
+    const BBOX_SS = "42.17561739661684,-6.855468750000001,44.2294565683017,0.9997558593750001";
     const DEBUG_BBOX = "46.727271481220434,23.481731414794922,46.817213196155656,23.728923797607425";
     const HAMBURG_BBOX = "53.52939080761803,9.875850677490236,53.566719995879154,10.123043060302736";
     const  BASE_URI = 'https://overpass.kumi.systems/api/interpreter';
-    const  QUERY_START = '[out:json][timeout:25];(';
+    const  QUERY_START = '[out:json][timeout:500];(';
     const  QUERY_END = ');out body;>;out skel qt;';
 
 
