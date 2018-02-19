@@ -88,9 +88,10 @@ class BarController extends Controller
                     array_push($node_list, $bar->node);
                 }
                 $bars = $osm_service->retrieve_osm_data($node_list,$bbox);
+//                var_dump($bars);
                 $features = $osm_service->create_feature_collection(json_decode($bars));
                 return response()->json([
-//                    'bars' => json_decode($bars),
+                    'bars' => json_decode($bars),
                     'features' => $features
                 ],HttpResponse::HTTP_OK);
             }
@@ -107,7 +108,7 @@ class BarController extends Controller
 
 
         return response()->json([
-//            'bars' => json_decode($bars),
+            'bars' => json_decode($bars->elements),
             'features' => $features
         ],HttpResponse::HTTP_OK);
     }

@@ -261,6 +261,8 @@ class OsmService implements OsmServiceInterface
         return $res;
     }
 
+
+
     /**
      * @param $bbox
      * @return \Psr\Http\Message\StreamInterface
