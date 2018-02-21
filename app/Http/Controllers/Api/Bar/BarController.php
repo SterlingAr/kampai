@@ -83,6 +83,14 @@ class BarController extends Controller
 
                 $node_list = array();
                 $bars = Bar::search($keywords)->get();
+
+                if($bars->isEmpty())
+                {
+                    return response()->json([
+                        'status' => 'Nothing found'
+                    ], HttpResponse::HTTP_NOT_FOUND);
+                }
+
                 foreach ($bars as $bar)
                 {
                     array_push($node_list, $bar->node);
@@ -90,6 +98,9 @@ class BarController extends Controller
                 $bars = $osm_service->retrieve_osm_data($node_list,$bbox);
 //                var_dump($bars);
                 $features = $osm_service->create_feature_collection(json_decode($bars));
+//                var_dump(json_encode($features));
+
+
                 return response()->json([
                     'bars' => json_decode($bars),
                     'features' => $features
