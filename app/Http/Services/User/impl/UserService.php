@@ -197,10 +197,17 @@ class UserService implements UserServiceInterface
 
         $role = Role::where('name','owner')->get()->first();
 
-        if(!$this->hasRole($role, $user))
+        if(isset($role))
         {
-            $user->roles()->save($role);
+            if(!$this->hasRole($role, $user))
+            {
+                $user->roles()->save($role);
+            }
+        } else {
+            $role = new Role();
+            $role->name = 'owner';
         }
+
 
         $user->bars()->save($bar);
 //        $bars_owned = json_decode($this->ownedBars($user));

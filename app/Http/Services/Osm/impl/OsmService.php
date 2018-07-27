@@ -13,10 +13,14 @@ use TeamTNT\TNTSearch\Indexer\TNTIndexer;
 
 class OsmService implements OsmServiceInterface
 {
+<<<<<<< HEAD
     const BBOX_SS = "43.29569915140259,-2.1273994445800786,43.357263034988996,-1.8802070617675781";
+=======
+    const BBOX_SS = "42.17561739661684,-6.855468750000001,44.2294565683017,0.9997558593750001";
+>>>>>>> prod
     const DEBUG_BBOX = "46.727271481220434,23.481731414794922,46.817213196155656,23.728923797607425";
     const HAMBURG_BBOX = "53.52939080761803,9.875850677490236,53.566719995879154,10.123043060302736";
-    const  BASE_URI = 'https://z.overpass-api.de/api/interpreter';
+    const  BASE_URI = 'https://lz4.overpass-api.de/api/interpreter';
     const  QUERY_START = '[out:json][timeout:25];(';
     const  QUERY_END = ');out body;>;out skel qt;';
 
@@ -53,11 +57,54 @@ class OsmService implements OsmServiceInterface
 
     }
 
-    private function create_n_grams($keyword)
+    public function create_feature_collection($nodes)
     {
+        $feature_collection = array(
+            "type" => 'FeatureCollection',
+            "features" => $this->create_features_array($nodes)
+        );
 
+        return $feature_collection;
     }
 
+    private function create_features_array($nodes)
+    {
+
+
+        $featureArray = [];
+
+        $feature = [];
+
+        $featureGeometry = [];
+
+//        dd($nodes->elements);
+
+        foreach($nodes->elements as $node)
+        {
+
+            $featureGeometry = [
+                'type' => 'Point',
+                'coordinates' => [$node->lon, $node->lat]
+             ];
+
+            $coord = [
+              'lat' => $node->lat,
+              'lon' => $node->lon
+            ];
+
+            $node->tags->node = $node->id;
+            $node->tags->coord = $coord;
+            $feature = [
+                'type' => 'Feature',
+                'geometry' => $featureGeometry,
+                'amenity' => $node->tags->amenity,
+                'details' => $node->tags
+
+            ];
+            array_push($featureArray,$feature);
+        }
+        return $featureArray;
+    }
 
     /**
      * Loop through each node and save it to the database.
@@ -65,8 +112,12 @@ class OsmService implements OsmServiceInterface
     private function save_node_data()
     {
 
+<<<<<<< HEAD
 
         $osm_obj = json_decode($this->query_all_node_data(self::HAMBURG_BBOX));
+=======
+        $osm_obj = json_decode($this->query_all_node_data(self::BBOX_SS));
+>>>>>>> prod
 
         $nodes = $osm_obj->elements;
 
@@ -218,6 +269,8 @@ class OsmService implements OsmServiceInterface
 
         return $res;
     }
+
+
 
     /**
      * @param $bbox
