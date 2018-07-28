@@ -13,11 +13,8 @@ use TeamTNT\TNTSearch\Indexer\TNTIndexer;
 
 class OsmService implements OsmServiceInterface
 {
-<<<<<<< HEAD
-    const BBOX_SS = "43.29569915140259,-2.1273994445800786,43.357263034988996,-1.8802070617675781";
-=======
+
     const BBOX_SS = "42.17561739661684,-6.855468750000001,44.2294565683017,0.9997558593750001";
->>>>>>> prod
     const DEBUG_BBOX = "46.727271481220434,23.481731414794922,46.817213196155656,23.728923797607425";
     const HAMBURG_BBOX = "53.52939080761803,9.875850677490236,53.566719995879154,10.123043060302736";
     const  BASE_URI = 'https://lz4.overpass-api.de/api/interpreter';
@@ -112,12 +109,8 @@ class OsmService implements OsmServiceInterface
     private function save_node_data()
     {
 
-<<<<<<< HEAD
 
-        $osm_obj = json_decode($this->query_all_node_data(self::HAMBURG_BBOX));
-=======
         $osm_obj = json_decode($this->query_all_node_data(self::BBOX_SS));
->>>>>>> prod
 
         $nodes = $osm_obj->elements;
 
