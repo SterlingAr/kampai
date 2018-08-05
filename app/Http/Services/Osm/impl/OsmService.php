@@ -17,7 +17,7 @@ class OsmService implements OsmServiceInterface
     const BBOX_SS = "42.17561739661684,-6.855468750000001,44.2294565683017,0.9997558593750001";
     const DEBUG_BBOX = "46.727271481220434,23.481731414794922,46.817213196155656,23.728923797607425";
     const HAMBURG_BBOX = "53.52939080761803,9.875850677490236,53.566719995879154,10.123043060302736";
-    const  BASE_URI = 'https://lz4.overpass-api.de/api/interpreter';
+    const  BASE_URI = 'http://lz4.overpass-api.de/api/interpreter';
     const  QUERY_START = '[out:json][timeout:25];(';
     const  QUERY_END = ');out body;>;out skel qt;';
 

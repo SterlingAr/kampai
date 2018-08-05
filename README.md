@@ -1,3 +1,5 @@
+#Live demo at: https://api-kampai.marius-cv.com
+__Example endpoint__ :  https://api-kampai.marius-cv.com/api/bars/pizza/43.317590823572715,-1.9977521896362307,43.32753472025052,-1.9565534591674807
 # Deploy steps
 
 __Nuts & bolts__ 
